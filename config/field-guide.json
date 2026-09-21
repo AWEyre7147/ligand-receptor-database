@@ -1,0 +1,649 @@
+{
+  "fields": {
+    "acquisition_status": "Final source row records local_checksums_verified after raw and normalized checksum verification; this does not mean a live download succeeded today.",
+    "assertion_count": "Number of eligible source records merged into this ordered interaction; repeated pathway or provider rows can increase it.",
+    "citation": "Dataset-level citation URL copied from acquisition/normalization metadata; not pair-level experimental evidence.",
+    "completeness": "Canonical definition completeness verdict after every declared member resolves; complete does not certify biological validation.",
+    "complex_key": "Source-local normalized definition key over source, species, label, relationship and ordered member identifiers/labels.",
+    "complex_label": "Original source complex or dependency-group label; it is not a gene symbol.",
+    "dataset_provenance": "Acquisition asset provenance such as native or orthology-derived; asset-level labeling may be less specific than per-record evidence.",
+    "dataset_species": "Species scope assigned to the acquired file; shared assets can contain multiple or unknown endpoint species.",
+    "definition_id": "D:-prefixed hash of source and normalized complex_key; joins a source definition to canonical entity membership.",
+    "description": "Explanatory workbook prose written by the pipeline, not biological evidence.",
+    "direct_publication_count": "Count of distinct evidence.value strings with type pubmed across eligible assertions; overlapping databases do not add independent replications.",
+    "display_label": "Readable canonical entity label chosen during same-species resolution; labels are not primary keys.",
+    "disposition": "Final policy result: primary/companion support a merged interaction; review/excluded/provenance_only remain auditable but do not support it.",
+    "entity_id": "E:-prefixed species/type/identity hash. Entities can be genes, molecular peptides, whole complexes or explicit proxies.",
+    "entity_type": "Canonical entity class: gene_product, complex, encoded_peptide, nonprotein_proxy or nonprotein_molecule where actually resolvable.",
+    "evidence_key": "Hash of normalized record_key, evidence type, exact value, provider and source field; repeated claims across records retain separate keys.",
+    "evidence_provenance": "Per-record native_reported, provider_orthology or unknown. Native_reported is a provider claim, not independent verification of experiments.",
+    "exclusion_reasons": "Normalized exclusion flags, retained without deleting the source assertion; do not add overlapping flag counts as distinct rows.",
+    "gene_id": "Same-species NCBI Gene ID, stored as text. For encoded peptides it identifies the precursor gene, not the molecular ligand.",
+    "group_label": "CellChat regulator group named by the interaction field; separate from required complex members.",
+    "identity": "Canonical identity serialization used to make entity_id: stable gene IDs or exact symbols, source molecular IDs, or complete member/role/stoichiometry/context tuples.",
+    "interaction_id": "I:-prefixed hash of species, ordered ligand_entity_id, receptor_entity_id and tier. Noneligible assertions/evidence have no supporting interaction_id.",
+    "is_directed": "Nullable positive source direction assertion. True reports direction; null is no positive assertion, not proof of an undirected interaction.",
+    "is_inhibition": "Nullable positive source inhibition assertion. A reversed PPI does not inherit the original sign; null does not mean stimulation.",
+    "is_stimulation": "Nullable positive source stimulation assertion. Null does not mean inhibition, false or absence of biological signaling.",
+    "ligand": "Ligand display label: canonical in interaction views, normalized source label in Assertions/Review. Join by entity ID, not this text.",
+    "limitations": "Pipeline-generated interpretive limitations on an entity or eligible interaction, including unverified symbols or missing direct references.",
+    "mapping_basis": "First successful deterministic same-species entity resolution basis; later source assertions retain their own identifiers in normalized records.",
+    "mapping_status": "Regulator identity result: same_species_resolved or unresolved_regulator. An unresolved optional regulator does not become a required subunit.",
+    "member_entity_id": "Canonical child entity ID: required subunit, proxy dependency, encoded_by gene or separate regulator member according to its table and role.",
+    "member_id": "Original member identifier in namespace; not necessarily an NCBI Gene ID and not always resolved.",
+    "member_label": "Original source member label, including optional CellChat regulator members.",
+    "member_order": "One-based order of a member in its original source definition; ordering alone does not establish stoichiometry.",
+    "membership_id": "Unprefixed 32-character deterministic canonical parent/member/relationship/stoichiometry key; identifies a dependency edge, not an interaction.",
+    "namespace": "Identifier vocabulary supplied by the adapter (e.g. symbol, UniProt, NCBIGene, HGNC, MGI, GtoPdb); interpret member_id in this namespace.",
+    "normalized_assertions": "Number of normalized source records, before final policy disposition; counts all retained statuses.",
+    "normalized_review_reasons": "Original normalization flags copied unchanged to final assertions even when accepted policies resolve them; final reasons controls disposition.",
+    "orientation": "Interpretation of source ordering: established ligand-to-receptor, reversed-to-ligand/receptor, or explicit unresolved/source direction labels.",
+    "product_id": "Source molecular product identifier where available. A proxy without a product ID is not assigned its enzyme gene as a molecule identifier.",
+    "provenance": "Sorted distinct evidence_provenance labels across eligible assertions; a merged interaction can have multiple evidence origins.",
+    "provider": "Source-provided evidence attribution, when present; can differ from the dataset source that distributed it.",
+    "provider_summary_publication_count": "Distinct PMID-like values in evidence types containing pubmed other than direct pubmed; provider-summary links are counted separately.",
+    "raw_json": "Compact JSON of the complete original source row. Values become strings/null recursively; whitespace/case and literal source missing-value spellings are preserved where loaded.",
+    "reasons": "Final unresolved identity/scope/exclusion reasons after accepted policies; empty for eligible primary/companion assertions.",
+    "receptor": "Receptor display label: canonical in interaction views, normalized source label in Assertions/Review. A whole complex can occupy this endpoint.",
+    "record_key": "Normalized source-row identity hash of source, source_file, source_table, textual source_row and source_record_id. One final assertion per record.",
+    "regulator_id": "R:-prefixed hash of source, normalized regulator row index and its complete original fields.",
+    "related_interaction_id": "Optional navigation link from a noneligible assertion to an existing eligible endpoint pair. This link never adds evidence or source counts.",
+    "relationship": "Dependency role: required_subunit, encoded_by or source biosynthetic/proxy roles. Source-Members retains original claims, including unknown stoichiometry labels.",
+    "review_reasons": "Normalization policy questions and interpretation warnings; these are not automatically final exclusions.",
+    "role": "CellChat optional regulator category from agonist, antagonist, co_A_receptor or co_I_receptor; not required complex membership.",
+    "selection_json": "Exact acquisition version-selection object serialized as JSON, including commit/release or provider selection metadata.",
+    "semantic_key": "Source-local hash of endpoint IDs/namespaces/types/species/complex keys and orientation, excluding file/row location; used for distinct source counts, not cross-source merging.",
+    "sign_basis": "Source-specific explanation of sign preservation or withholding, separate from a claim of ligand/receptor orientation.",
+    "sign_summary": "Aggregate positive eligible sign assertions: unknown, stimulation_reported, inhibition_reported or conflicting_positive_assertions.",
+    "source": "One of the 16 registered provider IDs; this is the distributing dataset, not necessarily an independent originating experiment.",
+    "source_complex_key": "Original normalized complex_key retained on a final canonical definition.",
+    "source_count": "Number of distinct eligible distributing datasets in sources; LIANA constituent rows are not counted as independent sources.",
+    "source_field": "Exact upstream evidence column or adapter-declared lookup descriptor; interpret with source and the source mapping below.",
+    "source_file": "Path relative to data/sources locating the immutable original asset.",
+    "source_label": "Original label on a canonical definition, retained even when the display label or resolved membership differs.",
+    "source_record_id": "Provider interaction ID where supplied; absent when the source has no row-level ID.",
+    "source_row": "Textual original row/index retained by the adapter: usually spreadsheet/text row, sometimes named R index; not a universal zero-based offset.",
+    "source_table": "Worksheet or nested R-object location; empty string denotes a flat/default table and is meaningful, not a missing field.",
+    "sources": "Sorted distinct eligible source IDs that support the merged interaction.",
+    "species": "Species of the canonical entity/dependency or normalized member; no cross-species identity conversion is performed.",
+    "species_basis": "How endpoint species was assigned (dataset, explicit fields or same-molecule source lookup). Missing partner species is not imputed.",
+    "species_group": "Agreement classification of endpoint species: human, mouse, unknown_species, mixed_species, cross_species or other_species.",
+    "status": "Normalization-only state: candidate, review or excluded. Candidate is not synonymous with final primary eligibility.",
+    "stoichiometry": "Known member copy count stored as text; null means unknown. Unknown is not one, and incompatible known counts preserve separate complex identities.",
+    "stoichiometry_context": "Original assembly-context serialization preserved when source stoichiometry cannot be reduced safely to the exact endpoint members.",
+    "supporting_definition_ids": "Canonical definition IDs whose complete required-member sets support a GtoPdb receptor complex interpretation; structural support, not extra interaction evidence.",
+    "tier": "primary for eligible gene-encoded ligands/receptors; companion for eligible explicit nonprotein/proxy ligands.",
+    "topic": "Pipeline-authored Readme topic label.",
+    "type": "Evidence vocabulary distinguishing direct pubmed, embedded provider-link PMIDs, source text, database/aggregate memberships, pathway and other retained source evidence.",
+    "underlying_sources": "Original underlying database labels exposed for aggregator overlap; these are not automatically counted as independent supporting datasets.",
+    "value": "Original or parsed evidence value; namespace and meaning are determined by type. PubMed IDs are text without an invented publication URL.",
+    "ligand_label": "Ligand: Original cleaned source endpoint display label; no case conversion.",
+    "ligand_id": "Ligand: Source endpoint identifier; use the accompanying namespace, never infer it from numeric appearance.",
+    "ligand_namespace": "Ligand: Source endpoint identifier namespace assigned by the adapter.",
+    "ligand_type": "Ligand: Normalized source endpoint class; unresolved and potential_enzyme_proxy values can precede final review.",
+    "ligand_mapping": "Ligand: Normalized identifier resolution basis, which can be source_symbol_unverified, source_lookup, source_identifier, ambiguous or unresolved.",
+    "ligand_species": "Ligand: Explicit normalized endpoint species list; [] means unknown, multiple entries remain mixed without expansion.",
+    "ligand_complex_key": "Ligand: Link to the intact source-local membership definition; null for endpoints without such a definition.",
+    "ligand_entity_id": "Ligand: Resolved canonical entity foreign key; can be null on noneligible assertions when identity resolution failed.",
+    "receptor_label": "Receptor: Original cleaned source endpoint display label; no case conversion.",
+    "receptor_id": "Receptor: Source endpoint identifier; use the accompanying namespace, never infer it from numeric appearance.",
+    "receptor_namespace": "Receptor: Source endpoint identifier namespace assigned by the adapter.",
+    "receptor_type": "Receptor: Normalized source endpoint class; unresolved and potential_enzyme_proxy values can precede final review.",
+    "receptor_mapping": "Receptor: Normalized identifier resolution basis, which can be source_symbol_unverified, source_lookup, source_identifier, ambiguous or unresolved.",
+    "receptor_species": "Receptor: Explicit normalized endpoint species list; [] means unknown, multiple entries remain mixed without expansion.",
+    "receptor_complex_key": "Receptor: Link to the intact source-local membership definition; null for endpoints without such a definition.",
+    "receptor_entity_id": "Receptor: Resolved canonical entity foreign key; can be null on noneligible assertions when identity resolution failed.",
+    "original_endpoint_a": "Original endpoint A label before any ligand/receptor reorientation; source punctuation and case remain in raw_json.",
+    "original_id_a": "Original endpoint A identifier before reorientation; interpret using the source mapping.",
+    "original_role_a": "Original endpoint A role assigned from source layout, retained when normalized orientation reverses.",
+    "original_endpoint_b": "Original endpoint B label before any ligand/receptor reorientation; source punctuation and case remain in raw_json.",
+    "original_id_b": "Original endpoint B identifier before reorientation; interpret using the source mapping.",
+    "original_role_b": "Original endpoint B role assigned from source layout, retained when normalized orientation reverses."
+  },
+  "observed_vocabularies": {
+    "final/assertions/source": [
+      "cellcall",
+      "cellchat",
+      "cellinker",
+      "cellphonedb",
+      "celltalkdb",
+      "connectomedb",
+      "dimitrov",
+      "gtopdb",
+      "icellnet",
+      "italk",
+      "kirouac",
+      "lrdb",
+      "nichenet",
+      "omnipathppis",
+      "pavlicev",
+      "ramilowski"
+    ],
+    "final/assertions/species_group": [
+      "cross_species",
+      "human",
+      "mixed_species",
+      "mouse",
+      "other_species",
+      "unknown_species"
+    ],
+    "final/assertions/disposition": [
+      "companion",
+      "excluded",
+      "primary",
+      "provenance_only",
+      "review"
+    ],
+    "final/assertions/evidence_provenance": [
+      "native_reported",
+      "provider_orthology",
+      "unknown"
+    ],
+    "final/assertions/orientation": [
+      "ligand_to_receptor",
+      "reversed_to_ligand_receptor",
+      "source_adhesion-adhesion",
+      "source_gap-gap",
+      "source_ligand-ligand",
+      "source_receptor-receptor",
+      "unresolved_source_target"
+    ],
+    "final/assertions/sign_basis": [
+      "GtoPdb Action/Type retained verbatim; no agonism-to-stimulation mapping",
+      "explicit CellPhoneDB modulatory_effect; absent activation remains unknown",
+      "source PPI sign; retained in raw_json if LR orientation is reversed/unresolved"
+    ],
+    "final/assertions/reasons": [
+      "LIANA_constituent_not_independent_consensus_support",
+      "N03_endogenous_status_not_positive",
+      "N03_enzyme_named_ligand_requires_review",
+      "N03_unclassified_proxy_possible_in_publication",
+      "N04_constituent_resource_not_consensus",
+      "N04_cross_species",
+      "N04_direction_or_interaction_scope",
+      "N04_free_text_receptor_alternatives_or_complex",
+      "N04_mixed_species",
+      "N04_other_species",
+      "N04_putative_interaction",
+      "N04_target_is_ligand_entity",
+      "N04_unknown_species",
+      "endogenous_signaling_not_established",
+      "endpoint_species_not_single_human_or_mouse",
+      "gene_encoded_ligand_unconfirmed",
+      "ligand:ambiguous_alias",
+      "ligand:ambiguous_identifier",
+      "ligand:duplicate_complex_components_without_explicit_stoichiometry",
+      "ligand:gtopdb_complex_completeness_unestablished",
+      "ligand:identifier_symbol_conflict",
+      "ligand:peptide_encoding_not_unique",
+      "ligand:uncertain_endpoint_type",
+      "ligand:unresolved_normalized_identifier",
+      "ligand:unresolved_same_species_identifier",
+      "ligand_receptor_orientation_not_established",
+      "nonendogenous_pharmacological_ligand",
+      "pharmacology_target_not_established_receptor_class",
+      "receptor:ambiguous_alias",
+      "receptor:ambiguous_identifier",
+      "receptor:gtopdb_subunit_list_not_confirmed_obligate_complex",
+      "receptor:identifier_symbol_conflict",
+      "receptor:target_companion_encoding_not_unique",
+      "receptor:unresolved_normalized_identifier",
+      "receptor:unresolved_same_species_identifier",
+      "target_species_outside_human_mouse",
+      "unresolved_identifier",
+      "unresolved_member_id_in_companion_table"
+    ],
+    "final/assertions/normalized_review_reasons": [
+      "N01_mouse_evidence_provenance_unknown",
+      "N01_provider_mouse_orthology",
+      "N02_complex_representation",
+      "N03_conflicting_nonprotein_flag",
+      "N03_endogenous_status_not_positive",
+      "N03_enzyme_named_ligand_requires_review",
+      "N03_nonprotein_or_proxy",
+      "N03_unclassified_proxy_possible_in_publication",
+      "N04_constituent_resource_not_consensus",
+      "N04_cross_species",
+      "N04_direction_or_interaction_scope",
+      "N04_free_text_receptor_alternatives_or_complex",
+      "N04_mixed_species",
+      "N04_other_species",
+      "N04_putative_interaction",
+      "N04_target_is_ligand_entity",
+      "N04_unknown_species",
+      "conflicting_signs",
+      "gene_encoded_ligand_unconfirmed",
+      "neurotransmitter_flag_not_used_for_entity_type",
+      "unresolved_identifier",
+      "unresolved_member_id_in_companion_table"
+    ],
+    "final/definitions/source": [
+      "cellcall",
+      "cellchat",
+      "cellinker",
+      "cellphonedb",
+      "dimitrov",
+      "gtopdb",
+      "icellnet",
+      "omnipathppis"
+    ],
+    "final/definitions/completeness": [
+      "all_declared_components_resolved"
+    ],
+    "final/memberships/relationship": [
+      "biosynthetic_or_transport_proxy",
+      "biosynthetic_proxy_component",
+      "encoded_by",
+      "required_subunit"
+    ],
+    "final/memberships/species": [
+      "human",
+      "mouse"
+    ],
+    "final/entities/species": [
+      "human",
+      "mouse"
+    ],
+    "final/entities/entity_type": [
+      "complex",
+      "encoded_peptide",
+      "gene_product",
+      "nonprotein_proxy"
+    ],
+    "final/entities/mapping_basis": [
+      "complete_source_definition",
+      "exact_unverified_symbol",
+      "same_species_annotation",
+      "source_lookup+same_species_annotation",
+      "source_peptide_with_gene_encoding",
+      "source_single_gene_proxy",
+      "unique_exact_alias_same_species_annotation"
+    ],
+    "final/entities/limitations": [
+      "peptide_identity_retained_separately_from_precursor",
+      "product_identifier_missing",
+      "unknown_stoichiometry",
+      "unverified_symbol_no_authoritative_match"
+    ],
+    "final/evidence/disposition": [
+      "companion",
+      "excluded",
+      "primary",
+      "provenance_only",
+      "review"
+    ],
+    "final/evidence/source": [
+      "cellcall",
+      "cellchat",
+      "cellinker",
+      "cellphonedb",
+      "celltalkdb",
+      "connectomedb",
+      "dimitrov",
+      "gtopdb",
+      "icellnet",
+      "nichenet",
+      "omnipathppis",
+      "ramilowski"
+    ],
+    "final/evidence/type": [
+      "aggregate_membership",
+      "database_membership",
+      "database_record",
+      "patent",
+      "pathway",
+      "provider_evidence_class",
+      "pubmed",
+      "pubmed_embedded_in_provider_link",
+      "source_evidence_class",
+      "source_evidence_text",
+      "url"
+    ],
+    "final/evidence/species_group": [
+      "cross_species",
+      "human",
+      "mixed_species",
+      "mouse",
+      "other_species",
+      "unknown_species"
+    ],
+    "final/interactions/species": [
+      "human",
+      "mouse"
+    ],
+    "final/interactions/ligand_type": [
+      "complex",
+      "encoded_peptide",
+      "gene_product",
+      "nonprotein_proxy"
+    ],
+    "final/interactions/receptor_type": [
+      "complex",
+      "gene_product"
+    ],
+    "final/interactions/tier": [
+      "companion",
+      "primary"
+    ],
+    "final/interactions/sign_summary": [
+      "conflicting_positive_assertions",
+      "inhibition_reported",
+      "stimulation_reported",
+      "unknown"
+    ],
+    "final/interactions/sources": [
+      "cellcall",
+      "cellchat",
+      "cellinker",
+      "cellphonedb",
+      "celltalkdb",
+      "connectomedb",
+      "dimitrov",
+      "gtopdb",
+      "icellnet",
+      "italk",
+      "kirouac",
+      "lrdb",
+      "nichenet",
+      "omnipathppis",
+      "ramilowski"
+    ],
+    "final/interactions/provenance": [
+      "native_reported",
+      "provider_orthology",
+      "unknown"
+    ],
+    "final/interactions/limitations": [
+      "peptide_identity_retained_separately_from_precursor",
+      "product_identifier_missing",
+      "reversed_PPI_sign_not_transferred",
+      "some_assertions_lack_direct_publication_ids",
+      "source_signs_conflict",
+      "unknown_stoichiometry",
+      "unverified_symbol_no_authoritative_match"
+    ],
+    "final/regulators/disposition": [
+      "primary"
+    ],
+    "final/regulators/role": [
+      "agonist",
+      "antagonist",
+      "co_A_receptor",
+      "co_I_receptor"
+    ],
+    "final/regulators/mapping_status": [
+      "same_species_resolved"
+    ],
+    "final/regulators/species": [
+      "human",
+      "mouse"
+    ],
+    "final/source_members/source": [
+      "cellcall",
+      "cellchat",
+      "cellinker",
+      "cellphonedb",
+      "dimitrov",
+      "gtopdb",
+      "icellnet",
+      "omnipathppis"
+    ],
+    "final/source_members/namespace": [
+      "GtoPdb_ligand",
+      "GtoPdb_target",
+      "NCBIGene",
+      "UniProt",
+      "symbol"
+    ],
+    "final/source_members/species": [
+      "",
+      "9606",
+      "bovine",
+      "escherichia coli",
+      "human",
+      "monkey",
+      "mouse",
+      "none",
+      "pig",
+      "rat",
+      "rhesus macaque",
+      "sars-cov-2"
+    ],
+    "final/source_members/relationship": [
+      "biosynthetic_or_transport_proxy",
+      "biosynthetic_proxy_component",
+      "required_subunit",
+      "required_subunit_stoichiometry_unknown"
+    ],
+    "final/sources/source": [
+      "cellcall",
+      "cellchat",
+      "cellinker",
+      "cellphonedb",
+      "celltalkdb",
+      "connectomedb",
+      "dimitrov",
+      "gtopdb",
+      "icellnet",
+      "italk",
+      "kirouac",
+      "lrdb",
+      "nichenet",
+      "omnipathppis",
+      "pavlicev",
+      "ramilowski"
+    ],
+    "final/sources/acquisition_status": [
+      "local_checksums_verified"
+    ],
+    "intermediate/records/source": [
+      "cellcall",
+      "cellchat",
+      "cellinker",
+      "cellphonedb",
+      "celltalkdb",
+      "connectomedb",
+      "dimitrov",
+      "gtopdb",
+      "icellnet",
+      "italk",
+      "kirouac",
+      "lrdb",
+      "nichenet",
+      "omnipathppis",
+      "pavlicev",
+      "ramilowski"
+    ],
+    "intermediate/records/dataset_species": [
+      "human",
+      "mouse",
+      "multispecies including human and mouse"
+    ],
+    "intermediate/records/dataset_provenance": [
+      "author-distributed human LRdb; user-supplied browser download",
+      "native",
+      "orthology-derived",
+      "provider bulk export; original species fields preserved; no conversion",
+      "unknown"
+    ],
+    "intermediate/records/evidence_provenance": [
+      "native_reported",
+      "provider_orthology",
+      "unknown"
+    ],
+    "intermediate/records/original_role_a": [
+      "ligand",
+      "partner_a",
+      "receptor",
+      "source"
+    ],
+    "intermediate/records/original_role_b": [
+      "ligand",
+      "partner_b",
+      "receptor",
+      "target"
+    ],
+    "intermediate/records/ligand_namespace": [
+      "CellPhoneDB_entity",
+      "GtoPdb_ligand",
+      "HGNC",
+      "MGI",
+      "NCBIGene",
+      "UniProt",
+      "publication_label",
+      "source_complex",
+      "symbol"
+    ],
+    "intermediate/records/ligand_type": [
+      "complex",
+      "gene_product",
+      "nonprotein_molecule",
+      "nonprotein_proxy",
+      "potential_enzyme_proxy",
+      "synthetic",
+      "unknown"
+    ],
+    "intermediate/records/ligand_mapping": [
+      "source_identifier",
+      "source_lookup",
+      "source_symbol_unverified",
+      "unresolved"
+    ],
+    "intermediate/records/receptor_namespace": [
+      "CellPhoneDB_entity",
+      "GtoPdb_ligand",
+      "GtoPdb_target",
+      "HGNC",
+      "MGI",
+      "NCBIGene",
+      "UniProt",
+      "publication_label",
+      "source_complex",
+      "source_label",
+      "symbol"
+    ],
+    "intermediate/records/receptor_type": [
+      "ambiguous_entity",
+      "complex",
+      "gene_product",
+      "unknown"
+    ],
+    "intermediate/records/receptor_mapping": [
+      "ambiguous",
+      "source_identifier",
+      "source_lookup",
+      "source_symbol_unverified",
+      "unresolved"
+    ],
+    "intermediate/records/species_basis": [
+      "dataset",
+      "explicit_endpoint_species",
+      "explicit_endpoint_taxon"
+    ],
+    "intermediate/records/species_group": [
+      "cross_species",
+      "human",
+      "mixed_species",
+      "mouse",
+      "other_species",
+      "unknown_species"
+    ],
+    "intermediate/records/orientation": [
+      "ligand_to_receptor",
+      "reversed_to_ligand_receptor",
+      "source_adhesion-adhesion",
+      "source_gap-gap",
+      "source_ligand-ligand",
+      "source_receptor-receptor",
+      "unresolved_source_target"
+    ],
+    "intermediate/records/sign_basis": [
+      "GtoPdb Action/Type retained verbatim; no agonism-to-stimulation mapping",
+      "explicit CellPhoneDB modulatory_effect; absent activation remains unknown",
+      "source PPI sign; retained in raw_json if LR orientation is reversed/unresolved"
+    ],
+    "intermediate/records/status": [
+      "candidate",
+      "excluded",
+      "review"
+    ],
+    "intermediate/records/review_reasons": [
+      "N01_mouse_evidence_provenance_unknown",
+      "N01_provider_mouse_orthology",
+      "N02_complex_representation",
+      "N03_conflicting_nonprotein_flag",
+      "N03_endogenous_status_not_positive",
+      "N03_enzyme_named_ligand_requires_review",
+      "N03_nonprotein_or_proxy",
+      "N03_unclassified_proxy_possible_in_publication",
+      "N04_constituent_resource_not_consensus",
+      "N04_cross_species",
+      "N04_direction_or_interaction_scope",
+      "N04_free_text_receptor_alternatives_or_complex",
+      "N04_mixed_species",
+      "N04_other_species",
+      "N04_putative_interaction",
+      "N04_target_is_ligand_entity",
+      "N04_unknown_species",
+      "conflicting_signs",
+      "gene_encoded_ligand_unconfirmed",
+      "neurotransmitter_flag_not_used_for_entity_type",
+      "unresolved_identifier",
+      "unresolved_member_id_in_companion_table"
+    ],
+    "intermediate/records/exclusion_reasons": [
+      "nonendogenous_pharmacological_ligand",
+      "target_species_outside_human_mouse"
+    ],
+    "intermediate/evidence/type": [
+      "aggregate_membership",
+      "database_membership",
+      "database_record",
+      "patent",
+      "pathway",
+      "provider_evidence_class",
+      "pubmed",
+      "pubmed_embedded_in_provider_link",
+      "source_evidence_class",
+      "source_evidence_text",
+      "url"
+    ],
+    "intermediate/memberships/namespace": [
+      "GtoPdb_ligand",
+      "GtoPdb_target",
+      "NCBIGene",
+      "UniProt",
+      "symbol"
+    ],
+    "intermediate/memberships/species": [
+      "",
+      "9606",
+      "bovine",
+      "escherichia coli",
+      "human",
+      "monkey",
+      "mouse",
+      "none",
+      "pig",
+      "rat",
+      "rhesus macaque",
+      "sars-cov-2"
+    ],
+    "intermediate/memberships/relationship": [
+      "biosynthetic_or_transport_proxy",
+      "biosynthetic_proxy_component",
+      "required_subunit",
+      "required_subunit_stoichiometry_unknown"
+    ],
+    "intermediate/regulators/role": [
+      "agonist",
+      "antagonist",
+      "co_A_receptor",
+      "co_I_receptor"
+    ],
+    "intermediate/regulators/species": [
+      "human",
+      "mouse"
+    ]
+  }
+}

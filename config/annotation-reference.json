@@ -1,0 +1,9 @@
+{
+  "description": "Same-species identity assets only; do not read orthology or enrichment columns. Copy these three authorized files, preserving relative paths, or use --annotation-dir.",
+  "run_id": "20260920T002526867731Z",
+  "files": {
+    "manifest.json": "51507d5ba576b7892105176090795a01c852a0e740f3825c1256572cbb2b45b0",
+    "Parquet/human.parquet": "03820f2caad0a4e409b643104e7550aa578b36a4da980abc970582cb45365b5e",
+    "Parquet/mouse.parquet": "6e1adb8add330d845ad7fb96e5a751485048bdc106ead9f9268a19b28b50320a"
+  }
+}

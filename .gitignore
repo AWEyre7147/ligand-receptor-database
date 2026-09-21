@@ -1,54 +1,34 @@
-# =============================================================================
-# Python
-# =============================================================================
-
-__pycache__/
-*.py[cod]
-
-# =============================================================================
-# Jupyter
-# =============================================================================
-
-.ipynb_checkpoints/
-
-# =============================================================================
-# Virtual environments
-# =============================================================================
-
+# Local environments and Python caches
+/AGENTS.md
 .venv/
 venv/
-env/
-
-# =============================================================================
-# IDEs
-# =============================================================================
-
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+# Regenerable local work and staging (inspect locks/backups before cleanup)
+.build-work/
+.normalization-work/
+.readiness-work/
+data/.processed-*/
+data/.processed-backup/
+# Regenerable normalization outputs are retained locally, not uploaded.
+/data/interim/
+# Optional runtime dependencies and editor state
+node_modules/
 .vscode/
 .idea/
-
-# =============================================================================
-# Operating systems
-# =============================================================================
-
 .DS_Store
 Thumbs.db
-
-# =============================================================================
-# Received source data
-# =============================================================================
-
-data/received/*
-!data/received/.gitkeep
-
-# =============================================================================
-# Received source data
-# =============================================================================
-
-CITATION.cff
-
-# =============================================================================
-# Temporary files
-# =============================================================================
-
-*.tmp
-*.log
+# Personal vault state is retained locally
+docs/.obsidian/
+# Credentials must never enter version control
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+# Other scientific data and manifests are not blanket-ignored.
+# Public eligibility is controlled by docs/Repository readiness.md, not ignores.

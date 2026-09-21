@@ -1,0 +1,66 @@
+## Exact source-to-field transformations
+
+The [source adapters](../scripts/source_normalizers.py) define the following mappings. Raw values remain in normalized `records.raw_json`. Each adapter calls `Source.add`, which adds source/file/table/row provenance, ordered keys, species agreement, review flags and typed evidence. The file inventory in [the normalized manifest](../data/interim/manifest.json) records exact headers, source table names, row counts and header offsets. [Acquisition notes](Source%20acquisition.md) and [the source registry](../scripts/source_registry.py) link official providers and citations.
+
+| Source / adapter | Endpoints, species and identity origins | Evidence and dependencies |
+|---|---|---|
+| cellcall / `cellcall` | `Ligand_Symbol`, `Ligand_ID`, `Receptor_Symbol`, `Receptor_ID`; species/provenance from file metadata; rows begin at text line 2 | `pathway_ID` → KEGG pathway evidence, not PMID; comma-delimited receptor symbols explicitly form source complexes; TF/pathway details stay raw |
+| cellinker / `cellinker` | `Ligand_symbol`, `Ligand_id`, `Receptor_symbol`, `Receptor_id`; `LRID` → source_record_id; human/mouse asset metadata | Exact misspelling `Pmubmed.ID` → PMIDs; `Other.DB` → underlying_sources and database membership; `ligand compond ID` / `receptor compond ID` look up `subunit n` labels and duplicate-header `subunit n.1` IDs in species complex CSVs |
+| omnipathppis / `omnipath` | `source`, `target` UniProt and `source_genesymbol`, `target_genesymbol`; explicit endpoint taxon fields. Human intercell `scope=generic`, `source=composite` roles establish unique orientation; mouse remains unresolved | `references` provider:PMID and `sources`; source `is_stimulation`, `is_inhibition`, `is_directed`; reversed sign withheld. Explicit COMPLEX: syntax and complex lookup preserve members; role annotation is not transferred to mouse |
+| dimitrov / `dimitrov` | `source`, `target` UniProt and corresponding `*_genesymbol`; human resource | `resource` → underlying_sources and aggregate_membership. Only `consensus` rows support final interactions; constituent rows remain provenance_only. Explicit COMPLEX: identifiers preserve UniProt members |
+| cellphonedb / `cellphonedb` | `partner_a`, `partner_b` resolve through gene/protein/complex input tables; `directionality` establishes ligand/receptor scope; human | Source `source` evidence text and explicit PMID tokens; `uniprot_1`–`uniprot_5` define complexes. Gene lookup uses `hgnc_symbol`/`uniprot`. `stoichiometry` repeats become counts only if the complete member set agrees; otherwise original context remains distinct. Biosynthesis descriptions/IDs mark source proxies |
+| cellchat / `cellchat` | R `interaction.ligand` / `.receptor`, species file, `complex` table member cells; `annotation=Non-protein Signaling` establishes proxy class | `evidence` text and explicit PMID tokens; `agonist`, `antagonist`, `co_A_receptor`, `co_I_receptor` resolve through `cofactor` groups into separate Regulators. `is_neurotransmitter` alone does not imply nonprotein; geneInfo is a supporting lookup |
+| connectomedb / `connectomedb` | `Ligand Symbols`, `Receptor Symbols`, species-specific HGNC/MGI IDs and `Interaction ID`; parenthetical label annotations removed only for normalized display | `Evidence` retains provider assertion classification. PubMed IDs embedded in provider summary links are `pubmed_embedded_in_provider_link`, not direct experimental confirmation. Mouse dataset remains provider orthology-derived even when evidence wording says Direct |
+| lrdb / `simple_pairs` | `ligand`, `receptor`; human symbols; `d.ligand` / `d.receptor` preserve possible enzyme/proxy ambiguity | No fabricated pair publications; description text remains raw; author-hosted LRdb distribution requires verified manual import when TLS acquisition fails |
+| italk / `simple_pairs` | R `database` object's `Ligand.ApprovedSymbol`, `Receptor.ApprovedSymbol`, `Pair.Name`; fallback `*.Name` stays unknown when approved identity absent | Source database classification preserved raw; no invented pair-level references or species for unresolved rows |
+| ramilowski / `simple_pairs` | `Ligand.ApprovedSymbol`, `Receptor.ApprovedSymbol`, `Pair.Name`; human | `PMID.Manual`, `Pair.Evidence`, `Pair.Source`; DLRP/HPMR/IUPHAR/HPRD/STRING columns retain underlying memberships. Putative rows remain review. Description-only possible enzyme proxies are not promoted automatically |
+| pavlicev / `simple_pairs` | Supplemental S5 header at zero-based row 3 (Excel row 4), receptor-first layout reversed into ligand/receptor order; human | Original GtoPdb/DLRP/publication additions retained in raw table and source context. Local rows cannot reliably separate protein ligands and enzyme proxies: review remains required |
+| kirouac / `simple_pairs` | SF_R `SF Symbol`, `SF ID`, `R Symbol`, `R ID`; S12 `LIGAND`, `RECEPTOR(S)` | Numeric SF_R identities retained; S12 free-text receptor groups remain unexpanded and unresolved; no arbitrary splitting into combinations |
+| nichenet / `nichenet` | RDS `from`, `to`; file species; mouse file provider_orthology | `database`/source memberships remain provenance, not direct PMID evidence; underscores such as C4B_2 remain literal symbols |
+| gtopdb / `gtopdb` | `Ligand`, `Ligand ID`, `Ligand Type`, `Ligand Species`, `Ligand Gene Symbol`, `Ligand Subunit IDs`; analogous Target fields and UniProt/Ensembl IDs. Only a same-ligand-ID peptide lookup can fill explicit missing ligand species | `PubMed ID`, URLs and patent text retained by type; `Endogenous`, action/type and affinity remain raw. Molecular ligand IDs survive precursor-gene mapping. Target classes restricted in final build. GtoPdb receptor subunit lists need an identical complete gene set from an explicit non-GtoPdb definition, linked by supporting_definition_ids; families are not assumed obligate |
+| celltalkdb / `celltalkdb` | `ligand_gene_symbol`, `ligand_gene_id`, `receptor_gene_symbol`, `receptor_gene_id`, `lr_pair` in species RDS | `evidence` PMIDs; provider evidence provenance otherwise unknown; supporting gene/annotation files inventoried |
+| icellnet / `icellnet` | `Ligand 1`–`Ligand 4`, `Receptor 1`–`Receptor 5`; human symbols, explicit source subunit columns | `Reference` PMIDs; explicit multicolumn endpoints stay intact; classification/source fields remain raw |
+
+Final identity mapping uses only the pinned annotation columns `symbol`, `entrezgene`, `taxid`, `type_of_gene`, `alias`, `ensembl.gene`, `uniprot.Swiss-Prot`, `uniprot.TrEMBL` and species-specific `HGNC` or `MGI`. See [annotation-reference.json](../config/annotation-reference.json). Source lookup precedes unique same-species reference resolution; ambiguous aliases and conflicting IDs stay review. No orthology/enrichment columns are read. Exact unverified symbols can survive as explicitly limited single endpoints, but cannot establish complex completeness.
+
+## Operational metadata
+
+Manifests are operational provenance, separate from biological table fields. [Manifest field reference](Manifest%20reference.md) documents every currently observed nested field path and missing-state interpretation. Acquisition `versions.txt` is JSON despite its extension. A failed last download can coexist with preserved, verified manually imported files. A source's acquisition status is therefore not interchangeable with final `local_checksums_verified`.
+## Interpreting review reasons
+
+Flags are machine-readable labels, not scores. Normalization intentionally asks policy questions that the accepted final policies may resolve; therefore consult final `reasons` and `disposition`, while keeping `normalized_review_reasons` for audit. Prefixes `ligand:` and `receptor:` attach the following identity failure to that endpoint. The vocabulary snapshot above records each exact observed combination.
+
+| Reason or family | Interpretation and disposition caution |
+|---|---|
+| N01_provider_mouse_orthology | Provider inferred the mouse resource from orthology. Accepted with an inferred label if all other eligibility checks pass |
+| N01_mouse_evidence_provenance_unknown | Native versus inferred mouse support is unestablished; accepted as unknown under N01, never upgraded to experimental proof |
+| N02_complex_representation | Source endpoint requires intact membership representation; final resolution must establish the complete set |
+| N03_nonprotein_or_proxy | Source endpoint may be a molecule/proxy; final eligible proxies go into the separate companion |
+| N03_conflicting_nonprotein_flag | Source protein/nonprotein flag conflicts with endpoint interpretation; source definitions and accepted policies resolve only supported cases |
+| N03_endogenous_status_not_positive / endogenous_signaling_not_established | Source does not positively establish endogenous signaling; do not infer it from a familiar name |
+| N03_enzyme_named_ligand_requires_review | Description suggests an enzyme may stand for a ligand; no explicit product/dependency definition establishes an eligible proxy |
+| N03_unclassified_proxy_possible_in_publication | Publication table mixes possible proteins/proxies without sufficient row-level classification; Pavlicev remains review |
+| N04_constituent_resource_not_consensus / LIANA_constituent_not_independent_consensus_support | LIANA constituent membership is audit provenance, not independent consensus support |
+| N04_unknown_species / N04_mixed_species / N04_cross_species / N04_other_species | Missing species, multiple species on an endpoint, differing endpoint species, or a nonhuman/nonmouse pair respectively; retained in Shared outputs |
+| endpoint_species_not_single_human_or_mouse | Final endpoints cannot establish one matching human or mouse species; no conversion or expansion repairs this |
+| N04_direction_or_interaction_scope / ligand_receptor_orientation_not_established | Local evidence does not establish an ordered ligand-to-receptor interaction |
+| N04_free_text_receptor_alternatives_or_complex | Free-text receptor group could mean alternatives or a complex; no combinatorial expansion is performed |
+| N04_putative_interaction | Source labels the interaction putative; remains review even if gene identity resolves |
+| N04_target_is_ligand_entity | GtoPdb target refers to another ligand entity instead of an established receptor endpoint |
+| neurotransmitter_flag_not_used_for_entity_type | Flag alone was deliberately not used to move an otherwise protein ligand to nonprotein coverage |
+| conflicting_signs | Source has positive stimulation and inhibition assertions; preserve both and label conflict instead of inventing a single sign |
+| gene_encoded_ligand_unconfirmed | No sufficient encoding identity was established for a source ligand class that might be gene encoded |
+| nonendogenous_pharmacological_ligand | Synthetic/antibody or explicitly nonendogenous peptide source row; retained as an exclusion |
+| target_species_outside_human_mouse | Explicit source target species are outside the project's species scope |
+| pharmacology_target_not_established_receptor_class | Target class is not confirmed within gpcr/catalytic_receptor/lgic/nhr; general pharmacology binding is not automatically LR signaling |
+| unresolved_identifier / unresolved_member_id_in_companion_table | Normalization cannot assign a unique endpoint/member identifier using the source lookup |
+| ambiguous_alias / ambiguous_identifier | More than one same-species gene matches; no arbitrary winner is selected |
+| identifier_symbol_conflict | A source accession and accompanying label identify conflicting genes |
+| unresolved_same_species_identifier / unresolved_normalized_identifier | Final strict identity mapping failed, or normalization already marked the identifier unresolved |
+| uncertain_endpoint_type | The endpoint class cannot safely be assigned to gene, complex, peptide or explicit proxy/molecule |
+| duplicate_complex_components_without_explicit_stoichiometry | Multiple source members collapse to one gene without an explicit copy-count explanation |
+| gtopdb_complex_completeness_unestablished | GtoPdb definition does not establish a complete multi-member endpoint |
+| gtopdb_subunit_list_not_confirmed_obligate_complex | A receptor subunit list lacks matching independent complete required-member evidence; it may describe alternatives |
+| peptide_encoding_not_unique / target_companion_encoding_not_unique | Source peptide/target companion cross-references do not resolve to exactly one compatible encoding gene |
+
+`required_subunit` describes components that must remain together. Source roles with an unknown-stoichiometry suffix retain that uncertainty; canonical membership uses a separate nullable stoichiometry field. `biosynthetic_or_transport_proxy` names a gene dependency, not the ligand molecule. `encoded_by` connects a mature molecular peptide to its precursor gene. CellChat's agonist/antagonist/coreceptor roles remain exclusively in Regulators.

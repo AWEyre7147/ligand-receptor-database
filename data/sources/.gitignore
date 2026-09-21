@@ -1,0 +1,6 @@
+.download-*/
+.download.lock
+.*.backup/
+versions.tmp
+.env
+.env.*

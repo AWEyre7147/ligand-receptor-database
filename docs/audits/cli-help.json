@@ -1,0 +1,30 @@
+{
+  "download_sources": {
+    "status": "passed",
+    "help_characters": 566
+  },
+  "normalize_sources": {
+    "status": "passed",
+    "help_characters": 691
+  },
+  "validate_normalization": {
+    "status": "passed",
+    "help_characters": 396
+  },
+  "build_databases": {
+    "status": "passed",
+    "help_characters": 756
+  },
+  "generate_field_guide": {
+    "status": "passed",
+    "help_characters": 244
+  },
+  "generate_manifest_guide": {
+    "status": "passed",
+    "help_characters": 196
+  },
+  "validate_documentation": {
+    "status": "passed",
+    "help_characters": 379
+  }
+}

@@ -1,0 +1,7 @@
+# Offline table/R-object readers and typed intermediate output. No analysis toolchains.
+pandas==3.0.1
+numpy==2.3.5
+pyarrow==25.0.1
+openpyxl==3.1.5
+xlrd==2.0.2
+rdata==1.1.0

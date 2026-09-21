@@ -1,0 +1,1358 @@
+{
+  "schema_version": 1,
+  "sources": {
+    "cellcall": {
+      "name": "CellCall",
+      "provider": "https://github.com/ShellyCoder/cellcall",
+      "citation_url": "https://doi.org/10.1093/nar/gkab638",
+      "terms_url": "https://github.com/ShellyCoder/cellcall",
+      "coverage": "human, mouse",
+      "notes": "Core and extended LR-TF references; mouse homology files are provider-derived, not native mouse experimental evidence.",
+      "aliases": [],
+      "redistribution": "Review provider and upstream data terms before public redistribution; software license is not a blanket data license.",
+      "latest_attempt": "2026-09-20T16:27:03+00:00",
+      "status": "unchanged",
+      "error": null,
+      "content_change": "unchanged",
+      "attempted_selection": {
+        "repository": "ShellyCoder/cellcall",
+        "release": null,
+        "commit": "5066738689017cd1ebe9356d534003fe58b4c54e",
+        "selection_policy": "current official repository commit"
+      },
+      "selection": {
+        "repository": "ShellyCoder/cellcall",
+        "release": null,
+        "commit": "5066738689017cd1ebe9356d534003fe58b4c54e",
+        "selection_policy": "current official repository commit"
+      },
+      "files": [
+        {
+          "path": "cellcall/new_ligand_receptor_TFs.txt",
+          "download_url": "https://raw.githubusercontent.com/ShellyCoder/cellcall/5066738689017cd1ebe9356d534003fe58b4c54e/inst/extdata/new_ligand_receptor_TFs.txt",
+          "species": "human",
+          "provenance": "native",
+          "size": 1285426,
+          "sha256": "badcf63f9334b6129faaf0aee1cde0a9bdb3ffaf3ce74a9f3303bb3d5bb371c6",
+          "upstream_checksum": "git-blob:a5dd8705ba0d910fea7f8e0754b28ec6202cafd1",
+          "etag": "\"8657e9b76404590e96c20bb730c9eb2ae211ab5ff326bf110397d0db3bf0df6c\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:03+00:00",
+          "last_download": "2026-09-20T16:15:31+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "cellcall/new_ligand_receptor_TFs_extended.txt",
+          "download_url": "https://raw.githubusercontent.com/ShellyCoder/cellcall/5066738689017cd1ebe9356d534003fe58b4c54e/inst/extdata/new_ligand_receptor_TFs_extended.txt",
+          "species": "human",
+          "provenance": "native",
+          "size": 296865,
+          "sha256": "0398f238a5fc28b034d6cc406bc9be17c48392c82d138016b19b60afd7a34073",
+          "upstream_checksum": "git-blob:ad806f5868dcf749dd949a2bf026a7848dc499e7",
+          "etag": "\"7223277ce014b8085c212b5f2a9bb5dce6520461b173a505fac76b5ccfe2d53f\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:03+00:00",
+          "last_download": "2026-09-20T16:15:31+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "cellcall/new_ligand_receptor_TFs_homology.txt",
+          "download_url": "https://raw.githubusercontent.com/ShellyCoder/cellcall/5066738689017cd1ebe9356d534003fe58b4c54e/inst/extdata/new_ligand_receptor_TFs_homology.txt",
+          "species": "mouse",
+          "provenance": "orthology-derived",
+          "size": 891609,
+          "sha256": "b8440c693602ade4c879cf8c33573c977a3de359748f8250bb4e56278f74e8b9",
+          "upstream_checksum": "git-blob:3e3214df952830e31c62fbdcca966b862b2dc3cb",
+          "etag": "\"7b31b72bd6d5a008d820e152fef1c82da49a2674c5888e387146ce881a47376a\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:03+00:00",
+          "last_download": "2026-09-20T16:15:31+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "cellcall/new_ligand_receptor_TFs_homology_extended.txt",
+          "download_url": "https://raw.githubusercontent.com/ShellyCoder/cellcall/5066738689017cd1ebe9356d534003fe58b4c54e/inst/extdata/new_ligand_receptor_TFs_homology_extended.txt",
+          "species": "mouse",
+          "provenance": "orthology-derived",
+          "size": 275356,
+          "sha256": "3e03a52cc873b5660c1ef3c83c82444b220b58f2778418217298ffa5391e0f6a",
+          "upstream_checksum": "git-blob:e647dfdcc98cc6a014ee323e2018f452b222470e",
+          "etag": "\"92b375f3ccb60bda547be6a40d3c824d082ce53d8c93e76bea0c8df368df2902\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:03+00:00",
+          "last_download": "2026-09-20T16:15:32+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "cellcall/KEGG_SYMBOL_ID.txt",
+          "download_url": "https://raw.githubusercontent.com/ShellyCoder/cellcall/5066738689017cd1ebe9356d534003fe58b4c54e/inst/extdata/KEGG_SYMBOL_ID.txt",
+          "species": "shared",
+          "provenance": "unknown",
+          "size": 26132,
+          "sha256": "eab00e2ad4246ce8b6789b6af10b2f1a6bbbd18b8b39cd90886414c5498b5fa4",
+          "upstream_checksum": "git-blob:ecc48c55e683add6d836e52cf571408e58885df1",
+          "etag": "\"ca927eab37e9886a28802714c13ac2140f3d8c894e2d3d29efe707867ddb4469\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:03+00:00",
+          "last_download": "2026-09-20T16:15:32+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        }
+      ],
+      "last_successful_check": "2026-09-20T16:27:03+00:00",
+      "last_successful_download": "2026-09-20T16:15:32+00:00",
+      "changed_files": [],
+      "removed_files": [],
+      "repaired_files": [],
+      "downloaded_files": []
+    },
+    "cellinker": {
+      "name": "Cellinker",
+      "provider": "https://www.rna-society.org/cellinker/Download.html",
+      "citation_url": "https://www.rna-society.org/cellinker/",
+      "terms_url": "https://www.rna-society.org/cellinker/Download.html",
+      "coverage": "human, mouse",
+      "notes": "Provider species-specific interactions and complexes; evidence provenance is mixed/unknown.",
+      "aliases": [
+        "Celllinker"
+      ],
+      "redistribution": "Review provider and upstream data terms before public redistribution; software license is not a blanket data license.",
+      "latest_attempt": "2026-09-20T16:27:03+00:00",
+      "status": "unchanged",
+      "error": null,
+      "content_change": "unchanged",
+      "attempted_selection": {
+        "version": null,
+        "discovery_url": "https://www.rna-society.org/cellinker/Download.html"
+      },
+      "selection": {
+        "version": null,
+        "discovery_url": "https://www.rna-society.org/cellinker/Download.html"
+      },
+      "files": [
+        {
+          "path": "cellinker/Homo sapiens.txt",
+          "download_url": "https://www.rna-society.org/cellinker/download/Homo%20sapiens.txt",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 483691,
+          "sha256": "c41d8fe7677feab96ba444fd96e4e005700ebbd51031bb38b71c32e1786974d4",
+          "upstream_checksum": null,
+          "etag": null,
+          "last_modified": "Thu, 07 Jan 2021 15:03:20 GMT",
+          "last_successful_check": "2026-09-20T16:27:04+00:00",
+          "last_download": "2026-09-20T16:15:35+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "cellinker/Mus musculus.txt",
+          "download_url": "https://www.rna-society.org/cellinker/download/Mus%20musculus.txt",
+          "species": "mouse",
+          "provenance": "unknown",
+          "size": 427735,
+          "sha256": "5dbd6e670155f8bf11e9c53e027dae2b4883c53623db70996f64584b41a4e175",
+          "upstream_checksum": null,
+          "etag": null,
+          "last_modified": "Thu, 07 Jan 2021 15:03:12 GMT",
+          "last_successful_check": "2026-09-20T16:27:04+00:00",
+          "last_download": "2026-09-20T16:15:36+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "cellinker/human-complex.csv",
+          "download_url": "https://www.rna-society.org/cellinker/download/human-complex.csv",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 9040,
+          "sha256": "b71f7a02efd316491f281ab5a0da35631bbec3f68a3ff9bd7035abe3c83742d9",
+          "upstream_checksum": null,
+          "etag": null,
+          "last_modified": "Thu, 07 Jan 2021 14:57:45 GMT",
+          "last_successful_check": "2026-09-20T16:27:05+00:00",
+          "last_download": "2026-09-20T16:15:37+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "cellinker/mouse-complex.csv",
+          "download_url": "https://www.rna-society.org/cellinker/download/mouse-complex.csv",
+          "species": "mouse",
+          "provenance": "unknown",
+          "size": 8212,
+          "sha256": "0d98dfc9a1c042d4965c17b1a977b4a31ed5e6b20933fb9ecf4ddc31a0833f80",
+          "upstream_checksum": null,
+          "etag": null,
+          "last_modified": "Thu, 07 Jan 2021 14:57:45 GMT",
+          "last_successful_check": "2026-09-20T16:27:05+00:00",
+          "last_download": "2026-09-20T16:15:38+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        }
+      ],
+      "last_successful_check": "2026-09-20T16:27:05+00:00",
+      "last_successful_download": "2026-09-20T16:15:38+00:00",
+      "changed_files": [],
+      "removed_files": [],
+      "repaired_files": [],
+      "downloaded_files": []
+    },
+    "omnipathppis": {
+      "name": "OmniPathPPIs",
+      "provider": "https://omnipathdb.org/",
+      "citation_url": "https://doi.org/10.1038/s41592-018-0111-x",
+      "terms_url": "https://omnipathdb.org/info",
+      "coverage": "human, mouse",
+      "notes": "Raw ligrecextra interactions, intercellular roles and complex definitions. Not a finished LR database. Server mouse interactions are orthology-derived; no client translation. Human intercellular/complex tables are shared interpretation assets, not mouse-native annotations.",
+      "aliases": [],
+      "redistribution": "Acquired with license=academic. Underlying resources have heterogeneous terms; academic access is not blanket permission for public or commercial redistribution.",
+      "latest_attempt": "2026-09-20T16:27:05+00:00",
+      "status": "unchanged",
+      "error": null,
+      "content_change": "unchanged",
+      "attempted_selection": {
+        "version": null,
+        "service": "https://omnipathdb.org",
+        "scope": "ligrecextra plus intercellular roles and complex definitions; academic-license response"
+      },
+      "selection": {
+        "version": null,
+        "service": "https://omnipathdb.org",
+        "scope": "ligrecextra plus intercellular roles and complex definitions; academic-license response"
+      },
+      "files": [
+        {
+          "path": "omnipathppis/human/interactions.tsv",
+          "download_url": "https://omnipathdb.org/interactions?datasets=ligrecextra&organisms=9606&genesymbols=1&fields=sources%2Creferences%2Cncbi_tax_id&format=tsv&license=academic",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 1713661,
+          "sha256": "a4a151cfb1abf941c29d7c8c68b1ce53173ba62e96c24026423b3fe5602f88f7",
+          "upstream_checksum": null,
+          "etag": null,
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:06+00:00",
+          "last_download": "2026-09-20T16:27:06+00:00",
+          "archive_member": null,
+          "query_parameters": {
+            "datasets": "ligrecextra",
+            "organisms": "9606",
+            "genesymbols": "1",
+            "fields": "sources,references,ncbi_tax_id",
+            "format": "tsv",
+            "license": "academic"
+          }
+        },
+        {
+          "path": "omnipathppis/mouse/interactions.tsv",
+          "download_url": "https://omnipathdb.org/interactions?datasets=ligrecextra&organisms=10090&genesymbols=1&fields=sources%2Creferences%2Cncbi_tax_id&format=tsv&license=academic",
+          "species": "mouse",
+          "provenance": "orthology-derived",
+          "size": 1431618,
+          "sha256": "6970c4914cbd6ef14aa1414c9ea103e2e23fd0f2f319e6127184a031ad50ca09",
+          "upstream_checksum": null,
+          "etag": null,
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:07+00:00",
+          "last_download": "2026-09-20T16:27:07+00:00",
+          "archive_member": null,
+          "query_parameters": {
+            "datasets": "ligrecextra",
+            "organisms": "10090",
+            "genesymbols": "1",
+            "fields": "sources,references,ncbi_tax_id",
+            "format": "tsv",
+            "license": "academic"
+          }
+        },
+        {
+          "path": "omnipathppis/intercell.tsv",
+          "download_url": "https://omnipathdb.org/intercell?format=tsv&license=academic",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 56466405,
+          "sha256": "ca956efd35fe5524a970ca5536679c2e663876e9fe7fa5acdf14ebe17249af89",
+          "upstream_checksum": null,
+          "etag": null,
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:10+00:00",
+          "last_download": "2026-09-20T16:27:10+00:00",
+          "archive_member": null,
+          "query_parameters": {
+            "format": "tsv",
+            "license": "academic"
+          }
+        },
+        {
+          "path": "omnipathppis/complexes.tsv",
+          "download_url": "https://omnipathdb.org/complexes?format=tsv&license=academic",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 5865809,
+          "sha256": "2a8f533e9228e8c01d3548ee4709f9f6461b820331c05f24c1f9e1f2409f4d7b",
+          "upstream_checksum": null,
+          "etag": null,
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:12+00:00",
+          "last_download": "2026-09-20T16:27:12+00:00",
+          "archive_member": null,
+          "query_parameters": {
+            "format": "tsv",
+            "license": "academic"
+          }
+        }
+      ],
+      "last_successful_check": "2026-09-20T16:27:12+00:00",
+      "last_successful_download": "2026-09-20T16:27:12+00:00",
+      "changed_files": [],
+      "removed_files": [],
+      "repaired_files": [],
+      "downloaded_files": [
+        "omnipathppis/human/interactions.tsv",
+        "omnipathppis/mouse/interactions.tsv",
+        "omnipathppis/intercell.tsv",
+        "omnipathppis/complexes.tsv"
+      ]
+    },
+    "dimitrov": {
+      "name": "Dimitrov",
+      "provider": "https://github.com/saezlab/liana-py",
+      "citation_url": "https://doi.org/10.1038/s41467-022-30755-0",
+      "terms_url": "https://github.com/saezlab/liana-py",
+      "coverage": "human-only",
+      "notes": "LIANA aggregate distribution: omni_resource.csv contains consensus plus constituent resources. Retained intact; select resource=consensus downstream.",
+      "aliases": [],
+      "redistribution": "Review provider and upstream data terms before public redistribution; software license is not a blanket data license.",
+      "latest_attempt": "2026-09-20T16:27:12+00:00",
+      "status": "unchanged",
+      "error": null,
+      "content_change": "unchanged",
+      "attempted_selection": {
+        "repository": "saezlab/liana-py",
+        "release": "V2.0.0",
+        "commit": "c59472ccc9de8360dbbf5016db75f8abde08dd3e",
+        "selection_policy": "latest official release"
+      },
+      "selection": {
+        "repository": "saezlab/liana-py",
+        "release": "V2.0.0",
+        "commit": "c59472ccc9de8360dbbf5016db75f8abde08dd3e",
+        "selection_policy": "latest official release"
+      },
+      "files": [
+        {
+          "path": "dimitrov/omni_resource.csv",
+          "download_url": "https://raw.githubusercontent.com/saezlab/liana-py/c59472ccc9de8360dbbf5016db75f8abde08dd3e/src/liana/resource/omni_resource.csv",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 2004367,
+          "sha256": "65e46a428818c0600de66c1574c94ff2f5dc80859998321c03a956d330dd67fb",
+          "upstream_checksum": "git-blob:d004cec380d7a6c971155252c492ad89553e3e0f",
+          "etag": "\"4da8b051cc485438dbe1906fb795a10d7bec17174e02c53375f4700f551ff70e\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:13+00:00",
+          "last_download": "2026-09-20T16:16:45+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        }
+      ],
+      "last_successful_check": "2026-09-20T16:27:13+00:00",
+      "last_successful_download": "2026-09-20T16:16:45+00:00",
+      "changed_files": [],
+      "removed_files": [],
+      "repaired_files": [],
+      "downloaded_files": []
+    },
+    "cellphonedb": {
+      "name": "CellPhoneDB",
+      "provider": "https://github.com/ventolab/cellphonedb-data",
+      "citation_url": "https://doi.org/10.1038/s41596-020-0292-x",
+      "terms_url": "https://github.com/ventolab/cellphonedb-data",
+      "coverage": "human-only",
+      "notes": "",
+      "aliases": [
+        "DellPhoneDB"
+      ],
+      "redistribution": "Review provider and upstream data terms before public redistribution; software license is not a blanket data license.",
+      "latest_attempt": "2026-09-20T16:27:13+00:00",
+      "status": "unchanged",
+      "error": null,
+      "content_change": "unchanged",
+      "attempted_selection": {
+        "repository": "ventolab/cellphonedb-data",
+        "release": "v5.0.0",
+        "commit": "71ffa8a163389913907d40993bec2821a111f64d",
+        "selection_policy": "latest official release"
+      },
+      "selection": {
+        "repository": "ventolab/cellphonedb-data",
+        "release": "v5.0.0",
+        "commit": "71ffa8a163389913907d40993bec2821a111f64d",
+        "selection_policy": "latest official release"
+      },
+      "files": [
+        {
+          "path": "cellphonedb/complex_input.csv",
+          "download_url": "https://raw.githubusercontent.com/ventolab/cellphonedb-data/71ffa8a163389913907d40993bec2821a111f64d/data/complex_input.csv",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 56886,
+          "sha256": "c761b75f5438d5b23f9fefa5ddaac84acb127fe5dd72fe931d5c07d8a557b362",
+          "upstream_checksum": "git-blob:46c58b77b5fcee7a05127fbf4dc97857c36427d3",
+          "etag": "\"2b88ae2a5557da9246bfb6923e6617ab3153b6e4595995f393972c30456301d0\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:14+00:00",
+          "last_download": "2026-09-20T16:16:46+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "cellphonedb/gene_input.csv",
+          "download_url": "https://raw.githubusercontent.com/ventolab/cellphonedb-data/71ffa8a163389913907d40993bec2821a111f64d/data/gene_input.csv",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 65195,
+          "sha256": "538fff62a77d9077e0307337552bed087817632da015c620f17666d088066623",
+          "upstream_checksum": "git-blob:2f1fc40b17bd9642625d6aac391ee7aa8259586e",
+          "etag": "\"6b07943749a545942e7066f26eb53da47af3921b17bd02e92137bd16eb1951a0\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:14+00:00",
+          "last_download": "2026-09-20T16:16:46+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "cellphonedb/interaction_input.csv",
+          "download_url": "https://raw.githubusercontent.com/ventolab/cellphonedb-data/71ffa8a163389913907d40993bec2821a111f64d/data/interaction_input.csv",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 505620,
+          "sha256": "3cf0ceace45dcb42478f0e6a7be9a50104794eac68d731f7c82d4c13325175ab",
+          "upstream_checksum": "git-blob:7261404dcc1932b461703a25d34ab1a6d2795211",
+          "etag": "\"fe09f668617150cdb016962635bd52ce610bc17576d8dfe653c4661652dcb67b\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:14+00:00",
+          "last_download": "2026-09-20T16:16:46+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "cellphonedb/protein_input.csv",
+          "download_url": "https://raw.githubusercontent.com/ventolab/cellphonedb-data/71ffa8a163389913907d40993bec2821a111f64d/data/protein_input.csv",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 158940,
+          "sha256": "322f277963ca2fc879c97660eb1409478603a3d2d7442c6606bce79a45f14ae2",
+          "upstream_checksum": "git-blob:d7f9bc01e22d5122868bb8e44d5a3a873dd7783d",
+          "etag": "\"35f71e307d80366037d8bb0e1af74ab00fcf7153de6191de412a163649214e45\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:14+00:00",
+          "last_download": "2026-09-20T16:16:47+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "cellphonedb/transcription_factor_input.csv",
+          "download_url": "https://raw.githubusercontent.com/ventolab/cellphonedb-data/71ffa8a163389913907d40993bec2821a111f64d/data/transcription_factor_input.csv",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 26581,
+          "sha256": "f91c295cdaf46ccef376ea524a8e5c8157ebf830cc2012f31059ab831ccf1ada",
+          "upstream_checksum": "git-blob:4f68e4b8abf2768f2bbfe84bc665a8fb04d428c0",
+          "etag": "\"33609808eac21d74c91daaeb618ff683599784af4b6fbd961c1f8947cdee1faf\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:14+00:00",
+          "last_download": "2026-09-20T16:16:47+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        }
+      ],
+      "last_successful_check": "2026-09-20T16:27:14+00:00",
+      "last_successful_download": "2026-09-20T16:16:47+00:00",
+      "changed_files": [],
+      "removed_files": [],
+      "repaired_files": [],
+      "downloaded_files": []
+    },
+    "kirouac": {
+      "name": "Kirouac",
+      "provider": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC2990637/fullTextXML",
+      "citation_url": "https://doi.org/10.1038/msb.2010.71",
+      "terms_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2990637/",
+      "coverage": "human-only",
+      "notes": "Original publication supplementary dataset and tables, distributed by Europe PMC. Static 2010 resource.",
+      "aliases": [],
+      "redistribution": "Review provider and upstream data terms before public redistribution; software license is not a blanket data license.",
+      "latest_attempt": "2026-09-20T16:27:14+00:00",
+      "status": "unchanged",
+      "error": null,
+      "content_change": "unchanged",
+      "attempted_selection": {
+        "version": "2010",
+        "distribution": "Europe PMC original publication supplements",
+        "discovery_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC2990637/fullTextXML"
+      },
+      "selection": {
+        "version": "2010",
+        "distribution": "Europe PMC original publication supplements",
+        "discovery_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC2990637/fullTextXML"
+      },
+      "files": [
+        {
+          "path": "kirouac/msb201071-s2.xls",
+          "download_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC2990637/supplementaryFiles",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 723456,
+          "sha256": "30b2ef9e61b130c8da536c314ff5fbddd19f0592c4a1a0015a30b095beca5c24",
+          "upstream_checksum": null,
+          "etag": null,
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:17+00:00",
+          "last_download": "2026-09-20T16:27:17+00:00",
+          "archive_member": "msb201071-s2.xls",
+          "query_parameters": null
+        },
+        {
+          "path": "kirouac/msb201071-s3.xls",
+          "download_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC2990637/supplementaryFiles",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 134144,
+          "sha256": "6ea36e6b4cd895d1e79e16180fc1dfcc2bd515e3fc12e28e86ac326c34c19599",
+          "upstream_checksum": null,
+          "etag": null,
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:17+00:00",
+          "last_download": "2026-09-20T16:27:17+00:00",
+          "archive_member": "msb201071-s3.xls",
+          "query_parameters": null
+        }
+      ],
+      "last_successful_check": "2026-09-20T16:27:17+00:00",
+      "last_successful_download": "2026-09-20T16:27:17+00:00",
+      "changed_files": [],
+      "removed_files": [],
+      "repaired_files": [],
+      "downloaded_files": [
+        "kirouac/msb201071-s2.xls",
+        "kirouac/msb201071-s3.xls"
+      ]
+    },
+    "cellchat": {
+      "name": "CellChat",
+      "provider": "https://github.com/jinworks/CellChat",
+      "citation_url": "https://doi.org/10.1038/s41467-021-21246-9",
+      "terms_url": "https://github.com/jinworks/CellChat",
+      "coverage": "human, mouse",
+      "notes": "Current official data commit (software release tags lag database updates). Species-specific R objects include interactions, complexes, cofactors and gene information; mixed evidence, native/orthology split not established.",
+      "aliases": [],
+      "redistribution": "Review provider and upstream data terms before public redistribution; software license is not a blanket data license.",
+      "latest_attempt": "2026-09-20T16:27:17+00:00",
+      "status": "unchanged",
+      "error": null,
+      "content_change": "unchanged",
+      "attempted_selection": {
+        "repository": "jinworks/CellChat",
+        "release": null,
+        "commit": "75253cd0c9e68410e6e721a6d3a0419a1d7e358f",
+        "selection_policy": "current official repository commit"
+      },
+      "selection": {
+        "repository": "jinworks/CellChat",
+        "release": null,
+        "commit": "75253cd0c9e68410e6e721a6d3a0419a1d7e358f",
+        "selection_policy": "current official repository commit"
+      },
+      "files": [
+        {
+          "path": "cellchat/CellChatDB.human.rda",
+          "download_url": "https://raw.githubusercontent.com/jinworks/CellChat/75253cd0c9e68410e6e721a6d3a0419a1d7e358f/data/CellChatDB.human.rda",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 1519587,
+          "sha256": "582e99db2bb1b1e05c0364553893d804952bd007fef870720a9cc659a7bd3ad8",
+          "upstream_checksum": "git-blob:d2a6800047279072f6816e109c076703a062e568",
+          "etag": "\"66182195b70300eb342f105a30056bb66a1de72852bb98b6d4d809fd57f6c116\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:18+00:00",
+          "last_download": "2026-09-20T16:21:39+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "cellchat/CellChatDB.mouse.rda",
+          "download_url": "https://raw.githubusercontent.com/jinworks/CellChat/75253cd0c9e68410e6e721a6d3a0419a1d7e358f/data/CellChatDB.mouse.rda",
+          "species": "mouse",
+          "provenance": "unknown",
+          "size": 1279646,
+          "sha256": "dd59b19646e546b3ed41f394ad2cf64cf44f3d3fcfbb58ac176f0fe1322f9413",
+          "upstream_checksum": "git-blob:802382b1b4e022361f5492b7c8723bb5ed6f335d",
+          "etag": "\"57ac69e55bcb841d172fc74e90ebf6660253e96e479c9f50cab1b89e4e3f9639\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:18+00:00",
+          "last_download": "2026-09-20T16:21:39+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        }
+      ],
+      "last_successful_check": "2026-09-20T16:27:18+00:00",
+      "last_successful_download": "2026-09-20T16:21:39+00:00",
+      "changed_files": [],
+      "removed_files": [],
+      "repaired_files": [],
+      "downloaded_files": []
+    },
+    "connectomedb": {
+      "name": "ConnectomeDB",
+      "provider": "https://connectomedb.org/downloads.html",
+      "citation_url": "https://doi.org/10.1093/nar/gkaf1108",
+      "terms_url": "https://connectomedb.org/docs/policy.html",
+      "coverage": "human, mouse",
+      "notes": "Official Current-Release human and orthology-mapped mouse files. Download catalog and web browser dates may differ; select bulk catalog.",
+      "aliases": [],
+      "redistribution": "Terms page specifies CC-BY-NC 4.0 for data and a separate commercial license; download page says MIT, while policy assigns MIT to software. Treat this conflict as unresolved before public redistribution.",
+      "latest_attempt": "2026-09-20T16:27:18+00:00",
+      "status": "unchanged",
+      "error": null,
+      "content_change": "unchanged",
+      "attempted_selection": {
+        "version": "Current-Release",
+        "catalog_dates": [
+          "2025-09-25"
+        ],
+        "discovery_url": "https://connectomedb.org/downloads/Current-Release/CSV/index.html"
+      },
+      "selection": {
+        "version": "Current-Release",
+        "catalog_dates": [
+          "2025-09-25"
+        ],
+        "discovery_url": "https://connectomedb.org/downloads/Current-Release/CSV/index.html"
+      },
+      "files": [
+        {
+          "path": "connectomedb/ConnectomeDB2025_human.csv",
+          "download_url": "https://connectomedb.org/downloads/Current-Release/CSV/ConnectomeDB2025_human.csv",
+          "species": "human",
+          "provenance": "native",
+          "size": 1436980,
+          "sha256": "da5a713b615a3d4df26d3d95082d09b92e27f153fc1b8fb35c5d5297a4b004f3",
+          "upstream_checksum": null,
+          "etag": "\"15ed34-64d2005437168\"",
+          "last_modified": "Mon, 16 Mar 2026 08:29:42 GMT",
+          "last_successful_check": "2026-09-20T16:27:20+00:00",
+          "last_download": "2026-09-20T16:16:55+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "connectomedb/ConnectomeDB2025_mouse.csv",
+          "download_url": "https://connectomedb.org/downloads/Current-Release/CSV/ConnectomeDB2025_mouse.csv",
+          "species": "mouse",
+          "provenance": "orthology-derived",
+          "size": 1428106,
+          "sha256": "79b04cc1ec8a48860ce3936de3d8641dbc578db4aa0b81c4ba6b52bb5323baf4",
+          "upstream_checksum": null,
+          "etag": "\"15ca8a-64d2005439878\"",
+          "last_modified": "Mon, 16 Mar 2026 08:29:42 GMT",
+          "last_successful_check": "2026-09-20T16:27:21+00:00",
+          "last_download": "2026-09-20T16:16:57+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        }
+      ],
+      "last_successful_check": "2026-09-20T16:27:21+00:00",
+      "last_successful_download": "2026-09-20T16:16:57+00:00",
+      "changed_files": [],
+      "removed_files": [],
+      "repaired_files": [],
+      "downloaded_files": []
+    },
+    "italk": {
+      "name": "iTALK",
+      "provider": "https://github.com/Coolgenome/iTALK",
+      "citation_url": "https://doi.org/10.1101/507871",
+      "terms_url": "https://github.com/Coolgenome/iTALK",
+      "coverage": "human-only",
+      "notes": "",
+      "aliases": [],
+      "redistribution": "Review provider and upstream data terms before public redistribution; software license is not a blanket data license.",
+      "latest_attempt": "2026-09-20T16:27:21+00:00",
+      "status": "unchanged",
+      "error": null,
+      "content_change": "unchanged",
+      "attempted_selection": {
+        "repository": "Coolgenome/iTALK",
+        "release": null,
+        "commit": "6d9b3907f00004fcac9514d2726ad68d524a952b",
+        "selection_policy": "current official repository commit"
+      },
+      "selection": {
+        "repository": "Coolgenome/iTALK",
+        "release": null,
+        "commit": "6d9b3907f00004fcac9514d2726ad68d524a952b",
+        "selection_policy": "current official repository commit"
+      },
+      "files": [
+        {
+          "path": "italk/LR_database.rda",
+          "download_url": "https://raw.githubusercontent.com/Coolgenome/iTALK/6d9b3907f00004fcac9514d2726ad68d524a952b/data/LR_database.rda",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 43207,
+          "sha256": "ab41438722409d37fd697a48fcf75c9e5711df756f77f1c36eadd81087b86a1e",
+          "upstream_checksum": "git-blob:696b73401b99b274cad07074f0f4c5a71e5cded1",
+          "etag": "\"c4f9c696c76887ddb76c2c8639a46232e80bd9a29d6ac0521a841578cd024e29\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:22+00:00",
+          "last_download": "2026-09-20T16:16:58+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        }
+      ],
+      "last_successful_check": "2026-09-20T16:27:22+00:00",
+      "last_successful_download": "2026-09-20T16:16:58+00:00",
+      "changed_files": [],
+      "removed_files": [],
+      "repaired_files": [],
+      "downloaded_files": []
+    },
+    "lrdb": {
+      "name": "LRdb",
+      "provider": "https://github.com/jcolinge/BulkSignalR",
+      "citation_url": "https://doi.org/10.1093/nar/gkaa183",
+      "terms_url": "https://github.com/jcolinge/BulkSignalR",
+      "coverage": "human-only",
+      "notes": "Current author distribution discovered from BulkSignalR R/zzz.R; not the frozen SCA-IRCM December 2019 snapshot.",
+      "aliases": [],
+      "redistribution": "Review provider and upstream data terms before public redistribution; software license is not a blanket data license.",
+      "latest_attempt": "2026-09-20T16:27:22+00:00",
+      "status": "manually-imported",
+      "error": null,
+      "content_change": "changed",
+      "attempted_selection": {
+        "repository": "jcolinge/BulkSignalR",
+        "release": null,
+        "commit": "0ea102d40e06765cd3c07e4b6389117f1737a01e",
+        "selection_policy": "current official repository commit",
+        "data_version": "unversioned author endpoint; compare SHA-256"
+      },
+      "files": [
+        {
+          "path": "lrdb/LRdb.txt",
+          "download_url": "https://partage-dev.montp.inserm.fr:9192/CBSB/SignalR/resources/LRdb.txt",
+          "species": "human",
+          "provenance": "author-distributed human LRdb; user-supplied browser download",
+          "size": 241045,
+          "sha256": "5174f35ad3851bcf66bc0f5d581ca4c9e10f6988429d6aeb37b1b06deec526a6",
+          "upstream_checksum": null,
+          "etag": null,
+          "last_modified": null,
+          "last_successful_check": null,
+          "last_download": null,
+          "imported_at": "2026-09-20T17:18:34+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        }
+      ],
+      "last_successful_check": null,
+      "last_successful_download": null,
+      "automated_access_status": {
+        "status": "unavailable",
+        "error": "URLError fetching https://partage-dev.montp.inserm.fr:9192/CBSB/SignalR/resources/LRdb.txt: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)",
+        "latest_attempt": "2026-09-20T16:27:22+00:00"
+      },
+      "changed_files": [
+        "lrdb/LRdb.txt"
+      ],
+      "manual_import": {
+        "imported_at": "2026-09-20T17:18:34+00:00",
+        "method": "User saved linked author file in browser; copied without modification",
+        "original_filename": "LRdb.txt",
+        "reported_download_url": "https://partage-dev.montp.inserm.fr:9192/CBSB/SignalR/resources/LRdb.txt",
+        "validation": "UTF-8 TSV; four expected columns; 3639 nonempty rows; 3639 unique ligand-receptor pairs; no missing descriptions",
+        "upstream_version": "unknown; unversioned endpoint",
+        "automated_refresh": "TLS verification remains unresolved; no remote freshness check performed"
+      }
+    },
+    "ramilowski": {
+      "name": "Ramilowski",
+      "provider": "https://fantom.gsc.riken.jp/5/suppl/Ramilowski_et_al_2015/",
+      "citation_url": "https://doi.org/10.1038/ncomms8866",
+      "terms_url": "https://fantom.gsc.riken.jp/5/suppl/Ramilowski_et_al_2015/",
+      "coverage": "human-only",
+      "notes": "Static April 2015 publication data; retain putative and literature-supported rows.",
+      "aliases": [],
+      "redistribution": "Review provider and upstream data terms before public redistribution; software license is not a blanket data license.",
+      "latest_attempt": "2026-09-20T16:27:27+00:00",
+      "status": "unchanged",
+      "error": null,
+      "content_change": "unchanged",
+      "attempted_selection": {
+        "version": "April 2015 (static publication)"
+      },
+      "selection": {
+        "version": "April 2015 (static publication)"
+      },
+      "files": [
+        {
+          "path": "ramilowski/PairsLigRec.txt",
+          "download_url": "https://fantom.gsc.riken.jp/5/suppl/Ramilowski_et_al_2015/data/PairsLigRec.txt",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 381608,
+          "sha256": "813c83942d55de5f44463d7d8569a4ef72409b94501c52d1afad58e6dadd21d9",
+          "upstream_checksum": null,
+          "etag": "\"5d2a8-51b59042312c0\"",
+          "last_modified": "Tue, 21 Jul 2015 02:00:19 GMT",
+          "last_successful_check": "2026-09-20T16:27:28+00:00",
+          "last_download": "2026-09-20T16:17:05+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        }
+      ],
+      "last_successful_check": "2026-09-20T16:27:28+00:00",
+      "last_successful_download": "2026-09-20T16:17:05+00:00",
+      "changed_files": [],
+      "removed_files": [],
+      "repaired_files": [],
+      "downloaded_files": []
+    },
+    "pavlicev": {
+      "name": "Pavlicev",
+      "provider": "https://genome.cshlp.org/content/27/3/349/suppl/DC1",
+      "citation_url": "https://doi.org/10.1101/gr.207597.116",
+      "terms_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5340963/",
+      "coverage": "human-only",
+      "notes": "Original Supplemental Tables workbook from publication via Europe PMC; workbook retained whole, including supporting tables.",
+      "aliases": [],
+      "redistribution": "Review provider and upstream data terms before public redistribution; software license is not a blanket data license.",
+      "latest_attempt": "2026-09-20T16:27:28+00:00",
+      "status": "unchanged",
+      "error": null,
+      "content_change": "unchanged",
+      "attempted_selection": {
+        "version": "2017",
+        "distribution": "Europe PMC original publication supplements",
+        "discovery_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5340963/fullTextXML"
+      },
+      "selection": {
+        "version": "2017",
+        "distribution": "Europe PMC original publication supplements",
+        "discovery_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5340963/fullTextXML"
+      },
+      "files": [
+        {
+          "path": "pavlicev/supp_gr.207597.116_Supplemental_Tables.xlsx",
+          "download_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5340963/supplementaryFiles",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 4475071,
+          "sha256": "7c8ff0d456668f31459c67c4947d9c04efd46e9f2bbea0ef1fc1dbf3a3d24896",
+          "upstream_checksum": null,
+          "etag": null,
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:33+00:00",
+          "last_download": "2026-09-20T16:27:33+00:00",
+          "archive_member": "supp_gr.207597.116_Supplemental_Tables.xlsx",
+          "query_parameters": null
+        }
+      ],
+      "last_successful_check": "2026-09-20T16:27:33+00:00",
+      "last_successful_download": "2026-09-20T16:27:33+00:00",
+      "changed_files": [],
+      "removed_files": [],
+      "repaired_files": [],
+      "downloaded_files": [
+        "pavlicev/supp_gr.207597.116_Supplemental_Tables.xlsx"
+      ]
+    },
+    "nichenet": {
+      "name": "NicheNet",
+      "provider": "https://github.com/saeyslab/nichenetr",
+      "citation_url": "https://doi.org/10.1038/s41592-019-0667-5",
+      "terms_url": "https://zenodo.org/records/7074291",
+      "coverage": "human, mouse",
+      "notes": "Current documented Zenodo LR-network models only. Mouse model is provider orthology-derived; no new conversions.",
+      "aliases": [],
+      "redistribution": "Review provider and upstream data terms before public redistribution; software license is not a blanket data license.",
+      "latest_attempt": "2026-09-20T16:27:33+00:00",
+      "status": "unchanged",
+      "error": null,
+      "content_change": "unchanged",
+      "attempted_selection": {
+        "repository": "saeyslab/nichenetr",
+        "release": null,
+        "commit": "66f90d5eeafef280b2b2f339b3fd70ffec1781dd",
+        "selection_policy": "current official repository commit",
+        "zenodo_record": 7074291,
+        "version": null,
+        "doi": "10.5281/zenodo.7074291"
+      },
+      "selection": {
+        "repository": "saeyslab/nichenetr",
+        "release": null,
+        "commit": "66f90d5eeafef280b2b2f339b3fd70ffec1781dd",
+        "selection_policy": "current official repository commit",
+        "zenodo_record": 7074291,
+        "version": null,
+        "doi": "10.5281/zenodo.7074291"
+      },
+      "files": [
+        {
+          "path": "nichenet/lr_network_human_21122021.rds",
+          "download_url": "https://zenodo.org/api/records/7074291/files/lr_network_human_21122021.rds/content",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 20724,
+          "sha256": "47c971d2fbba4ecd0ba7485d1846a74054432a0d1a97ea3e6a79ae27d0da8094",
+          "upstream_checksum": "md5:2a155f81e9ffffd5d5e709fe66bcc465",
+          "etag": null,
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:35+00:00",
+          "last_download": "2026-09-20T16:17:11+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "nichenet/lr_network_mouse_21122021.rds",
+          "download_url": "https://zenodo.org/api/records/7074291/files/lr_network_mouse_21122021.rds/content",
+          "species": "mouse",
+          "provenance": "orthology-derived",
+          "size": 32993,
+          "sha256": "a6f9528e567a39a3a335560bfe5440873a0c08446a422cd92f5bc9617164061e",
+          "upstream_checksum": "md5:cf33ee8b6bf84bdf2d11cab9c8f94b9e",
+          "etag": null,
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:35+00:00",
+          "last_download": "2026-09-20T16:17:12+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        }
+      ],
+      "last_successful_check": "2026-09-20T16:27:35+00:00",
+      "last_successful_download": "2026-09-20T16:17:12+00:00",
+      "changed_files": [],
+      "removed_files": [],
+      "repaired_files": [],
+      "downloaded_files": []
+    },
+    "gtopdb": {
+      "name": "GtoPdb",
+      "provider": "https://www.guidetopharmacology.org/download.jsp",
+      "citation_url": "https://www.guidetopharmacology.org/",
+      "terms_url": "https://www.guidetopharmacology.org/webServices.jsp",
+      "coverage": "shared multispecies exports including human and mouse; unfiltered",
+      "notes": "User-supplied GtoPdb CSV exports. No species conversion. Authenticated automated acquisition remains unfinished.",
+      "aliases": [],
+      "redistribution": "Official web-services documentation specifies ODbL for the database and CC-BY-SA 4.0 for contents, with registration/API keys and commercial access fees.",
+      "latest_attempt": "2026-09-20T16:27:35+00:00",
+      "status": "manually-imported",
+      "error": null,
+      "content_change": "changed",
+      "attempted_selection": null,
+      "files": [
+        {
+          "path": "gtopdb/peptides.csv",
+          "download_url": null,
+          "source_page": "https://www.guidetopharmacology.org/download.jsp",
+          "species": "multispecies including human and mouse",
+          "provenance": "provider bulk export; original species fields preserved; no conversion",
+          "size": 1670688,
+          "sha256": "c99a07f579ca3ce5f1ac872eb114aa71d9e81362e4327cf8400056932860e95d",
+          "upstream_checksum": null,
+          "etag": null,
+          "last_modified": null,
+          "last_successful_check": null,
+          "last_download": null,
+          "imported_at": "2026-09-20T17:50:55+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "gtopdb/interactions.csv",
+          "download_url": null,
+          "source_page": "https://www.guidetopharmacology.org/download.jsp",
+          "species": "multispecies including human and mouse",
+          "provenance": "provider bulk export; original species fields preserved; no conversion",
+          "size": 7547713,
+          "sha256": "f574b999ee99c1ecced83876db6a35d8d1b1d607392fc13fb2025e0f1029de64",
+          "upstream_checksum": null,
+          "etag": null,
+          "last_modified": null,
+          "last_successful_check": null,
+          "last_download": null,
+          "imported_at": "2026-09-20T17:50:55+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "gtopdb/targets_and_families.csv",
+          "download_url": null,
+          "source_page": "https://www.guidetopharmacology.org/download.jsp",
+          "species": "multispecies including human and mouse",
+          "provenance": "provider bulk export; original species fields preserved; no conversion",
+          "size": 1896908,
+          "sha256": "607135bd520b5016e3cb8e2fccdfe825026b0fc8830fda33887613298d2d9b29",
+          "upstream_checksum": null,
+          "etag": null,
+          "last_modified": null,
+          "last_successful_check": null,
+          "last_download": null,
+          "imported_at": "2026-09-20T17:50:55+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        }
+      ],
+      "last_successful_check": null,
+      "last_successful_download": null,
+      "automated_access_status": {
+        "status": "authentication-required",
+        "error": "Provider requires login: https://www.guidetopharmacology.org/login.jsp",
+        "latest_attempt": "2026-09-20T16:27:35+00:00"
+      },
+      "changed_files": [
+        "gtopdb/peptides.csv",
+        "gtopdb/interactions.csv",
+        "gtopdb/targets_and_families.csv"
+      ],
+      "manual_import": {
+        "imported_at": "2026-09-20T17:50:55+00:00",
+        "method": "User-provided browser downloads; copied byte-for-byte",
+        "source_page": "https://www.guidetopharmacology.org/download.jsp",
+        "release": "2026.3",
+        "publication_date": "2026-09-16",
+        "version_evidence": "Identical release comment in all three files",
+        "validation": {
+          "peptides.csv": {
+            "rows": 2464,
+            "columns": 26
+          },
+          "interactions.csv": {
+            "rows": 24934,
+            "columns": 44
+          },
+          "targets_and_families.csv": {
+            "rows": 3390,
+            "columns": 37
+          }
+        },
+        "automated_refresh": "API access pending; no remote freshness check performed"
+      },
+      "selection": {
+        "release": "2026.3",
+        "publication_date": "2026-09-16",
+        "selection_policy": "user-supplied exports; version verified from file headers"
+      }
+    },
+    "celltalkdb": {
+      "name": "CellTalkDB",
+      "provider": "https://github.com/ZJUFanLab/CellTalkDB",
+      "citation_url": "https://doi.org/10.1093/bib/bbaa269",
+      "terms_url": "https://github.com/ZJUFanLab/CellTalkDB",
+      "coverage": "human, mouse",
+      "notes": "Provider database objects and manual annotation/gene/protein lookup assets; species-specific evidence provenance remains unknown.",
+      "aliases": [],
+      "redistribution": "Review provider and upstream data terms before public redistribution; software license is not a blanket data license.",
+      "latest_attempt": "2026-09-20T16:27:37+00:00",
+      "status": "unchanged",
+      "error": null,
+      "content_change": "unchanged",
+      "attempted_selection": {
+        "repository": "ZJUFanLab/CellTalkDB",
+        "release": "v1.0",
+        "commit": "09b4b9f414c805d6a22c022f08c27a819e39d339",
+        "selection_policy": "latest official release"
+      },
+      "selection": {
+        "repository": "ZJUFanLab/CellTalkDB",
+        "release": "v1.0",
+        "commit": "09b4b9f414c805d6a22c022f08c27a819e39d339",
+        "selection_policy": "latest official release"
+      },
+      "files": [
+        {
+          "path": "celltalkdb/human_lr_pair.rds",
+          "download_url": "https://raw.githubusercontent.com/ZJUFanLab/CellTalkDB/09b4b9f414c805d6a22c022f08c27a819e39d339/database/human_lr_pair.rds",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 82790,
+          "sha256": "e3049ee8609cd46f27aebf56c5f7790e428912081c79877a574073634320035f",
+          "upstream_checksum": "git-blob:513b53d0d9c85f4c3d6ed8b238f2fd02238db83c",
+          "etag": "\"5fef930d779ba73ef6df9fac3bf9be4c6873addbfbe210db588bf4c10812963f\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:37+00:00",
+          "last_download": "2026-09-20T16:17:15+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "celltalkdb/mouse_lr_pair.rds",
+          "download_url": "https://raw.githubusercontent.com/ZJUFanLab/CellTalkDB/09b4b9f414c805d6a22c022f08c27a819e39d339/database/mouse_lr_pair.rds",
+          "species": "mouse",
+          "provenance": "unknown",
+          "size": 59030,
+          "sha256": "0114cd350ee10a0856c59f03d7d95c5a8a544f318f223e9f0b953d45f85a0d6d",
+          "upstream_checksum": "git-blob:4702c6c7972c403944db86713190819c3a1b850a",
+          "etag": "\"7de1cdbabd00d5d7d3aaebdce51b573bb50d710731a7f60eea66a71d640864f1\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:37+00:00",
+          "last_download": "2026-09-20T16:17:15+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "celltalkdb/human_ann_manual.rds",
+          "download_url": "https://raw.githubusercontent.com/ZJUFanLab/CellTalkDB/09b4b9f414c805d6a22c022f08c27a819e39d339/data/human_ann_manual.rds",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 5364,
+          "sha256": "0b4a53ad0a6c7ce79d2b269a8c41b31b3c5ca1f8e081fe508506496a6b822d41",
+          "upstream_checksum": "git-blob:711815485717b4640f03089d8e489701b50ac90c",
+          "etag": "\"6fd453e766ec870c4950cf489ca0555a4c12ae4b076b9a66dc23c2c041667cb4\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:37+00:00",
+          "last_download": "2026-09-20T16:17:15+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "celltalkdb/human_gene2ensembl.rds",
+          "download_url": "https://raw.githubusercontent.com/ZJUFanLab/CellTalkDB/09b4b9f414c805d6a22c022f08c27a819e39d339/data/human_gene2ensembl.rds",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 418424,
+          "sha256": "9c7cbde595a5fd8ecde22eb172937ba10062f126223dea3432807658d32f2a36",
+          "upstream_checksum": "git-blob:113bf908cd5bba76736cdeef876fabe6da4f80eb",
+          "etag": "\"a244b9537d9daf2b55e2993d6da8b0fc8aac803a70ae8302454241b5e6d139bf\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:37+00:00",
+          "last_download": "2026-09-20T16:17:15+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "celltalkdb/human_gene_info.rds",
+          "download_url": "https://raw.githubusercontent.com/ZJUFanLab/CellTalkDB/09b4b9f414c805d6a22c022f08c27a819e39d339/data/human_gene_info.rds",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 1296817,
+          "sha256": "61df6f4e7547ef5241c45681d3b2c4325b9a68b7436930f0b8bf88bab1cda293",
+          "upstream_checksum": "git-blob:628be76fae402a9043bc204a7fe39a93d78e9ae6",
+          "etag": "\"adbba19d3a5136027218b10089b499c1238577030a3f4d54374e84cd715f0630\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:37+00:00",
+          "last_download": "2026-09-20T16:17:16+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "celltalkdb/human_uniprot.rds",
+          "download_url": "https://raw.githubusercontent.com/ZJUFanLab/CellTalkDB/09b4b9f414c805d6a22c022f08c27a819e39d339/data/human_uniprot.rds",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 554785,
+          "sha256": "7e8a56619a20e27a9fd5f935364f8d6ee3f0492840dca21733314b40021bd97b",
+          "upstream_checksum": "git-blob:047c5057b5331d5c5c0e047de65ddf505afadd44",
+          "etag": "\"109cc8c624c4e0dd8cd3a3c838bbb3d42f1009a8d5afc2ab257fb70686ab836f\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:37+00:00",
+          "last_download": "2026-09-20T16:17:16+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "celltalkdb/mouse_ann_manual.rds",
+          "download_url": "https://raw.githubusercontent.com/ZJUFanLab/CellTalkDB/09b4b9f414c805d6a22c022f08c27a819e39d339/data/mouse_ann_manual.rds",
+          "species": "mouse",
+          "provenance": "unknown",
+          "size": 5061,
+          "sha256": "df52a943b4119cd9ba21e46d9178c18b3eac0822cf9b667b3523fd0ede24bf3b",
+          "upstream_checksum": "git-blob:ce4f762d230256888514fcd1a65e2d3f280ce219",
+          "etag": "\"d469c52175edc04b4ef6d92c5959b63831ba5f96ad9aec14472155481343153c\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:37+00:00",
+          "last_download": "2026-09-20T16:17:16+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "celltalkdb/mouse_gene2ensembl.rds",
+          "download_url": "https://raw.githubusercontent.com/ZJUFanLab/CellTalkDB/09b4b9f414c805d6a22c022f08c27a819e39d339/data/mouse_gene2ensembl.rds",
+          "species": "mouse",
+          "provenance": "unknown",
+          "size": 335802,
+          "sha256": "2f71ca545023a1dcbc1df90ae4d65bf6369deae8a57d354676dc3f8c40c5d567",
+          "upstream_checksum": "git-blob:11684742229a0d266215a5e3930cfd59bc01e31f",
+          "etag": "\"cb8f7791d9c8f239290a7c8a92e5453e955655efc9f55a31f0ef226b40db9793\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:37+00:00",
+          "last_download": "2026-09-20T16:17:17+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "celltalkdb/mouse_gene_info.rds",
+          "download_url": "https://raw.githubusercontent.com/ZJUFanLab/CellTalkDB/09b4b9f414c805d6a22c022f08c27a819e39d339/data/mouse_gene_info.rds",
+          "species": "mouse",
+          "provenance": "unknown",
+          "size": 1512496,
+          "sha256": "43832871ae4ca16203a2bf982cb9ed3ea0a27a69f0e2578144ed08a04de4183c",
+          "upstream_checksum": "git-blob:edda63ef9dfa63aee1771ddcb5ddd149515347c0",
+          "etag": "\"5c7b3691b3846001e6cfa8a6e9d2f714d05390b6c10dc41a6790166df631c4cf\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:38+00:00",
+          "last_download": "2026-09-20T16:17:17+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        },
+        {
+          "path": "celltalkdb/mouse_uniprot.rds",
+          "download_url": "https://raw.githubusercontent.com/ZJUFanLab/CellTalkDB/09b4b9f414c805d6a22c022f08c27a819e39d339/data/mouse_uniprot.rds",
+          "species": "mouse",
+          "provenance": "unknown",
+          "size": 437617,
+          "sha256": "6ea7a3c19bde191124b74d5203d41b673c5c339006e039b5594b9a9a692d381a",
+          "upstream_checksum": "git-blob:f0fc62cee1cd1b815c3c6a98a864e33f44a907af",
+          "etag": "\"eae1a53e87b1181f614b54d94a9041021a846cfcb5b768d407589ab5d0e8ae88\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:38+00:00",
+          "last_download": "2026-09-20T16:17:18+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        }
+      ],
+      "last_successful_check": "2026-09-20T16:27:38+00:00",
+      "last_successful_download": "2026-09-20T16:17:18+00:00",
+      "changed_files": [],
+      "removed_files": [],
+      "repaired_files": [],
+      "downloaded_files": []
+    },
+    "icellnet": {
+      "name": "ICELLNET",
+      "provider": "https://github.com/soumelis-lab/ICELLNET",
+      "citation_url": "https://doi.org/10.1038/s41467-021-21244-x",
+      "terms_url": "https://github.com/soumelis-lab/ICELLNET",
+      "coverage": "human-only",
+      "notes": "Current official data commit as linked by Vignette.md (software release tags lag database updates). Human source table includes subunits, families and references; no mouse conversion.",
+      "aliases": [],
+      "redistribution": "Review provider and upstream data terms before public redistribution; software license is not a blanket data license.",
+      "latest_attempt": "2026-09-20T16:27:38+00:00",
+      "status": "unchanged",
+      "error": null,
+      "content_change": "unchanged",
+      "attempted_selection": {
+        "repository": "soumelis-lab/ICELLNET",
+        "release": null,
+        "commit": "ee1c19169d722f4e7284fd6f3d4f52507941d00a",
+        "selection_policy": "current official repository commit"
+      },
+      "selection": {
+        "repository": "soumelis-lab/ICELLNET",
+        "release": null,
+        "commit": "ee1c19169d722f4e7284fd6f3d4f52507941d00a",
+        "selection_policy": "current official repository commit"
+      },
+      "files": [
+        {
+          "path": "icellnet/ICELLNETdb.tsv",
+          "download_url": "https://raw.githubusercontent.com/soumelis-lab/ICELLNET/ee1c19169d722f4e7284fd6f3d4f52507941d00a/data/ICELLNETdb.tsv",
+          "species": "human",
+          "provenance": "unknown",
+          "size": 92954,
+          "sha256": "3f180adba09f62ecd1df2fbbfde73025b551f06c8229839062da848844c16966",
+          "upstream_checksum": "git-blob:ca07b7003238e01a030d04882da37cbb59fa290c",
+          "etag": "\"09c84b1147fe2a4c973b3af8747fe118d4c041d3402f1d41850ee6522d1bc679\"",
+          "last_modified": null,
+          "last_successful_check": "2026-09-20T16:27:38+00:00",
+          "last_download": "2026-09-20T16:21:40+00:00",
+          "archive_member": null,
+          "query_parameters": null
+        }
+      ],
+      "last_successful_check": "2026-09-20T16:27:38+00:00",
+      "last_successful_download": "2026-09-20T16:21:40+00:00",
+      "changed_files": [],
+      "removed_files": [],
+      "repaired_files": [],
+      "downloaded_files": []
+    }
+  },
+  "last_run": {
+    "started": "2026-09-20T16:27:03+00:00",
+    "sources": {
+      "cellcall": {
+        "status": "unchanged",
+        "content_change": "unchanged"
+      },
+      "cellinker": {
+        "status": "unchanged",
+        "content_change": "unchanged"
+      },
+      "omnipathppis": {
+        "status": "unchanged",
+        "content_change": "unchanged"
+      },
+      "dimitrov": {
+        "status": "unchanged",
+        "content_change": "unchanged"
+      },
+      "cellphonedb": {
+        "status": "unchanged",
+        "content_change": "unchanged"
+      },
+      "kirouac": {
+        "status": "unchanged",
+        "content_change": "unchanged"
+      },
+      "cellchat": {
+        "status": "unchanged",
+        "content_change": "unchanged"
+      },
+      "connectomedb": {
+        "status": "unchanged",
+        "content_change": "unchanged"
+      },
+      "italk": {
+        "status": "unchanged",
+        "content_change": "unchanged"
+      },
+      "lrdb": {
+        "status": "unavailable",
+        "content_change": "not_checked"
+      },
+      "ramilowski": {
+        "status": "unchanged",
+        "content_change": "unchanged"
+      },
+      "pavlicev": {
+        "status": "unchanged",
+        "content_change": "unchanged"
+      },
+      "nichenet": {
+        "status": "unchanged",
+        "content_change": "unchanged"
+      },
+      "gtopdb": {
+        "status": "authentication-required",
+        "content_change": "not_checked"
+      },
+      "celltalkdb": {
+        "status": "unchanged",
+        "content_change": "unchanged"
+      },
+      "icellnet": {
+        "status": "unchanged",
+        "content_change": "unchanged"
+      }
+    },
+    "finished": "2026-09-20T16:27:38+00:00"
+  }
+}

@@ -1,0 +1,774 @@
+{
+  "status": "success",
+  "schema_version": "1.0.0",
+  "policy_sha256": "e6fb2bc14717102d07bf2dd0aeb7a9f6a8df6485926fc9255bc3a7edb44d6151",
+  "inputs": [
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\manifest.json",
+      "sha256": "26191c4505a239840cdfd57a103fb2b93145e058e73a03de0de32c84d4ddde61"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\docs\\Accepted database policies.md",
+      "sha256": "e6fb2bc14717102d07bf2dd0aeb7a9f6a8df6485926fc9255bc3a7edb44d6151"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\versions.txt",
+      "sha256": "a795a7815859872bab389137f8475de3e38c406dfa8b93dd30d502499b3e5694"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\cellcall\\new_ligand_receptor_TFs.txt",
+      "sha256": "badcf63f9334b6129faaf0aee1cde0a9bdb3ffaf3ce74a9f3303bb3d5bb371c6"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\cellcall\\new_ligand_receptor_TFs_extended.txt",
+      "sha256": "0398f238a5fc28b034d6cc406bc9be17c48392c82d138016b19b60afd7a34073"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\cellcall\\new_ligand_receptor_TFs_homology.txt",
+      "sha256": "b8440c693602ade4c879cf8c33573c977a3de359748f8250bb4e56278f74e8b9"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\cellcall\\new_ligand_receptor_TFs_homology_extended.txt",
+      "sha256": "3e03a52cc873b5660c1ef3c83c82444b220b58f2778418217298ffa5391e0f6a"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\cellcall\\KEGG_SYMBOL_ID.txt",
+      "sha256": "eab00e2ad4246ce8b6789b6af10b2f1a6bbbd18b8b39cd90886414c5498b5fa4"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\cellcall\\records.parquet",
+      "sha256": "2e45bbdc5f2d34e164214062c071687032bfc3f95a01b1ea2e8c535813ee5c1b"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\cellcall\\evidence.parquet",
+      "sha256": "ef8bec9b1482ad616b78d4e75904f6deda6c44f9b574f0de55e4c9b60cd25af0"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\cellcall\\memberships.parquet",
+      "sha256": "5003580a0795957ba982bc9d2e98f26bf13f5663b508adcb3fe266555648307d"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\cellcall\\regulators.parquet",
+      "sha256": "ee2e2c6f7c651f815d4d2a4bb50820318ad10f951d51a20e41cebebbe433c7e1"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\cellcall\\review_examples.tsv",
+      "sha256": "c1a97fc3fd7ebf13698bf3c37fc0f570fdc014e5714dddaee8caf953964a2cae"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\cellinker\\Homo sapiens.txt",
+      "sha256": "c41d8fe7677feab96ba444fd96e4e005700ebbd51031bb38b71c32e1786974d4"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\cellinker\\Mus musculus.txt",
+      "sha256": "5dbd6e670155f8bf11e9c53e027dae2b4883c53623db70996f64584b41a4e175"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\cellinker\\human-complex.csv",
+      "sha256": "b71f7a02efd316491f281ab5a0da35631bbec3f68a3ff9bd7035abe3c83742d9"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\cellinker\\mouse-complex.csv",
+      "sha256": "0d98dfc9a1c042d4965c17b1a977b4a31ed5e6b20933fb9ecf4ddc31a0833f80"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\cellinker\\records.parquet",
+      "sha256": "704be0ff34ffc181907e693d3f12fea24da3f4ee86c59a4b7e591dc986c42fed"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\cellinker\\evidence.parquet",
+      "sha256": "f93d5ab83e360723c759b32da843ffaecee5fdc2dff834485e023a0dc9dd7bc1"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\cellinker\\memberships.parquet",
+      "sha256": "32572ce648067b7cc069bff7791c35880d44fcc83830fceac2fe1e7a3c422bbb"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\cellinker\\regulators.parquet",
+      "sha256": "ee2e2c6f7c651f815d4d2a4bb50820318ad10f951d51a20e41cebebbe433c7e1"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\cellinker\\review_examples.tsv",
+      "sha256": "248fc84ece406cab40507e2173f4d7e572e8932e1b8da1e1353f34c86c91b1b2"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\omnipathppis\\human\\interactions.tsv",
+      "sha256": "a4a151cfb1abf941c29d7c8c68b1ce53173ba62e96c24026423b3fe5602f88f7"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\omnipathppis\\mouse\\interactions.tsv",
+      "sha256": "6970c4914cbd6ef14aa1414c9ea103e2e23fd0f2f319e6127184a031ad50ca09"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\omnipathppis\\intercell.tsv",
+      "sha256": "ca956efd35fe5524a970ca5536679c2e663876e9fe7fa5acdf14ebe17249af89"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\omnipathppis\\complexes.tsv",
+      "sha256": "2a8f533e9228e8c01d3548ee4709f9f6461b820331c05f24c1f9e1f2409f4d7b"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\omnipathppis\\records.parquet",
+      "sha256": "2d8e3bb052608398c6b75703a40b129162cc11fa5a3f5d134d71f436b426cab4"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\omnipathppis\\evidence.parquet",
+      "sha256": "1f6c4afb2f94756dbd8f5641bfc715b3c1d934bcb2335e97c3fd95cf70d64216"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\omnipathppis\\memberships.parquet",
+      "sha256": "2a7c8b4d6c0ad78c00e0fc71a6b46d8e790a05e403777d8b10a5a06a9a060275"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\omnipathppis\\regulators.parquet",
+      "sha256": "ee2e2c6f7c651f815d4d2a4bb50820318ad10f951d51a20e41cebebbe433c7e1"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\omnipathppis\\review_examples.tsv",
+      "sha256": "347c6c6492746c54979f5f006e1a335b7d4f216e76447c10c0133c375a1b810c"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\dimitrov\\omni_resource.csv",
+      "sha256": "65e46a428818c0600de66c1574c94ff2f5dc80859998321c03a956d330dd67fb"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\dimitrov\\records.parquet",
+      "sha256": "67fe9106d66f119eeebff2b75e396e54802c0b4cd1985c70714beebdaca67abc"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\dimitrov\\evidence.parquet",
+      "sha256": "21213020a80120ef6cafa5a258a955068a46de466a05d6cdab1f142d1ca39d22"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\dimitrov\\memberships.parquet",
+      "sha256": "414bf191efed5af36c1f31aac8fae866f381b1294c179052a8e9ca600a127c9c"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\dimitrov\\regulators.parquet",
+      "sha256": "ee2e2c6f7c651f815d4d2a4bb50820318ad10f951d51a20e41cebebbe433c7e1"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\dimitrov\\review_examples.tsv",
+      "sha256": "00380d107512928413ccc223b671cce466a6bd2664bc5d360b191382ffa81b08"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\cellphonedb\\complex_input.csv",
+      "sha256": "c761b75f5438d5b23f9fefa5ddaac84acb127fe5dd72fe931d5c07d8a557b362"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\cellphonedb\\gene_input.csv",
+      "sha256": "538fff62a77d9077e0307337552bed087817632da015c620f17666d088066623"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\cellphonedb\\interaction_input.csv",
+      "sha256": "3cf0ceace45dcb42478f0e6a7be9a50104794eac68d731f7c82d4c13325175ab"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\cellphonedb\\protein_input.csv",
+      "sha256": "322f277963ca2fc879c97660eb1409478603a3d2d7442c6606bce79a45f14ae2"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\cellphonedb\\transcription_factor_input.csv",
+      "sha256": "f91c295cdaf46ccef376ea524a8e5c8157ebf830cc2012f31059ab831ccf1ada"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\cellphonedb\\records.parquet",
+      "sha256": "eb894d8ad9994966e1b79b10722db83ac9d967b91ef5eaf2cfcbfedc5e799ca7"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\cellphonedb\\evidence.parquet",
+      "sha256": "bf18304442e9d0b0da70739d65f95ac9e32ba552eaa267a467252492d3dc9182"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\cellphonedb\\memberships.parquet",
+      "sha256": "f9b693d0a96f8676d40aa5334b0c0736decf6656290d682fc0d0bddb79cd76b3"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\cellphonedb\\regulators.parquet",
+      "sha256": "ee2e2c6f7c651f815d4d2a4bb50820318ad10f951d51a20e41cebebbe433c7e1"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\cellphonedb\\review_examples.tsv",
+      "sha256": "1b34487918928c49f4b5d6e6931d019120974c64d8a5ff5f7d9012daa88fd598"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\kirouac\\msb201071-s2.xls",
+      "sha256": "30b2ef9e61b130c8da536c314ff5fbddd19f0592c4a1a0015a30b095beca5c24"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\kirouac\\msb201071-s3.xls",
+      "sha256": "6ea36e6b4cd895d1e79e16180fc1dfcc2bd515e3fc12e28e86ac326c34c19599"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\kirouac\\records.parquet",
+      "sha256": "3c8217148480c583f449494a5c0d17480646a1e38920131765e723d6d178daea"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\kirouac\\evidence.parquet",
+      "sha256": "49ca20291d10271941e6343883acd486863b5ed6b40bfb77a6f6535799453188"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\kirouac\\memberships.parquet",
+      "sha256": "99fca890b3dc62ebf9e3f6c421ea5ec7ff994b40c670f2e59152394ca2a8c118"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\kirouac\\regulators.parquet",
+      "sha256": "ee2e2c6f7c651f815d4d2a4bb50820318ad10f951d51a20e41cebebbe433c7e1"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\kirouac\\review_examples.tsv",
+      "sha256": "a0bb5bc309a22e2e769228e1b1e4d23b39542fd2a02201b5dbc6699d305cc06a"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\cellchat\\CellChatDB.human.rda",
+      "sha256": "582e99db2bb1b1e05c0364553893d804952bd007fef870720a9cc659a7bd3ad8"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\cellchat\\CellChatDB.mouse.rda",
+      "sha256": "dd59b19646e546b3ed41f394ad2cf64cf44f3d3fcfbb58ac176f0fe1322f9413"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\cellchat\\records.parquet",
+      "sha256": "33ca36e8beda97d6491bd342470ee340c67462919a86df1e6bc7f22fdf2c2e05"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\cellchat\\evidence.parquet",
+      "sha256": "b9c2cd2800982f10d0541ef24a15003a8da185aa04e17b1b19935202b4399d6f"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\cellchat\\memberships.parquet",
+      "sha256": "0de77f76e0bc3cb99af60d671baec39f44945723a25b410e0a7cd4d801c93eb5"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\cellchat\\regulators.parquet",
+      "sha256": "de79920511b52b638c81496bf4560378ef949aecac6a41be5f4c2b50c8780aa2"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\cellchat\\review_examples.tsv",
+      "sha256": "c2f644d3284c209fb206281cda218ad5177932d98c8441387f13d6e002cb31a1"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\connectomedb\\ConnectomeDB2025_human.csv",
+      "sha256": "da5a713b615a3d4df26d3d95082d09b92e27f153fc1b8fb35c5d5297a4b004f3"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\connectomedb\\ConnectomeDB2025_mouse.csv",
+      "sha256": "79b04cc1ec8a48860ce3936de3d8641dbc578db4aa0b81c4ba6b52bb5323baf4"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\connectomedb\\records.parquet",
+      "sha256": "c02ff1d2f4fb06cfb10d366e6bf85377aeca59946ef8e0e74634bd504fce65fb"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\connectomedb\\evidence.parquet",
+      "sha256": "02a64b8f88f3424c73ce3d97157f5c8bc576dfb4f82aadd85ef37b5c51c9e6d9"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\connectomedb\\memberships.parquet",
+      "sha256": "99fca890b3dc62ebf9e3f6c421ea5ec7ff994b40c670f2e59152394ca2a8c118"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\connectomedb\\regulators.parquet",
+      "sha256": "ee2e2c6f7c651f815d4d2a4bb50820318ad10f951d51a20e41cebebbe433c7e1"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\connectomedb\\review_examples.tsv",
+      "sha256": "ff81978bf1c5bbc04bae2dbc5a9df12ba13743a77f4c12d91f61e5e39e01a64a"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\italk\\LR_database.rda",
+      "sha256": "ab41438722409d37fd697a48fcf75c9e5711df756f77f1c36eadd81087b86a1e"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\italk\\records.parquet",
+      "sha256": "0f0c52b2f6ba1c318a2107c0ef2b0c6e642fa6b30891b9eccb29146c27c13740"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\italk\\evidence.parquet",
+      "sha256": "49ca20291d10271941e6343883acd486863b5ed6b40bfb77a6f6535799453188"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\italk\\memberships.parquet",
+      "sha256": "99fca890b3dc62ebf9e3f6c421ea5ec7ff994b40c670f2e59152394ca2a8c118"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\italk\\regulators.parquet",
+      "sha256": "ee2e2c6f7c651f815d4d2a4bb50820318ad10f951d51a20e41cebebbe433c7e1"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\italk\\review_examples.tsv",
+      "sha256": "9b05a5d44b53668b43993967a4b0220608f5c49a40d3277efe9b7dc813947def"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\lrdb\\LRdb.txt",
+      "sha256": "5174f35ad3851bcf66bc0f5d581ca4c9e10f6988429d6aeb37b1b06deec526a6"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\lrdb\\records.parquet",
+      "sha256": "e381a8bbaa295521d00454b2443d47b805bfc947b9dab1ff45bac71514782596"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\lrdb\\evidence.parquet",
+      "sha256": "49ca20291d10271941e6343883acd486863b5ed6b40bfb77a6f6535799453188"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\lrdb\\memberships.parquet",
+      "sha256": "99fca890b3dc62ebf9e3f6c421ea5ec7ff994b40c670f2e59152394ca2a8c118"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\lrdb\\regulators.parquet",
+      "sha256": "ee2e2c6f7c651f815d4d2a4bb50820318ad10f951d51a20e41cebebbe433c7e1"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\lrdb\\review_examples.tsv",
+      "sha256": "dad842e7a59e2cfa248c6be78c8a78da2727120cda379732266cfc61afecdcc0"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\ramilowski\\PairsLigRec.txt",
+      "sha256": "813c83942d55de5f44463d7d8569a4ef72409b94501c52d1afad58e6dadd21d9"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\ramilowski\\records.parquet",
+      "sha256": "e97b762f05a89d5beb562c4f672a45a4ac766dede493fe6635756f2f4e7ebb9e"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\ramilowski\\evidence.parquet",
+      "sha256": "f6017fd852c816a4480559c25e7b8ce1d1b5f86fb59c3d3d828e83072dbd3caf"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\ramilowski\\memberships.parquet",
+      "sha256": "99fca890b3dc62ebf9e3f6c421ea5ec7ff994b40c670f2e59152394ca2a8c118"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\ramilowski\\regulators.parquet",
+      "sha256": "ee2e2c6f7c651f815d4d2a4bb50820318ad10f951d51a20e41cebebbe433c7e1"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\ramilowski\\review_examples.tsv",
+      "sha256": "7f0692232dcaccb0557bdf647d343b35389547baad0d09bc568b0d32152e3f69"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\pavlicev\\supp_gr.207597.116_Supplemental_Tables.xlsx",
+      "sha256": "7c8ff0d456668f31459c67c4947d9c04efd46e9f2bbea0ef1fc1dbf3a3d24896"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\pavlicev\\records.parquet",
+      "sha256": "6dbcb62fe7d9c6f174b23f1ac6a060758662e22f1dbb4b94a82240d8bae0c939"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\pavlicev\\evidence.parquet",
+      "sha256": "49ca20291d10271941e6343883acd486863b5ed6b40bfb77a6f6535799453188"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\pavlicev\\memberships.parquet",
+      "sha256": "99fca890b3dc62ebf9e3f6c421ea5ec7ff994b40c670f2e59152394ca2a8c118"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\pavlicev\\regulators.parquet",
+      "sha256": "ee2e2c6f7c651f815d4d2a4bb50820318ad10f951d51a20e41cebebbe433c7e1"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\pavlicev\\review_examples.tsv",
+      "sha256": "370ccc3dd91d94328b926c1e2f67c7620db70d6c29e100626c82a8d616e0e82a"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\nichenet\\lr_network_human_21122021.rds",
+      "sha256": "47c971d2fbba4ecd0ba7485d1846a74054432a0d1a97ea3e6a79ae27d0da8094"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\nichenet\\lr_network_mouse_21122021.rds",
+      "sha256": "a6f9528e567a39a3a335560bfe5440873a0c08446a422cd92f5bc9617164061e"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\nichenet\\records.parquet",
+      "sha256": "ee570f7cc43f92f121c529a7a868f9547b58d40213c4f791a60632871a9559cf"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\nichenet\\evidence.parquet",
+      "sha256": "248a3fe868f6f8e6236e38dd15ba0b756d2061e144df2bfad071c03e5ebc9d19"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\nichenet\\memberships.parquet",
+      "sha256": "99fca890b3dc62ebf9e3f6c421ea5ec7ff994b40c670f2e59152394ca2a8c118"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\nichenet\\regulators.parquet",
+      "sha256": "ee2e2c6f7c651f815d4d2a4bb50820318ad10f951d51a20e41cebebbe433c7e1"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\nichenet\\review_examples.tsv",
+      "sha256": "12b890674ac2308401288606539f2de991042fe52e3ac75b7d3903d8da430d95"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\gtopdb\\peptides.csv",
+      "sha256": "c99a07f579ca3ce5f1ac872eb114aa71d9e81362e4327cf8400056932860e95d"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\gtopdb\\interactions.csv",
+      "sha256": "f574b999ee99c1ecced83876db6a35d8d1b1d607392fc13fb2025e0f1029de64"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\gtopdb\\targets_and_families.csv",
+      "sha256": "607135bd520b5016e3cb8e2fccdfe825026b0fc8830fda33887613298d2d9b29"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\gtopdb\\records.parquet",
+      "sha256": "2032f9b71025140ee2b4e9e52dcfe4f777b710dfab6d42ee488eb33eab41ee1b"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\gtopdb\\evidence.parquet",
+      "sha256": "461e70d260a5192aa54ed5d8c6056830f88ed60d9fcf79079d02b0eff1102a95"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\gtopdb\\memberships.parquet",
+      "sha256": "ec901c9834f77ac8eef5871c41d76da3a7b34980040f367b7c9587110d789f66"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\gtopdb\\regulators.parquet",
+      "sha256": "ee2e2c6f7c651f815d4d2a4bb50820318ad10f951d51a20e41cebebbe433c7e1"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\gtopdb\\review_examples.tsv",
+      "sha256": "8ebd9f5b607d6e7ff110f4acb7b22753df06bcdd4a756141e9d0df2ec13b755a"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\celltalkdb\\human_lr_pair.rds",
+      "sha256": "e3049ee8609cd46f27aebf56c5f7790e428912081c79877a574073634320035f"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\celltalkdb\\mouse_lr_pair.rds",
+      "sha256": "0114cd350ee10a0856c59f03d7d95c5a8a544f318f223e9f0b953d45f85a0d6d"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\celltalkdb\\human_ann_manual.rds",
+      "sha256": "0b4a53ad0a6c7ce79d2b269a8c41b31b3c5ca1f8e081fe508506496a6b822d41"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\celltalkdb\\human_gene2ensembl.rds",
+      "sha256": "9c7cbde595a5fd8ecde22eb172937ba10062f126223dea3432807658d32f2a36"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\celltalkdb\\human_gene_info.rds",
+      "sha256": "61df6f4e7547ef5241c45681d3b2c4325b9a68b7436930f0b8bf88bab1cda293"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\celltalkdb\\human_uniprot.rds",
+      "sha256": "7e8a56619a20e27a9fd5f935364f8d6ee3f0492840dca21733314b40021bd97b"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\celltalkdb\\mouse_ann_manual.rds",
+      "sha256": "df52a943b4119cd9ba21e46d9178c18b3eac0822cf9b667b3523fd0ede24bf3b"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\celltalkdb\\mouse_gene2ensembl.rds",
+      "sha256": "2f71ca545023a1dcbc1df90ae4d65bf6369deae8a57d354676dc3f8c40c5d567"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\celltalkdb\\mouse_gene_info.rds",
+      "sha256": "43832871ae4ca16203a2bf982cb9ed3ea0a27a69f0e2578144ed08a04de4183c"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\celltalkdb\\mouse_uniprot.rds",
+      "sha256": "6ea7a3c19bde191124b74d5203d41b673c5c339006e039b5594b9a9a692d381a"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\celltalkdb\\records.parquet",
+      "sha256": "b78b6d6eb88a9c39e143e6cbc82b4fecff86f20df626ff6a5eaf370645326d66"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\celltalkdb\\evidence.parquet",
+      "sha256": "f7d05d81c00e4173f1691cc02076128ecc26e0079b5b94409758759a8633aa27"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\celltalkdb\\memberships.parquet",
+      "sha256": "99fca890b3dc62ebf9e3f6c421ea5ec7ff994b40c670f2e59152394ca2a8c118"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\celltalkdb\\regulators.parquet",
+      "sha256": "ee2e2c6f7c651f815d4d2a4bb50820318ad10f951d51a20e41cebebbe433c7e1"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\celltalkdb\\review_examples.tsv",
+      "sha256": "684790b2ed06980df58878d529f73887d4bdb03420f85645e85826ecdb570f58"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\sources\\icellnet\\ICELLNETdb.tsv",
+      "sha256": "3f180adba09f62ecd1df2fbbfde73025b551f06c8229839062da848844c16966"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\icellnet\\records.parquet",
+      "sha256": "055188f27dd99484babbf2208626ac1d675ab2fe1ed1cec668db0c50419b3a41"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\icellnet\\evidence.parquet",
+      "sha256": "2d00199be5d1d8f0ffac304d3ec295af8138156485b76bf102fdf1788e3d2617"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\icellnet\\memberships.parquet",
+      "sha256": "68953fe45c1905cf13e2242dba2a3084df018726c685946bab78782857f3b86e"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\icellnet\\regulators.parquet",
+      "sha256": "ee2e2c6f7c651f815d4d2a4bb50820318ad10f951d51a20e41cebebbe433c7e1"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\ligand-receptor-database\\data\\interim\\icellnet\\review_examples.tsv",
+      "sha256": "1dd60c435590bcb4dea7892567a8276fec5e30d81c47338dc3166156737a4c62"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\gene-annotation-resources\\annotations\\manifest.json",
+      "sha256": "51507d5ba576b7892105176090795a01c852a0e740f3825c1256572cbb2b45b0"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\gene-annotation-resources\\annotations\\Parquet\\human.parquet",
+      "sha256": "03820f2caad0a4e409b643104e7550aa578b36a4da980abc970582cb45365b5e"
+    },
+    {
+      "path": "C:\\Users\\aweyr\\OneDrive\\Documents\\Cheng-Lab\\Tool-Development\\gene-annotation-resources\\annotations\\Parquet\\mouse.parquet",
+      "sha256": "6e1adb8add330d845ad7fb96e5a751485048bdc106ead9f9268a19b28b50320a"
+    }
+  ],
+  "annotation_version": {
+    "run_id": "20260920T002526867731Z",
+    "schema_version": "2.0.0"
+  },
+  "implementation": {
+    "build_databases.py": "2129241edf64a5bf661f197f2caaa99c665f44c06f646d6e4935568485cc2d57",
+    "database_build.py": "7b961d7571f3dc4293e103ceb14df1cd23d55f61cdd7257c4824ef26d2c4b0cd",
+    "database_identity.py": "1279073832b33232f34ae4377f28525c8b33ca156cddc67c20db9a69017d415a",
+    "database_export.py": "cd97deeea7bdce66cb3fec91764c702fff27a9ef04958084aef2c947406c16ce",
+    "export_database_workbooks.mjs": "2abfc5b5ddc4742ad055683da294135731873506f6461631ed5a0991292a20aa"
+  },
+  "dependencies": {
+    "pandas": "3.0.1",
+    "numpy": "2.3.5",
+    "pyarrow": "25.0.1",
+    "openpyxl": "3.1.5",
+    "rdata": "1.1.0"
+  },
+  "counts": {
+    "assertions": 161579,
+    "by_disposition": {
+      "companion": 3000,
+      "excluded": 22244,
+      "primary": 94388,
+      "provenance_only": 30736,
+      "review": 11211
+    },
+    "species": {
+      "human": {
+        "primary": 12091,
+        "companion": 1999
+      },
+      "mouse": {
+        "primary": 9585,
+        "companion": 998
+      }
+    },
+    "evidence_rows": 255764,
+    "regulator_rows": 18397,
+    "membership_rows": 2391,
+    "checks": "input hashes; every assertion disposition; same-species identities; unique IDs; joins; source counts; evidence and regulator retention; complete complexes"
+  },
+  "validation": {
+    "unit_tests": 53,
+    "repeat_semantic_determinism": "passed",
+    "excel_parquet": {
+      "mouse": {
+        "status": "passed",
+        "sheets": 12,
+        "cells_compared": 2146275
+      },
+      "human": {
+        "status": "passed",
+        "sheets": 12,
+        "cells_compared": 4294609
+      }
+    },
+    "previews": "skipped by request",
+    "protected_files": {
+      "count": 55,
+      "status": "unchanged"
+    }
+  },
+  "outputs": [
+    {
+      "path": "Ligand-Receptor-Human-DB.parquet",
+      "rows": 12091,
+      "sha256": "885d43ed4041a99eec7fb4dc2b03794c894d7978300360898f4bb5d879f60488",
+      "semantic_sha256": "af1a7c665624001cb992e4cebb568fb666c542965e2a357a46e564d3d4dbb4cc"
+    },
+    {
+      "path": "Human-Nonprotein-Proxy.parquet",
+      "rows": 1999,
+      "sha256": "ae89430f8eb73505aeb895c122dec888f9aa220fa841f780e50b142d617cf814",
+      "semantic_sha256": "ad016340bbbf5b49f7fdc79154b1562830bee0d203caf125c0430f3e483f76a1"
+    },
+    {
+      "path": "Human-Review.parquet",
+      "rows": 4600,
+      "sha256": "d8b863f6ef2e85d352a4e9e4360bad460d1a1538a0e9c6d76e594700ebcd6f67",
+      "semantic_sha256": "48adf340cecf3e2758316bb197db56bf0c918bfa682a375571887271a18d60af"
+    },
+    {
+      "path": "Human-Assertions.parquet",
+      "rows": 99699,
+      "sha256": "b981e241ea1959e9fba8dfbdfead74dc9abd6101140ea237d2ca40a26e8daf27",
+      "semantic_sha256": "b397ef374815dd245f77c0b9103c91410e9576cc88594af1b98a0e86ef4225e0"
+    },
+    {
+      "path": "Human-Evidence.parquet",
+      "rows": 143701,
+      "sha256": "b987ba64d99cb62434ea9f0a52d9a03b0abb4fc02713cef4c006a3938beab58a",
+      "semantic_sha256": "eb2a050a411b9019b157acbdafd3408018d370f6555fc9e0ffbf3d3418cc4e2a"
+    },
+    {
+      "path": "Human-Source-Members.parquet",
+      "rows": 2722,
+      "sha256": "a14a81e0f3d830ad65dd3897979ba269f2c681636e0ce90c902c15ef576f916f",
+      "semantic_sha256": "54b69beab6046b6d8d250c39da2e52ca08a54e61a17786df9b475abef3fb9871"
+    },
+    {
+      "path": "Human-Entities.parquet",
+      "rows": 3891,
+      "sha256": "dd0be2ed4a2d60cb00a1af9fb80978b35af5e1318ff9c7b379b040c4459853ec",
+      "semantic_sha256": "f19741fa1125c4d451f2222de0595363a4235b16b64700969acf223629f0075e"
+    },
+    {
+      "path": "Human-Complex-Members.parquet",
+      "rows": 1678,
+      "sha256": "386b4c29e1225501cb71e47d5641108bb5c39350a92f4e06ca9bd391ac594c6b",
+      "semantic_sha256": "dccf0905cb6a608415cf518fa8b9229d77f715ea1b8205b401df7d0b672771c9"
+    },
+    {
+      "path": "Human-Complex-Definitions.parquet",
+      "rows": 1629,
+      "sha256": "9689a548cac7780d26f94d0d185d0cf918eeef2b6eb082929dad21d3f5ae35f2",
+      "semantic_sha256": "44574b6f26f3828efb2884328a93de9745121201d35708425d451888265a1ccb"
+    },
+    {
+      "path": "Human-Regulators.parquet",
+      "rows": 9196,
+      "sha256": "41cc5604989a260433f67823096364abca6f29c1ab50e2cd7ad55aa155104135",
+      "semantic_sha256": "bc7ac805ba687e3962263a90cc05a0e66309eee748513a3012551a261565554a"
+    },
+    {
+      "path": "Human-Sources.parquet",
+      "rows": 16,
+      "sha256": "88d5bd2cd8de8c1d2a38b9eb579ffca62c7c69501bf951b0d123cf6e3df659fd",
+      "semantic_sha256": "df5da36e458adbbdf42cff02829c10d6c157ab2d60cfe91f8b30b7a42fda5011"
+    },
+    {
+      "path": "Human-Readme.parquet",
+      "rows": 15,
+      "sha256": "799e12948e654617d68ae4ae09cb4bb6f74e18f3c894b09b5c2ded04e9bf3bd4",
+      "semantic_sha256": "ac00701a9c6f65b90ca2943f67cf4bd0d3bbaf6e1d7c7a0b2e320503baf5529c"
+    },
+    {
+      "path": "Ligand-Receptor-Mouse-DB.parquet",
+      "rows": 9585,
+      "sha256": "3f8b71f2f5b06998c49da030b869ed0c3d9b4e5e3e0e6e9dc7d8ac8ddef9b61d",
+      "semantic_sha256": "38ed1e3900cd2eab6b816e2f635754644e27404fe8af88da4cfbdae072873923"
+    },
+    {
+      "path": "Mouse-Nonprotein-Proxy.parquet",
+      "rows": 998,
+      "sha256": "5908e78117cd943a25523cf2452a386d3f55736859fc575b1f38a454c0bd6642",
+      "semantic_sha256": "2009d10e885d87f9a311a0e8f3e0eee2aff4363e6478117b70beb0372d85233c"
+    },
+    {
+      "path": "Mouse-Review.parquet",
+      "rows": 4529,
+      "sha256": "2a01230076db7e2d27041b6d36106f49b81ceb310c577b8115ecf6b94e6ab708",
+      "semantic_sha256": "9c75ea109293e03d9fea597db99d49a33bf67c17595181c8e4136ff7eb34d9ef"
+    },
+    {
+      "path": "Mouse-Assertions.parquet",
+      "rows": 37554,
+      "sha256": "acdba9bbd36e1dbc4f799121019bac44d4c720f0e5c75ef55b10c2c9f0078079",
+      "semantic_sha256": "805ef6ae6fa70373ee0e9c084494d44e6e42497919ba6b4c548c5f504012ca14"
+    },
+    {
+      "path": "Mouse-Evidence.parquet",
+      "rows": 83408,
+      "sha256": "763149d0a613e45b1aa904203625c40b1c3bf548a20fc8c82bcd9e57efaa4def",
+      "semantic_sha256": "4612dcaf7de1fc36a37b12c544b8fecd95aaec188f5f5272a3c68e9370a7be6b"
+    },
+    {
+      "path": "Mouse-Source-Members.parquet",
+      "rows": 953,
+      "sha256": "2653ddeb66c93d99ca6e257a2bc94031c90c766cb523ad39e61b96181db537ba",
+      "semantic_sha256": "1d6394b2009725957c5d30a8e22df447267215dfe4cbcd118ff414542afe41d1"
+    },
+    {
+      "path": "Mouse-Entities.parquet",
+      "rows": 3203,
+      "sha256": "2a9575f445d5bf91593cefa8f7b0b5f99506093291ee50bbc2bd4c89117727ea",
+      "semantic_sha256": "91197f2579918d09f6dbb36c8e47545cb867cd1753b2e05fd19faf9edfe0c9c6"
+    },
+    {
+      "path": "Mouse-Complex-Members.parquet",
+      "rows": 713,
+      "sha256": "a046591d8fc95a315f1151547bd9817a723c65ac0f09fa4e964a48346514bba7",
+      "semantic_sha256": "ba72865ce4ee9f00f1eb77435aa907795ee2a0f9d0bbcd40d14e3a1fe1ca1c6a"
+    },
+    {
+      "path": "Mouse-Complex-Definitions.parquet",
+      "rows": 461,
+      "sha256": "9d2be9c1e9d2de3c90ae1e3a4181728596789c7f1ab61e350aa52973f4f89b14",
+      "semantic_sha256": "bab54aeee1764eb3e6bf07cc5dddbadd24440a7691f96ba8007691e57a1e05c9"
+    },
+    {
+      "path": "Mouse-Regulators.parquet",
+      "rows": 9201,
+      "sha256": "b5ecd72f2d7c9e210b9ee8155bd48681095f85cbb69ff0ddf844e7074807fec5",
+      "semantic_sha256": "274002fba76a0e48cef00623a0120313bc8d81d2915119f545bebd15436f8d30"
+    },
+    {
+      "path": "Mouse-Sources.parquet",
+      "rows": 16,
+      "sha256": "88d5bd2cd8de8c1d2a38b9eb579ffca62c7c69501bf951b0d123cf6e3df659fd",
+      "semantic_sha256": "df5da36e458adbbdf42cff02829c10d6c157ab2d60cfe91f8b30b7a42fda5011"
+    },
+    {
+      "path": "Mouse-Readme.parquet",
+      "rows": 15,
+      "sha256": "a08df40386f334bd5bfa6ab416f467ce508af14fb90382a45788449b637298f8",
+      "semantic_sha256": "b9225f66438e668fe81811a51231614383f0b7eb05da2573f0125b8d1837edea"
+    },
+    {
+      "path": "Shared-Review.parquet",
+      "rows": 24326,
+      "sha256": "c55ade1e1c76c0674138b8798bed3fa40c3376101b622fa25a8ecbae3f7aecd2",
+      "semantic_sha256": "838947a650840580eee026c59a61659bdf3570757e095f163c63915f169942ab"
+    },
+    {
+      "path": "Shared-Assertions.parquet",
+      "rows": 24326,
+      "sha256": "c55ade1e1c76c0674138b8798bed3fa40c3376101b622fa25a8ecbae3f7aecd2",
+      "semantic_sha256": "838947a650840580eee026c59a61659bdf3570757e095f163c63915f169942ab"
+    },
+    {
+      "path": "Shared-Evidence.parquet",
+      "rows": 28655,
+      "sha256": "4222fba47eb537eb907e7859615b1bce78e39a5e941a963c4c18d1e282150cd9",
+      "semantic_sha256": "e6295e118087dfe88f6ab1a32ab9327a7c9c03e4e67e53c646ca7100fa1f687a"
+    },
+    {
+      "path": "Shared-Source-Members.parquet",
+      "rows": 803,
+      "sha256": "baaccb4dbbd20ed278867784c2cbf953668c5ec682882956c4d4ec3672784cc4",
+      "semantic_sha256": "375dbbaca7309d54b2c6e0ff5c7358231ea7a42c4aefaea69a7198e29bac7cc8"
+    },
+    {
+      "path": "Ligand-Receptor-Mouse-DB.xlsx",
+      "sha256": "7cfe11c8203bf8dcc9d438c8adf9b34494983dfe69ff0f52bb8535b4caff7136",
+      "semantic_sha256": "b4ad3d4c203fb25fa93c5c8c85a7efbe"
+    },
+    {
+      "path": "Ligand-Receptor-Human-DB.xlsx",
+      "sha256": "24464af2aecff4930602acd297f7a2c5181197cc93dd5f6e374d011048697d07",
+      "semantic_sha256": "7c607cca1ff5c60b2e696506d6845557"
+    }
+  ]
+}

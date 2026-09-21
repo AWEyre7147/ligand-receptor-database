@@ -1,0 +1,79 @@
+# Script guide
+
+Run commands from the repository root using the environment's Python. Python 3.10+ suffices for acquisition; normalization/build require Python 3.11+ and [requirements-normalization.txt](../requirements-normalization.txt). A fresh Python 3.12 environment without system-site packages was installed and checked for this milestone; see [readiness results](Repository%20readiness.md). The existing `.venv` was preserved.
+
+## Execution order and commands
+
+These are separate workflows. Acquiring newer originals changes the reproducibility target, so do not download simply to rebuild the current release.
+
+```powershell
+python scripts/download_sources.py --help
+python scripts/download_sources.py --source cellchat
+python scripts/normalize_sources.py --report
+python scripts/validate_normalization.py --repeat
+python scripts/build_databases.py --repeat --skip-previews --annotation-dir "../gene-annotation-resources/annotations"
+python scripts/validate_database_release.py
+python scripts/generate_field_guide.py --check
+python scripts/generate_manifest_guide.py --check
+python scripts/validate_documentation.py --annotation-dir "../gene-annotation-resources/annotations"
+python -m unittest discover -s tests -v
+```
+
+The download example accesses the network; all subsequent commands use local files. CLI help is side-effect free. Normalization/build do not run source packages or an R interpreter. The commands assume authorized original datasets, recorded selections and hashes, and the exact annotation dependency are already available.
+
+## Maintained scripts and modules
+
+| Script | Entry point / options and defaults | Inputs → outputs, responsibilities and dependencies | Side effects, errors and verification |
+|---|---|---|---|
+| [download_sources.py](../scripts/download_sources.py) | CLI; repeatable `--source <id>`, default all 16 | Official provider discovery/assets → `data/sources/<id>/` and JSON `versions.txt`; standard library, Git fallback | Network access, verified TLS, up to 3 transient retries, 45-second request timeout, 150 MB payload ceiling. Source updates stage atomically; failures preserve last good bytes and update attempt metadata. Continues other sources; returns nonzero on blocked sources. Tests: test_download_sources.py |
+| [source_registry.py](../scripts/source_registry.py) | Imported; no CLI | Provider definitions, citation/terms URLs and source-specific release/commit/discovery rules → selection metadata and asset descriptors | Network only when discovery functions run. GitHub quota fallback uses `git ls-remote` with a 60-second timeout, no clone. Missing required assets, login redirects and invalid discoveries raise explicit acquisition errors. Registry import performs no download |
+| [normalization_core.py](../scripts/normalization_core.py) | Imported; no CLI | Verified files and source rows → typed records/evidence/memberships/regulators and inventory; pandas, pyarrow, rdata | Offline readers for text/CSV/Excel/nested R. xlrd reads legacy XLS; openpyxl reads XLSX. Original strings remain raw; display cleaning is separate. Stable keys, species agreement, positive-only signs and counts are centralized. Ambiguous file lookup or malformed inputs fail rather than guessing |
+| [source_normalizers.py](../scripts/source_normalizers.py) | Imported `normalize(source_id, manifest)`; no CLI | 16 source adapters → one retained assertion per original interaction row plus typed support tables | Offline; never edits originals or performs species conversion. Explicit complexes remain intact; regulators are separate; unknown identities/species are retained for review. Exact upstream-field map is in the field guide. Covered by test_normalize_sources.py |
+| [normalize_sources.py](../scripts/normalize_sources.py) | CLI; repeatable `--source`, default all; `--report` false by default | Acquisition manifest/assets → four typed Parquet tables and review_examples.tsv per source; interim manifest | Offline. Validates source bytes before and after, schema/keys/row reconciliation before promotion. Continues other requested sources on failure and returns nonzero if any fail. `--report` refreshes generated inspection report; it does not accept policies |
+| [normalization_report.py](../scripts/normalization_report.py) | Imported `write_report(manifest)`; no CLI | Normalized manifest → `docs/Source normalization and decisions.md` | Overwrites only that generated report. Counts are assertions versus source-local distinct semantics, not merged final pairs. Keep policy decisions in the accepted policy note |
+| [validate_normalization.py](../scripts/validate_normalization.py) | CLI; `--repeat` false; `--protected-baseline <JSON>` absent by default | Interim/raw manifests and outputs → `data/interim/validation.json` | Offline; all schema/keys/hashes/counts checked. Repeat runs full normalization with report, compares bytes and semantics, then runs all tests. Optional JSON maps root-relative protected paths to SHA-256; no baseline is silently created. Failure exits nonzero |
+| [database_identity.py](../scripts/database_identity.py) | Imported `Identities(annotation_root=ANNOTATIONS)`; no CLI | Pinned same-species reference and source definition lookups → canonical entities/definitions/memberships | Offline, reads only identity columns and checks reference hashes against its manifest. Exact aliases must be unique. Strict complex members cannot be unverified symbols. GtoPdb molecular peptides retain encoding-gene links; family lists need independent complete-definition evidence. `IdentityError` becomes an explicit review reason in assembly |
+| [database_build.py](../scripts/database_build.py) | Imported `make_tables(annotation_root=None)`; no CLI | Verified intermediates, policy file and identities → canonical in-memory tables | Offline. Checks implementation/input hashes, applies N01–N04, preserves all assertions/evidence/regulators, merges only eligible ordered entity pairs. `None` preserves the sibling reference default; an explicit path is passed unchanged. Validates counts, relationships and policy invariants before export |
+| [database_export.py](../scripts/database_export.py) | Imported; no CLI | Canonical tables → species/shared Parquet, complete XLSX, optional previews | pyarrow + openpyxl. Reversible list/text serialization protects IDs and prevents formulas. Full workbook write is streaming; every cell is decoded/compared. Exceeding Excel's 32,767-character cell limit fails without truncation. Preview rendering alone uses Node/artifact; it is not part of scientific identity resolution |
+| [build_databases.py](../scripts/build_databases.py) | CLI; `--repeat` false; `--protected-baseline` absent; `--annotation-dir` absent (sibling default); `--skip-previews` false; `--node` absent (bundled executable) | Verified normalized inputs + references → `data/processed` Parquet/Excel/manifest and generated `docs/Final database build.md` | Offline. Runs all tests, schema/count checks, optional canonical repeat, full Excel parity, input rechecks and optional protected hashes before promotion. Copies unrelated processed files through. `--skip-previews` skips only PNG rendering; validation still runs. Maintained field guide is never overwritten |
+| [export_database_workbooks.mjs](../scripts/export_database_workbooks.mjs) | Helper invoked by Python; one positional config JSON, no option parser | Bounded first-six-row sheet samples → PNG previews in config.previewDir | Node built-ins and `@oai/artifact-tool`; no npm install performed by build. Historical name retained, but it does **not** produce the final XLSX. Full artifact export exceeded its string limit; openpyxl writes full data. Unhandled parse/render failure exits nonzero |
+| [validate_database_release.py](../scripts/validate_database_release.py) | CLI; optional `--protected-baseline`, `--semantic-baseline`, `--report` paths; all absent by default | Current build manifest, all final and normalized support tables → success/failure only | Offline/read-only. Independently checks artifact/input/implementation hashes, final counts/foreign keys and exact multiset retention of source evidence, original members and regulators. Preserved from the useful former scratch helper; optional byte/semantic baseline comparisons and JSON check report, no generated build-report rewrite |
+| [generate_field_guide.py](../scripts/generate_field_guide.py) | CLI; `--check` false by default | Curated config/field-guide.json, two Markdown fragments, every actual final/intermediate schema → authoritative Database dictionary.md | Offline. Includes empty tables and real worked joins. Observed vocabulary snapshot must match curated metadata; new labels require review, not silent acceptance. `--check` compares without writing. Does not alter data/manifests |
+| [generate_manifest_guide.py](../scripts/generate_manifest_guide.py) | CLI; `--check` false by default | Acquisition, intermediate and build manifests → Manifest reference.md | Offline. Inventories nested operational field paths/types, collapsing variable map keys explicitly. Requires a curated explanation for each field. `--check` rejects stale coverage. No source or final data changes |
+| [validate_documentation.py](../scripts/validate_documentation.py) | CLI; `--annotation-dir` defaults to sibling annotations | Repository reference pin, Markdown links, Python AST and Script guide → validation counts | Offline/read-only. Checks exact asset hashes, local Markdown/wiki targets, public NumPy docstrings and script/test inventory coverage. External URLs are cited/reviewed separately, not fetched by this checker |
+
+All unhandled exceptions yield nonzero CLI status. Imported functions propagate file/parser errors unless their function documentation describes handled recovery. No success report means success should not be assumed; read the corresponding manifest and error log.
+
+## Locks, transactions and recovery
+
+- Acquisition uses `data/sources/.download.lock`, per-source temporary staging, `.<source>.backup` and atomic JSON replacement. Startup recovers backups only when checksums identify a complete manifest-consistent copy. Ambiguous backups are left for inspection. A blocked source can have useful previously imported files.
+- Normalization uses `data/interim/.normalize.lock`, temporary source staging and `.<source>.backup`. A failed promotion restores prior tables; failed source metadata records previous success when available. Never remove a lock while its owning process is active.
+- Final building uses `.build-work/build.lock`, `data/.processed-*` staging and `data/.processed-backup`. It refuses unresolved prior backups and restores the old processed directory on ordinary promotion failure. An abrupt process termination may leave recovery material: inspect manifest/input/output hashes before choosing a copy. Do not delete it based only on its name.
+- After verifying no process is active, a stale lock may be removed by its exact path. Backups require checksum-based review first. Do not run two acquisition, normalization or build processes against the same outputs, and do not update originals during a build.
+
+## External reference and optional runtime
+
+The default annotation root is the sibling `../gene-annotation-resources/annotations`; `--annotation-dir` provides an explicit alternative. Only `manifest.json`, `Parquet/human.parquet` and `Parquet/mouse.parquet` are required. Their exact hashes and reference run are pinned in [annotation-reference.json](../config/annotation-reference.json). The reference manifest can contain a larger upstream project's metadata; that project's other files are not read or copied. Verify the repository pin using validate_documentation.py before building. The resolver also checks the species files against the reference manifest. It does not silently enforce the repository pin for a deliberately changed reference version: update/review the pin explicitly when changing references.
+
+A clone alone cannot reconstruct these unpublished assets from a stable public retrieval command. Obtain the three files from their authorized owner with the pinned bytes and preserve the two-file Parquet layout. Reference redistribution and stable retrieval instructions remain a release prerequisite. No orthology/enrichment columns are consumed.
+
+Default previews locate a Codex runtime beneath the current user's `.cache/codex-runtimes/codex-primary-runtime/dependencies/node`. `--node` changes the executable **only**, not the expected artifact package directory. On Windows a junction links scratch node_modules to that runtime; elsewhere a symlink is used. These are local conveniences, not portable dependencies. Use `--skip-previews` for the verified Python-only build. Do not follow this junction during cleanup.
+
+[requirements-normalization.txt](../requirements-normalization.txt) pins direct packages. [requirements-validated.txt](../requirements-validated.txt) records the full tested clean Python 3.12 resolution; install it for that tested environment. Other Python/OS combinations require their own wheel/compatibility validation. Requirements do not supply original datasets, annotation inputs or Node previews.
+
+## Manual imports and access failures
+
+Follow the existing [acquisition record](Source%20acquisition.md). LRdb's author endpoint previously failed verified TLS; do not disable certificate verification. GtoPdb currently requires authorized access, and the downloader has no completed authenticated refresh adapter. Download through the legitimate provider route, preserve original files and version/retrieval metadata, validate format/size/SHA-256, and record the exact import in acquisition metadata before normalization. There is no maintained generic import CLI; future manual imports need a reviewed, source-specific metadata update, not an invented downloader flag. Existing LRdb/GtoPdb imports are usable offline because their bytes reconcile with the recorded manifest. Tokens belong in process environment/request headers, never URLs or committed files. `GITHUB_TOKEN` is optional for GitHub API limits only.
+
+## Tests and documentation maintenance
+
+| Test module | Scope and command |
+|---|---|
+| [test_download_sources.py](../tests/test_download_sources.py) | 16 acquisition format/change/recovery tests with local fixtures/mocks; `python -m unittest discover -s tests -p test_download_sources.py -v` |
+| [test_normalize_sources.py](../tests/test_normalize_sources.py) | 17 schema/species/complex/evidence/source-adapter regressions; corresponding discover pattern |
+| [test_build_databases.py](../tests/test_build_databases.py) | 17 policy, same-species identity, complex completeness/stoichiometry, peptides/proxies, provenance, sign, stale-input and reversible Excel regressions |
+| [test_documentation.py](../tests/test_documentation.py) | 3 focused portability/pin tests: explicit/default annotation location and changed reference-byte rejection |
+
+Tests do not replace full data validation. After comment/docstring changes to hashed implementation files, rerun normalization and building through their supported commands; never edit recorded hashes by hand. Compare every biological Parquet table semantically, rather than XLSX ZIP timestamps. A build runs tests and every-cell Excel parity automatically. After schema changes, review field metadata/vocabularies, regenerate the guides explicitly, and run both check modes plus validate_documentation.py.
+
+Maintained narrative: README, accepted policies, acquisition/normalization usage, Script guide and readiness report. Generated from supported commands: source inspection report, final build report, field guide (curated metadata), manifest reference. Historical handoffs remain indexed; do not erase their unique context. Scratch inspection/export scripts are not workflow entry points.

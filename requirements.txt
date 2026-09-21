@@ -1,0 +1,1 @@
+# Python 3.10+; the downloader and its tests use only the standard library.
