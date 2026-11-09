@@ -3,7 +3,7 @@
 Human and mouse ligand–receptor databases assembled from 16 providers, with separate species identities and no species conversion.
 
 | Output | Human | Mouse |
-|---|---:|---:|
+|---|:---:|:---:|
 | Primary interactions | 12,091 | 9,585 |
 | Nonprotein/proxy companion interactions | 1,999 | 998 |
 
@@ -35,11 +35,3 @@ python scripts/build_databases.py --annotation-dir "../gene-annotation-resources
 Acquisition contacts providers and may replace source downloads. Some resources require manual downloads. Rebuilding existing inputs is offline and does not require acquisition. The build requires the exact separately supplied annotation files pinned in [config/annotation-reference.json](config/annotation-reference.json). The reference files are not bundled.
 
 Routine builds perform integrity checks. `--release-verification` additionally runs the full suite, repeats assembly and compares the Excel projection exhaustively. It is a separate, more expensive operation.
-
-## Documentation
-
-- [Database dictionary](docs/Database%20dictionary.md): fields, identifiers and relationships.
-- [Accepted database policies](docs/Accepted%20database%20policies.md): scientific inclusion and interpretation.
-- [Script guide](docs/Script%20guide.md): supported commands, dependencies and verification.
-
-Source citations and acquisition metadata are retained in `data/sources/versions.txt` and the source registry. Cite contributing resources when using the data. This is a computational integration resource, not independent experimental validation.
