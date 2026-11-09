@@ -10,8 +10,8 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from database_identity import Identities, IdentityError
 import database_build as build
-from database_export import excel_value, export_xlsx, validate_excel
-from build_databases import promote, verify_hashes
+from database_export import excel_value, export_xlsx, partitions, validate_excel, write_parquet
+from build_databases import promote, verification_plan, verify_hashes
 
 
 def resolver():
@@ -75,6 +75,94 @@ def member(label, order):
 
 
 class BuildTests(unittest.TestCase):
+    def test_routine_and_release_verification_plans_are_explicit(self):
+        routine = verification_plan(False, False)
+        self.assertFalse(any(routine.values()))
+        release = verification_plan(True, False)
+        self.assertTrue(release['full_test_suite'])
+        self.assertTrue(release['repeat_assembly'])
+        self.assertTrue(release['excel_parquet_parity'])
+        self.assertFalse(release['previews'])
+        self.assertTrue(verification_plan(True, True)['previews'])
+        with self.assertRaisesRegex(ValueError, 'release-verification'):
+            verification_plan(False, True)
+
+    def test_source_annotations_preserve_missing_negative_multiple_and_record_context(self):
+        def annotation_record(source, record_key, raw, species='human', orientation='ligand_to_receptor'):
+            return {
+                'source': source, 'record_key': record_key, 'raw_json': json.dumps(raw),
+                'source_file': source + '.csv', 'source_table': '', 'source_row': record_key,
+                'source_record_id': 'provider-' + record_key, 'species_group': species,
+                'orientation': orientation,
+            }
+        def assertion(record_key, disposition='primary', interaction='I:test', orientation='ligand_to_receptor'):
+            return {
+                'record_key': record_key, 'disposition': disposition, 'interaction_id': interaction,
+                'related_interaction_id': None, 'orientation': orientation,
+            }
+
+        first = annotation_record('omnipathppis', 'one', {
+            'is_stimulation': False, 'is_inhibition': None, 'is_directed': True,
+        })
+        rows = build.extract_source_annotations(first, assertion('one'))
+        self.assertEqual({r['original_value'] for r in rows}, {'false', 'true'})
+        self.assertNotIn('is_inhibition', {r['source_field'] for r in rows})
+
+        second = annotation_record('gtopdb', 'two', {
+            'Action': 'Agonist', 'Action comment': 'record-specific', 'Selectivity': 'Selective',
+            'Endogenous': 'True', 'Ligand Type': 'Peptide', 'Type': 'Functional',
+        })
+        third = annotation_record('gtopdb', 'three', {'Action': 'Antagonist', 'Endogenous': 'False'})
+        rows += build.extract_source_annotations(second, assertion('two'))
+        rows += build.extract_source_annotations(third, assertion('three'))
+        summary = build.source_annotation_summary('I:test', rows)
+        self.assertEqual(summary['gtopdb_action'], ['Agonist', 'Antagonist'])
+        self.assertEqual(summary['gtopdb_endogenous'], ['False', 'True'])
+        action = [r for r in rows if r['record_key'] == 'two' and r['source_field'] == 'Action'][0]
+        comment = [r for r in rows if r['record_key'] == 'two' and r['source_field'] == 'Action comment'][0]
+        self.assertEqual(action['source_record_id'], comment['source_record_id'])
+
+        blocked = annotation_record('italk', 'four', {'Classification': 'growth factor'}, species='mouse')
+        blocked_rows = build.extract_source_annotations(blocked, assertion('four', 'review', None))
+        self.assertFalse(blocked_rows[0]['summary_eligible'])
+        self.assertIsNone(blocked_rows[0]['interaction_id'])
+        self.assertEqual(build.source_annotation_summary('I:test', rows + blocked_rows)['italk_classification'], [])
+
+        human_assertion = {'record_key': 'one', 'species_group': 'human', 'disposition': 'primary'}
+        mouse_assertion = {'record_key': 'four', 'species_group': 'mouse', 'disposition': 'review'}
+        tables = {name: [] for name in build.SCHEMAS}
+        tables['assertions'] = [human_assertion, mouse_assertion]
+        tables['source_annotations'] = [rows[0], blocked_rows[0]]
+        split = partitions(tables)
+        human_rows = next(s['rows'] for s in split['human'] if s['sheet'] == 'Source-Annotations')
+        mouse_rows = next(s['rows'] for s in split['mouse'] if s['sheet'] == 'Source-Annotations')
+        self.assertEqual([r['record_key'] for r in human_rows], ['one'])
+        self.assertEqual([r['record_key'] for r in mouse_rows], ['four'])
+
+        reversed_record = annotation_record('omnipathppis', 'five', {'is_stimulation': True}, orientation='reversed_to_ligand_receptor')
+        reversed_rows = build.extract_source_annotations(reversed_record, assertion('five', orientation='reversed_to_ligand_receptor'))
+        self.assertFalse(reversed_rows[0]['summary_eligible'])
+        self.assertIn('orientation safeguard', reversed_rows[0]['interpretation_note'])
+
+    def test_source_annotation_small_excel_and_parquet_roundtrip(self):
+        row = {
+            'annotation_id': 'A:test', 'record_key': 'human-record', 'interaction_id': 'I:test',
+            'related_interaction_id': None, 'disposition': 'primary', 'source': 'gtopdb',
+            'source_file': 'gtopdb/interactions.csv', 'source_table': '', 'source_row': '3',
+            'source_record_id': '42', 'species_group': 'human', 'source_field': 'Endogenous',
+            'summary_field': 'gtopdb_endogenous', 'original_value': 'False',
+            'interpretation_note': None, 'summary_eligible': True,
+        }
+        spec = [{'sheet': 'Source-Annotations', 'filename': 'Human-Source-Annotations.parquet',
+                 'rows': [row], 'schema': 'source_annotations'}]
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            path = root / 'annotations.xlsx'
+            export_xlsx(spec, path, root, 'human')
+            self.assertEqual(validate_excel(path, spec)['status'], 'passed')
+            metadata = write_parquet({'human': spec}, root)
+            self.assertEqual(metadata[0]['rows'], 1)
+
     def test_same_species_identifiers_merge_but_species_never_do(self):
         ids=resolver()
         self.assertEqual(ids.gene('human','symbol','A'),ids.gene('human','HGNC','HGNC:101'))
@@ -145,7 +233,7 @@ class BuildTests(unittest.TestCase):
         state,_,left,_=build.disposition(r,ids,{})
         self.assertEqual(state,'companion')
         self.assertEqual(ids.entities[left]['entity_type'],'nonprotein_proxy')
-        self.assertIsNone(ids.entities[left]['product_id'])
+        self.assertNotIn('product_id', ids.entities[left])
         self.assertEqual(next(iter(ids.memberships.values()))['relationship'],'biosynthetic_or_transport_proxy')
 
     def test_gtopdb_family_list_needs_independent_obligate_definition(self):

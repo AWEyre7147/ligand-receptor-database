@@ -1,11 +1,11 @@
-"""Validate exported hashes, joins and exact source-support retention, offline."""
+"""Validate exported hashes, joins and exact source-support/annotation retention."""
 from collections import Counter
 import argparse
 import hashlib
 import json
 from pathlib import Path
 import pyarrow.parquet as pq
-from database_build import ROOT, INTERIM, SOURCE_IDS, file_hash, validate_tables, js
+from database_build import ROOT, INTERIM, SOURCE_IDS, extract_source_annotations, file_hash, validate_tables, js
 
 # =============================================================================
 # Independent post-export verification
@@ -49,9 +49,9 @@ def main() -> None:
     for f in m['inputs']:
         assert file_hash(Path(f['path']))==f['sha256'], f['path']
     tables={}
-    names={'assertions':'Assertions','evidence':'Evidence','source_members':'Source-Members','entities':'Entities','definitions':'Complex-Definitions','memberships':'Complex-Members','regulators':'Regulators'}
+    names={'assertions':'Assertions','evidence':'Evidence','source_members':'Source-Members','source_annotations':'Source-Annotations','entities':'Entities','definitions':'Complex-Definitions','memberships':'Complex-Members','regulators':'Regulators'}
     for k,suffix in names.items():
-        prefixes=['Human','Mouse','Shared'] if k in ('assertions','evidence','source_members') else ['Human','Mouse']
+        prefixes=['Human','Mouse','Shared'] if k in ('assertions','evidence','source_members','source_annotations') else ['Human','Mouse']
         tables[k]=[r for prefix in prefixes for r in pq.read_table(d/(prefix+'-'+suffix+'.parquet')).to_pylist()]
     tables['interactions']=[r for prefix in ['Human','Mouse'] for filename in ['Ligand-Receptor-'+prefix+'-DB.parquet',prefix+'-Nonprotein-Proxy.parquet'] for r in pq.read_table(d/filename).to_pylist()]
     tables['sources']=pq.read_table(d/'Human-Sources.parquet').to_pylist()
@@ -72,11 +72,25 @@ def main() -> None:
             original=pq.read_table(INTERIM/source/(name+'.parquet'))
             rows=[r for r in tables[finalname] if r.get('source')==source] if name!='regulators' else [r for r in tables[finalname] if r['source_file'].startswith(source+'/')]
             assert Counter(js({k:r[k] for k in original.column_names}) for r in rows)==Counter(js(r) for r in original.to_pylist()), (source,name)
+    assertions = {row['record_key']: row for row in tables['assertions']}
+    expected_annotations = []
+    for source in SOURCE_IDS:
+        for record in pq.read_table(INTERIM/source/'records.parquet').to_pylist():
+            expected_annotations.extend(extract_source_annotations(record, assertions[record['record_key']]))
+    # Reconstruct display numbers from the original normalized keys, rather than
+    # accepting exported annotation/record IDs as evidence of their correctness.
+    record_ids = {key: f'AST-{n:06d}' for n, key in enumerate(sorted(assertions), 1)}
+    annotation_ids = {key: f'ANN-{n:06d}' for n, key in enumerate(
+        sorted(row['annotation_id'] for row in expected_annotations), 1)}
+    for row in expected_annotations:
+        row['annotation_id'] = annotation_ids[row['annotation_id']]
+        row['record_id'] = record_ids[row['record_key']]
+    assert Counter(js(row) for row in tables['source_annotations']) == Counter(js(row) for row in expected_annotations)
     verification['counts'] = m['counts']
     verification['build_validation'] = m['validation']
     if args.report:
         args.report.write_text(json.dumps(verification, indent=2) + '\n', encoding='utf-8')
-    print('Release hashes, counts, joins and exact source evidence/member/regulator retention passed.')
+    print('Release hashes, counts, joins and exact source evidence/member/regulator/annotation retention passed.')
 
 
 if __name__ == '__main__':

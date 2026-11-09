@@ -25,3 +25,12 @@ Resolve uncertainty from available source definitions where possible; otherwise 
 ## Evidence and presentation
 
 Keep raw source assertions, versions and evidence traceable. Distinguish direct reference fields, database membership, dataset citations and provider summary links. Unknown stimulation/inhibition stays missing; contradictory assertions remain visible. Final counts need not resemble the historical workbook. Provide Excel for sharing and matching Parquet data for Python utilities.
+
+The approved 2026-11-09 Excel templates define a five-sheet presentation subset:
+Ligand-Receptor, Nonprotein-Proxy, Entities, Complex-Members and Regulators.
+Detailed provenance, evidence, assertions, reviews and source information remain
+in the complete Parquet exports. Excel lists use semicolon-separated display
+text; Parquet retains exact list boundaries and original values. Missing sign
+summaries are null/blank. The label `unknown` is reserved for an eligible explicit
+provider sign value, not used as a fallback for absent or false flags. Provider
+stimulation/inhibition contradictions and orientation safeguards are preserved.

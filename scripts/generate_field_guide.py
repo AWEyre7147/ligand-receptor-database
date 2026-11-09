@@ -13,7 +13,7 @@ from normalization_core import SOURCE_IDS
 
 SUFFIXES = {'Nonprotein-Proxy':'interactions', 'Assertions':'assertions', 'Review':'assertions', 'Evidence':'evidence',
             'Entities':'entities','Complex-Members':'memberships','Complex-Definitions':'definitions','Regulators':'regulators',
-            'Sources':'sources','Source-Members':'source_members','Readme':'readme'}
+            'Sources':'sources','Source-Members':'source_members','Source-Annotations':'source_annotations','Readme':'readme'}
 ENUM_FIELDS = set('source sources species species_group dataset_species dataset_provenance evidence_provenance provenance disposition status tier sign_summary orientation sign_basis entity_type ligand_type receptor_type ligand_mapping receptor_mapping mapping_basis mapping_status relationship role namespace ligand_namespace receptor_namespace type completeness acquisition_status original_role_a original_role_b species_basis reasons review_reasons exclusion_reasons normalized_review_reasons limitations'.split())
 
 # =============================================================================
@@ -115,11 +115,18 @@ def origin(group: str, field: str) -> str:
         return ('Source fields: see source mapping below; [source_normalizers.py](../scripts/source_normalizers.py) provider adapter → '
                 '[normalization_core.py](../scripts/normalization_core.py) `Source.'+{'records':'add','evidence':'add','memberships':'complex','regulators':'add'}[name]+'`; regulator rows are appended directly by `cellchat`.' if name=='regulators' else
                 'Source fields: see source mapping below; [source_normalizers.py](../scripts/source_normalizers.py) provider adapter → [normalization_core.py](../scripts/normalization_core.py) `Source.'+{'records':'add','evidence':'add','memberships':'complex'}[name]+'`. Location/keys/status flags are pipeline-derived; original payload is `raw_json`.')
+    if field in ('interaction_id', 'related_interaction_id', 'entity_id', 'ligand_entity_id',
+                 'receptor_entity_id', 'member_entity_id', 'membership_id', 'regulator_id',
+                 'definition_id', 'supporting_definition_ids', 'annotation_id', 'record_id',
+                 'evidence_id', 'source_complex_id'):
+        return 'Release-local numbering by [database_ids.py](../scripts/database_ids.py) `assign_readable_ids` after canonical assembly; all final foreign keys are rewritten together. Original normalized provenance keys and provider accessions are preserved.'
     if name in ('entities','memberships','definitions'):
         return 'Pipeline-derived by [database_identity.py](../scripts/database_identity.py) `Identities.store/gene/complex/endpoint`; source definitions plus pinned same-species identity columns (source mapping below).'
     if name=='readme': return 'Pipeline-authored [database_export.py](../scripts/database_export.py) `readme_rows`; no upstream biological claim.'
     if name=='sources': return 'Pipeline-derived [database_build.py](../scripts/database_build.py) `make_tables`: normalized manifest `source_citation`, `acquisition_selection`, verified status and source record count.'
     if name=='interactions': return 'Pipeline-derived [database_build.py](../scripts/database_build.py) `make_tables/interaction_id`: resolved entities and eligible assertion/evidence aggregation only; original source fields mapped below.'
+    if name=='source_annotations':
+        return 'Record-linked extraction from normalized `records.raw_json` by [database_build.py](../scripts/database_build.py) `extract_source_annotations`; final links and summary eligibility follow the assertion disposition and OmniPath orientation safeguard.'
     if name=='source_members':
         return 'Copied unchanged from normalized `memberships.'+field+'`; `source`, `definition_id`, `entity_id` are added by [database_build.py](../scripts/database_build.py) `make_tables`.' if field not in ('source','definition_id','entity_id') else 'Pipeline-derived [database_build.py](../scripts/database_build.py) `make_tables`, source and canonical definition/entity lookup.'
     original={'assertions':{'ligand':'ligand_label','receptor':'receptor_label','normalized_review_reasons':'review_reasons'},'evidence':{},'regulators':{}}[name].get(field,field)
@@ -200,6 +207,12 @@ def render(groups: dict, metadata: dict) -> str:
         If descriptions or reviewed vocabulary coverage are stale.
     """
     fields={f.name for g in groups.values() for f in g['schema']}
+    layout = json.loads((ROOT/'data/templates/manifest.json').read_text(encoding='utf-8'))
+    table_names = {'Ligand-Receptor':'interactions', 'Nonprotein-Proxy':'interactions',
+                   'Entities':'entities', 'Complex-Members':'memberships', 'Regulators':'regulators'}
+    aliases = {'gene_accession':'gene_id'}
+    excel_columns = {table_names[s['name']]: {aliases.get(h,h):h for h in s['headers']}
+                     for s in layout['sheets']}
     assert fields==set(metadata['fields']), 'Field description coverage differs'
     assert observed(groups)==metadata['observed_vocabularies'], 'Vocabulary snapshot changed; review config/field-guide.json'
     # Closed labels must be implemented literals, not merely repeated in prose.
@@ -219,14 +232,20 @@ def render(groups: dict, metadata: dict) -> str:
     for name,g in groups.items():
         paths=g['files']; listing=', '.join('`'+Path(p).name+'`' for p in paths) if name.startswith('final/') else '`data/interim/<each of 16 source IDs>/'+Path(paths[0]).name+'`'
         lines += [f'- **{name}**: {listing}.']
-    lines += ['', '## Fields: final tables', '', 'For every field below: row level is its containing table. Strings are text; lists are JSON arrays in Excel; int64 values are Excel numbers; bool values are Excel booleans. Scalar nulls are blank in Excel. Empty/control/formula-leading strings use the reversible `~json:` envelope. Intermediate tables have no Excel workbook. All fields are nullable in Arrow; logical required keys are checked separately. No measurement units exist here: count/order columns use records, datasets, distinct publications or one-based member positions as described; all other fields are unitless identifiers, labels or metadata.', '', 'Missing semantics: null generally means not supplied, unresolved or not applicable; the implementation does not encode those as separate null states. `[]` means no retained values, not evidence of biological absence. Empty `source_table` means flat/default table. Positive boolean nulls mean no positive assertion. Count zero means no qualifying retained item, not proof that none exists in biology.','']
+    lines += ['', '## Fields: final tables', '', 'Every field remains typed in Parquet. Only approved template columns appear in Excel. Excel lists display with semicolon separators and empty lists are blank; use Parquet for exact boundaries. Scalar text stays text, numbers and booleans remain typed, and absent values display blank. Intermediate tables have no Excel workbook. All Arrow fields are nullable; logical required keys are checked separately. Count/order units are records, datasets, publications or member positions as described.', '', 'Missing semantics: null generally means not supplied, unresolved or not applicable. `[]` means no retained values, not evidence of biological absence. Empty source_table means a flat/default table. Count zero is not proof that none exists in biology.','']
     for name,g in groups.items():
         if name=='intermediate/records': lines+=['## Fields: normalized intermediates','','These preserve source assertions before accepted-policy assembly. Their statuses and source definition roles need not agree with final eligibility or canonical membership.','']
         lines+=['### '+name,'','| Field | Parquet type / Excel | Definition, format and missing meaning | Verified example | Origin |','|---|---|---|---|---|']
         for f in g['schema']:
             values=[r[f.name] for r in g['rows'] if r[f.name] is not None and r[f.name]!=[]]
             example=min(values,key=lambda x:len(json.dumps(x))) if values else None
-            rep='not exported to Excel' if name.startswith('intermediate/') else 'JSON array' if pa.types.is_list(f.type) else 'number' if pa.types.is_integer(f.type) else 'boolean' if pa.types.is_boolean(f.type) else 'text/envelope'
+            visible = excel_columns.get(name.split('/')[-1], {}) if name.startswith('final/') else {}
+            rep = ('not exported to Excel' if f.name not in visible else
+                   'semicolon-separated text' if pa.types.is_list(f.type) else
+                   'number' if pa.types.is_integer(f.type) else
+                   'boolean' if pa.types.is_boolean(f.type) else 'text')
+            if f.name in visible and visible[f.name] != f.name:
+                rep += ' as ' + visible[f.name]
             lines.append(f"| `{f.name}` | `{f.type}` / {rep} | {metadata['fields'][f.name]} | {cell(example)} | {origin(name,f.name)} |")
         lines+=['']
     lines+=['## Reviewed vocabulary snapshot','','These are the **observed** values in this release, not permission to silently accept future values. The check command compares every set with the maintained catalog. Upstream labels and parameterized reason strings are open vocabularies; new values require review. Code branches may allow values not currently observed (e.g. nonprotein_molecule, boolean false in nullable schemas); no unobserved biological coverage is implied. Reason prefixes `ligand:`/`receptor:` identify the failing endpoint; N01–N04 refer to the accepted policies. Multiple flags overlap.','']

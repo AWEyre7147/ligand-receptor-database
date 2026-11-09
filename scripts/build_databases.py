@@ -12,15 +12,46 @@ import tempfile
 
 from database_build import *
 from database_export import partitions, write_parquet, export_xlsx, validate_excel, render_previews
+from database_excel import workbook_partitions, digest_workbook
 from download_sources import atomic_json, remove_tree
 
 OUTPUT = ROOT / 'data/processed'
-IMPLEMENTATION = ['build_databases.py', 'database_build.py', 'database_identity.py', 'database_export.py', 'export_database_workbooks.mjs']
+IMPLEMENTATION = ['build_databases.py', 'database_build.py', 'database_identity.py', 'database_ids.py', 'database_export.py', 'database_excel.py', 'export_database_workbooks.mjs']
 
 
 # =============================================================================
 # Public workflow and supporting operations
 # =============================================================================
+def verification_plan(release_verification: bool, previews: bool) -> dict[str, bool]:
+    """Select routine or explicit release-verification operations.
+
+    Parameters
+    ----------
+    release_verification : bool
+        Whether to run the expensive release checks after canonical assembly.
+    previews : bool
+        Whether to render optional bounded spreadsheet previews.
+
+    Returns
+    -------
+    dict[str, bool]
+        Named operations used by the build orchestration and focused tests.
+
+    Raises
+    ------
+    ValueError
+        If previews are requested outside explicit release verification.
+    """
+    if previews and not release_verification:
+        raise ValueError('--previews requires --release-verification')
+    return {
+        'full_test_suite': release_verification,
+        'repeat_assembly': release_verification,
+        'excel_parquet_parity': release_verification,
+        'previews': previews,
+    }
+
+
 def verify_hashes(inputs):
     """Detect any input mutation between the beginning and end of the offline build.
     
@@ -125,10 +156,10 @@ def report(tables, counts, validation, annotation_version):
               '## Files and command', '',
               '- [Human Excel](../data/processed/Ligand-Receptor-Human-DB.xlsx) and [Human Parquet](../data/processed/Ligand-Receptor-Human-DB.parquet).',
               '- [Mouse Excel](../data/processed/Ligand-Receptor-Mouse-DB.xlsx) and [Mouse Parquet](../data/processed/Ligand-Receptor-Mouse-DB.parquet).',
-              '- `Human-*` and `Mouse-*` Parquet files mirror every companion/support/readme worksheet. `Shared-Review`, `Shared-Assertions` and `Shared-Evidence` retain species-incompatible or unknown assertions separately.',
+              '- Excel follows the approved five-sheet templates. `Human-*` and `Mouse-*` Parquet files retain all companion/support/readme tables, including evidence, review and record-linked annotations omitted from Excel. Shared tables retain species-incompatible or unknown assertions separately.',
               '- [Build manifest](../data/processed/build-manifest.json) records input/policy/implementation hashes, versions, output checksums, counts and validation. See [Database dictionary](Database%20dictionary.md) for exact columns and joins.', '',
-              '```powershell', '.venv/Scripts/python scripts/build_databases.py --repeat', '```', '',
-              'Install `requirements-normalization.txt`. Workbooks use the existing openpyxl streaming writer: full-size artifact-tool XLSX export failed with `Invalid string length`. Use `--skip-previews` for a Python-only build; bounded previews use the bundled Node runtime and `@oai/artifact-tool`; `--node` can select that executable. No additional Python dependencies, downloader, new annotation download or species conversion runs. A complete release is staged and validated before replacing processed outputs. Failure preserves the prior release; unrelated processed files are copied through. A stale backup/lock requires inspection rather than automatic deletion.', '',
+              '```powershell', '.venv/Scripts/python scripts/build_databases.py --annotation-dir "../gene-annotation-resources/annotations"', '```', '',
+              'This routine command performs input, schema, identifier, relationship, policy, record-accounting and output-write checks. Add `--release-verification` for the full test suite, repeat canonical assembly and exhaustive Excel/Parquet parity; add `--previews` only when bounded layout rendering is also wanted. No additional Python dependencies, downloader, new annotation download or species conversion runs. A complete build is staged before replacing processed outputs. Failure preserves the prior release; unrelated processed files are copied through. A stale backup/lock requires inspection rather than automatic deletion.', '',
               '## Source contributions', '',
               'Counts below are distinct eligible interaction IDs per source. A pair may appear in several source rows; the columns must not be added as unique biological pairs. LIANA constituent memberships are retained as provenance only.', '',
               '| Source | Human primary | Mouse primary | Human companion | Mouse companion | Review | Excluded | Provenance only |', '|---|---:|---:|---:|---:|---:|---:|---:|']
@@ -153,15 +184,21 @@ def report(tables, counts, validation, annotation_version):
     for reason, number in reasons.most_common():
         lines.append(f'| `{reason}` | {number:,} |')
     eligible_mouse = [r for r in a if r['species_group']=='mouse' and r['disposition'] in ('primary','companion')]
+    parity = validation['excel_parquet']
+    parity_text = ('every template-projected Excel cell compared with its canonical Parquet value after display serialization'
+                   if all(v.get('status') == 'passed' for v in parity.values()) else 'not run in routine mode')
+    test_text = (str(validation['unit_tests']) + ' tests passed' if isinstance(validation['unit_tests'], int)
+                 else str(validation['unit_tests']))
     lines += ['', 'Eligible mouse source-assertion provenance: ' + ', '.join(f'{v:,} {k}' for k,v in sorted(Counter(r['evidence_provenance'] for r in eligible_mouse).items())) + '.', '',
               'OmniPath mouse orientation remains unresolved and contributes no automatic mouse support. Pavlicev S5 cannot be divided reliably into proteins and proxies using its local per-row fields. GtoPdb missing/multispecies ligand metadata is not filled from target species; synthetic/nonendogenous rows remain auditable exclusions. Source symbol aliases, incomplete complexes and conflicting metadata remain explicit. No online acquisition issue blocked this offline build.', '',
               '## Validation', '',
-              f"- {validation['unit_tests']} tests passed, including identity/species, cross-source merging, complex membership/stoichiometry, regulators, proxies, overlapping provenance, signs and stale inputs.",
-              '- Excel/Parquet parity: every exported data cell compared after reversible decoding; IDs remained text and no executable formulas were emitted.',
-              '- All normalized records have one disposition; every evidence/regulator row is retained; source totals, schemas, keys and joins reconcile.',
+              '- Build mode: ' + validation['mode'] + '.',
+              '- Full test suite: ' + test_text + '.',
+              '- Excel/Parquet exhaustive parity: ' + parity_text + '.',
+              '- All normalized records have one disposition; every evidence, regulator and source-annotation row is retained; source totals, schemas, keys and joins reconcile.',
               '- Repeat canonical-build semantic determinism: ' + validation['repeat_semantic_determinism'] + '.',
               '- Input checksums verified before and after the build. Protected input/historical/intermediate/vault snapshot: ' + str(validation.get('protected_files', 'not supplied')) + '.',
-              '- Workbook headers, filters, freezes and widths are checked from worksheet XML. Optional preview status: ' + str(validation.get('previews', 'not recorded')) + '. Long values remain available in full through Excel cells/support rows and Parquet; no evidence is truncated.', '']
+              '- Workbook output writing completed. Template headers and sheet structure are checked during exhaustive projection parity. Optional preview status: ' + str(validation.get('previews', 'not recorded')) + '. Detailed evidence remains in Parquet; displayed values exceeding Excel limits fail rather than being truncated.', '']
     return '\n'.join(lines)
 
 
@@ -176,15 +213,17 @@ def main():
     Raises
     ------
     ValueError
-        If the required unit-test run fails; other input/export errors propagate.
+        If an explicit release-verification test run fails; other input/export
+        and integrity errors propagate.
     """
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--repeat', action='store_true')
+    parser.add_argument('--release-verification', action='store_true', help='Run the full test suite, repeat canonical assembly and exhaustive Excel/Parquet parity')
+    parser.add_argument('--previews', action='store_true', help='Render bounded spreadsheet previews during explicit release verification')
     parser.add_argument('--protected-baseline', type=Path)
     parser.add_argument('--node')
     parser.add_argument('--annotation-dir', type=Path, help='Directory containing the pinned annotation manifest and Parquet/human.parquet and mouse.parquet')
-    parser.add_argument('--skip-previews', action='store_true', help='Build and validate complete workbooks without the optional Codex Node preview runtime')
     args = parser.parse_args()
+    plan = verification_plan(args.release_verification, args.previews)
     work = ROOT / '.build-work'
     work.mkdir(exist_ok=True)
     (work / '.gitignore').write_text('*\n')
@@ -195,31 +234,38 @@ def main():
     try:
         tables, inputs, annotation_version, normalized = make_tables(args.annotation_dir)
         counts = validate_tables(tables, normalized)
-        repeat = 'not requested'
-        if args.repeat:
+        repeat = 'not run in routine mode'
+        if plan['repeat_assembly']:
             again, again_inputs, _, _ = make_tables(args.annotation_dir)
             assert inputs == again_inputs, 'Repeat inputs changed'
             assert {n:digest_table(v,n) for n,v in tables.items()} == {n:digest_table(v,n) for n,v in again.items()}, 'Repeat semantics changed'
             del again
             repeat = 'passed'
-        test = subprocess.run([sys.executable, '-m', 'unittest', 'discover', '-s', 'tests', '-v'], cwd=ROOT, capture_output=True, text=True)
-        if test.returncode:
-            raise ValueError(test.stdout + test.stderr)
-        import re
-        validation = {'unit_tests': int(re.search(r'Ran (\d+) tests', test.stderr)[1]), 'repeat_semantic_determinism': repeat, 'excel_parquet': {}}
+        unit_tests = 'not run in routine mode'
+        if plan['full_test_suite']:
+            test = subprocess.run([sys.executable, '-m', 'unittest', 'discover', '-s', 'tests', '-v'], cwd=ROOT, capture_output=True, text=True)
+            if test.returncode:
+                raise ValueError(test.stdout + test.stderr)
+            import re
+            unit_tests = int(re.search(r'Ran (\d+) tests', test.stderr)[1])
+        validation = {'mode': 'release' if args.release_verification else 'routine', 'unit_tests': unit_tests,
+                      'repeat_semantic_determinism': repeat, 'excel_parquet': {}}
         stage = Path(tempfile.mkdtemp(prefix='.processed-', dir=ROOT / 'data'))
         if OUTPUT.exists():
             shutil.copytree(OUTPUT, stage, dirs_exist_ok=True)
         pieces = partitions(tables)
+        excel_pieces, template_inputs = workbook_partitions(pieces, SCHEMAS)
+        inputs.extend(template_inputs)
         outputs = write_parquet(pieces, stage)
         for sp in ('mouse', 'human'):
             path = stage / ('Ligand-Receptor-' + sp.title() + '-DB.xlsx')
-            export_xlsx(pieces[sp], path, work / 'excel', sp, args.node)
-            validation['excel_parquet'][sp] = validate_excel(path, pieces[sp])
-            if not args.skip_previews:
-                render_previews(pieces[sp], work / 'excel', sp, args.node)
-            outputs.append({'path': path.name, 'sha256': file_hash(path), 'semantic_sha256': key([(s['sheet'], digest_table(s['rows'],s['schema'])) for s in pieces[sp]])})
-        validation['previews'] = 'skipped by request' if args.skip_previews else 'rendered'
+            export_xlsx(excel_pieces[sp], path, work / 'excel', sp, args.node)
+            validation['excel_parquet'][sp] = validate_excel(path, excel_pieces[sp]) if plan['excel_parquet_parity'] else {'status': 'not run in routine mode'}
+            if plan['previews']:
+                render_previews(excel_pieces[sp], work / 'excel', sp, args.node)
+            outputs.append({'path': path.name, 'sha256': file_hash(path),
+                            'semantic_sha256': digest_workbook(excel_pieces[sp])})
+        validation['previews'] = 'rendered' if plan['previews'] else 'not requested'
         verify_hashes(inputs)
         if args.protected_baseline:
             baseline = json.loads(args.protected_baseline.read_text(encoding='utf-8'))
@@ -227,6 +273,10 @@ def main():
                 assert file_hash(ROOT / p) == h, 'Protected file changed: ' + p
             validation['protected_files'] = {'count': len(baseline), 'status': 'unchanged'}
         build = {'status': 'success', 'schema_version': VERSION, 'policy_sha256': file_hash(POLICY), 'inputs': inputs,
+                 'identifier_policy': {'scope': 'release-local; all species before partitioning',
+                                       'format': 'PREFIX-000001 (six-digit minimum)',
+                                       'ordering': 'sorted canonical keys; numbering may change in later releases',
+                                       'normalized_keys': 'preserved alongside readable record_id and evidence_id'},
                  'annotation_version': annotation_version, 'implementation': {n:file_hash(ROOT / 'scripts' / n) for n in IMPLEMENTATION},
                  'dependencies': {n:importlib.metadata.version(n) for n in ('pandas','numpy','pyarrow','openpyxl','rdata')},
                  'counts': counts, 'validation': validation, 'outputs': outputs}
@@ -234,7 +284,9 @@ def main():
         report_text = report(tables, counts, validation, annotation_version)
         promote(stage)
         stage = None
-        (ROOT / 'docs/Final database build.md').write_text(report_text, encoding='utf-8')
+        report_path = ROOT / 'docs/archived/Final database build.md'
+        report_path.parent.mkdir(parents=True, exist_ok=True)
+        report_path.write_text(report_text, encoding='utf-8')
         print(json.dumps({'counts': counts, 'validation': validation}, indent=2), flush=True)
     finally:
         lock.unlink(missing_ok=True)

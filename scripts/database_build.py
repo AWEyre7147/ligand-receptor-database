@@ -9,8 +9,9 @@ import pyarrow.parquet as pq
 
 from normalization_core import ROOT, RAW, SOURCE_IDS, key, js, file_hash
 from database_identity import Identities, IdentityError
+from database_ids import assign_readable_ids
 
-VERSION = '1.0.0'
+VERSION = '1.3.0'
 POLICY = ROOT / 'docs/Accepted database policies.md'
 INTERIM = ROOT / 'data/interim'
 
@@ -43,18 +44,88 @@ def schema(strings='', lists='', ints='', bools=''):
 
 SCHEMAS = {
  'interactions': schema('ligand receptor interaction_id species ligand_entity_id receptor_entity_id ligand_type receptor_type tier sign_summary',
-                        'sources underlying_sources provenance limitations', 'source_count assertion_count direct_publication_count provider_summary_publication_count'),
+                        'sources underlying_sources provenance limitations omnipath_reported_stimulation omnipath_reported_inhibition omnipath_reported_direction cellchat_interaction_annotation cellchat_pathway cellchat_ligand_location cellchat_ligand_family cellchat_receptor_location cellchat_receptor_family connectomedb_ligand_location connectomedb_receptor_location italk_classification gtopdb_ligand_type gtopdb_interaction_type gtopdb_action gtopdb_action_comment gtopdb_selectivity gtopdb_endogenous',
+                        'source_count assertion_count direct_publication_count provider_summary_publication_count'),
  'assertions': schema('record_key source species_group disposition interaction_id related_interaction_id ligand receptor ligand_entity_id receptor_entity_id source_file source_table source_row source_record_id evidence_provenance orientation sign_basis',
                       'reasons normalized_review_reasons underlying_sources', bools='is_stimulation is_inhibition is_directed'),
  'evidence': schema('evidence_key record_key interaction_id disposition source type value provider source_field species_group'),
  'memberships': schema('membership_id entity_id member_entity_id relationship stoichiometry species'),
  'definitions': schema('definition_id entity_id source source_complex_key source_label source_file source_table source_row stoichiometry_context completeness', 'supporting_definition_ids'),
  'regulators': schema('regulator_id record_key interaction_id disposition role group_label member_label member_entity_id mapping_status species source_file'),
- 'entities': schema('entity_id species entity_type display_label identity mapping_basis gene_id product_id', 'limitations'),
+ 'entities': schema('entity_id species entity_type display_label identity mapping_basis gene_id', 'limitations'),
  'sources': schema('source citation selection_json acquisition_status', ints='normalized_assertions'),
  'source_members': schema('source complex_key complex_label member_id member_label namespace species relationship stoichiometry source_file source_table source_row definition_id entity_id', ints='member_order'),
+ 'source_annotations': schema('annotation_id record_key interaction_id related_interaction_id disposition source source_file source_table source_row source_record_id species_group source_field summary_field original_value interpretation_note', bools='summary_eligible'),
  'readme': schema('topic description'),
 }
+
+# Add readable record IDs while preserving normalized keys for interim joins.
+for _table in ('assertions', 'evidence', 'regulators', 'source_annotations'):
+    SCHEMAS[_table] = SCHEMAS[_table].append(pa.field('record_id', pa.string()))
+SCHEMAS['evidence'] = SCHEMAS['evidence'].append(pa.field('evidence_id', pa.string()))
+for _table in ('definitions', 'source_members'):
+    SCHEMAS[_table] = SCHEMAS[_table].append(pa.field('source_complex_id', pa.string()))
+
+
+ANNOTATION_FIELDS = {
+    'omnipathppis': {
+        'is_stimulation': 'omnipath_reported_stimulation',
+        'is_inhibition': 'omnipath_reported_inhibition',
+        'is_directed': 'omnipath_reported_direction',
+    },
+    'cellchat': {
+        'annotation': 'cellchat_interaction_annotation',
+        'pathway_name': 'cellchat_pathway',
+        'ligand.location': 'cellchat_ligand_location',
+        'ligand.family': 'cellchat_ligand_family',
+        'receptor.location': 'cellchat_receptor_location',
+        'receptor.family': 'cellchat_receptor_family',
+    },
+    'connectomedb': {
+        'Ligand Location': 'connectomedb_ligand_location',
+        'Receptor Location': 'connectomedb_receptor_location',
+    },
+    'italk': {'Classification': 'italk_classification'},
+    'gtopdb': {
+        'Ligand Type': 'gtopdb_ligand_type',
+        'Type': 'gtopdb_interaction_type',
+        'Action': 'gtopdb_action',
+        'Action comment': 'gtopdb_action_comment',
+        'Selectivity': 'gtopdb_selectivity',
+        'Endogenous': 'gtopdb_endogenous',
+    },
+}
+
+
+def summarize_sign(assertions: list[dict], annotations: list[dict]) -> str | None:
+    """Summarize reported signs without turning absent evidence into unknown.
+
+    Parameters
+    ----------
+    assertions : list[dict]
+        Eligible, orientation-safe assertions for one interaction.
+    annotations : list[dict]
+        Detailed provider values for that same interaction.
+
+    Returns
+    -------
+    str or None
+        Positive or conflicting reported signs, explicit provider unknown, or
+        null when no sign was reported. False stimulation is not inhibition.
+    """
+    stimulation = any(row['is_stimulation'] is True for row in assertions)
+    inhibition = any(row['is_inhibition'] is True for row in assertions)
+    if stimulation and inhibition:
+        return 'conflicting_positive_assertions'
+    if stimulation:
+        return 'stimulation_reported'
+    if inhibition:
+        return 'inhibition_reported'
+    if any(row['summary_eligible'] and row['source'] == 'omnipathppis'
+           and row['source_field'] in ('is_stimulation', 'is_inhibition')
+           and row['original_value'].strip().casefold() == 'unknown' for row in annotations):
+        return 'unknown'
+    return None
 
 
 def verify_inputs():
@@ -174,6 +245,82 @@ def interaction_id(sp: str, left: str, right: str, tier: str) -> str:
     return 'I:' + key(sp, left, right, tier)
 
 
+def extract_source_annotations(record: dict, assertion: dict) -> list[dict]:
+    """Retain configured provider fields with their exact source-record association.
+
+    Parameters
+    ----------
+    record : dict
+        Normalized assertion containing the complete original row in ``raw_json``.
+    assertion : dict
+        Final disposition and interaction links for the same normalized record.
+
+    Returns
+    -------
+    list[dict]
+        One row per present provider field. Ineligible assertions and safeguarded
+        OmniPath orientations remain traceable but cannot populate summaries.
+    """
+    raw = json.loads(record['raw_json'])
+    fields = ANNOTATION_FIELDS.get(record['source'], {})
+    eligible = assertion['disposition'] in ('primary', 'companion')
+    orientation_ok = record['source'] != 'omnipathppis' or assertion['orientation'] == 'ligand_to_receptor'
+    rows = []
+    for source_field, summary_field in fields.items():
+        value = raw.get(source_field)
+        if value is None or value == '':
+            continue
+        original = value if isinstance(value, str) else js(value)
+        summary_eligible = eligible and orientation_ok
+        note = None
+        if not eligible:
+            note = 'not eligible accepted support; retained for source-record context only'
+        elif not orientation_ok:
+            note = 'withheld from summary by OmniPath ligand-receptor orientation safeguard'
+        rows.append({
+            'annotation_id': 'A:' + key(assertion['record_key'], source_field),
+            'record_key': assertion['record_key'],
+            'interaction_id': assertion['interaction_id'],
+            'related_interaction_id': assertion['related_interaction_id'],
+            'disposition': assertion['disposition'],
+            'source': record['source'],
+            'source_file': record['source_file'],
+            'source_table': record['source_table'],
+            'source_row': record['source_row'],
+            'source_record_id': record['source_record_id'],
+            'species_group': record['species_group'],
+            'source_field': source_field,
+            'summary_field': summary_field,
+            'original_value': original,
+            'summary_eligible': summary_eligible,
+            'interpretation_note': note,
+        })
+    return rows
+
+
+def source_annotation_summary(interaction_id_value: str, annotations: list[dict]) -> dict[str, list[str]]:
+    """Aggregate distinct eligible values independently for each provider field.
+
+    Parameters
+    ----------
+    interaction_id_value : str
+        Final interaction whose eligible source records are summarized.
+    annotations : list[dict]
+        Record-linked provider annotation rows.
+
+    Returns
+    -------
+    dict[str, list[str]]
+        Every configured summary column with sorted distinct values. Empty lists
+        represent no eligible reported value; explicit negatives remain strings.
+    """
+    result = {field: [] for fields in ANNOTATION_FIELDS.values() for field in fields.values()}
+    for row in annotations:
+        if row['interaction_id'] == interaction_id_value and row['summary_eligible']:
+            result[row['summary_field']].append(row['original_value'])
+    return {name: sorted(set(values)) for name, values in result.items()}
+
+
 def make_tables(annotation_root=None):
     """Build canonical interactions and retain every assertion, evidence row and regulator.
     Resolve explicit complex definitions before checking GtoPdb family-versus-complex ambiguity.
@@ -229,6 +376,7 @@ def make_tables(annotation_root=None):
                      normalized_review_reasons=r['review_reasons'])
             tables['assertions'].append(a)
             links[r['record_key']] = a
+            tables['source_annotations'].extend(extract_source_annotations(r, a))
             if iid:
                 groups[iid].append(a)
         entry = manifest['sources'][s]
@@ -251,12 +399,15 @@ def make_tables(annotation_root=None):
     for e in tables['evidence']:
         if e['interaction_id']:
             evidence_by_interaction[e['interaction_id']].append(e)
+    annotations_by_interaction = defaultdict(list)
+    for annotation in tables['source_annotations']:
+        if annotation['interaction_id']:
+            annotations_by_interaction[annotation['interaction_id']].append(annotation)
     for iid, assertions in sorted(groups.items()):
         a = assertions[0]
         left, right = [ids.entities[a[side + '_entity_id']] for side in ('ligand', 'receptor')]
         ev = evidence_by_interaction[iid]
-        signs = {field: any(x[field] is True for x in assertions) for field in ('is_stimulation', 'is_inhibition')}
-        sign = 'conflicting_positive_assertions' if all(signs.values()) else 'stimulation_reported' if signs['is_stimulation'] else 'inhibition_reported' if signs['is_inhibition'] else 'unknown'
+        sign = summarize_sign(assertions, annotations_by_interaction[iid])
         notes = set(left['limitations'] + right['limitations'])
         referenced_records = {e['record_key'] for e in ev if e['type'] == 'pubmed'}
         if any(x['record_key'] not in referenced_records for x in assertions):
@@ -273,11 +424,15 @@ def make_tables(annotation_root=None):
             'provenance': sorted({x['evidence_provenance'] for x in assertions}), 'limitations': sorted(notes),
             'source_count': len(sources), 'assertion_count': len(assertions),
             'direct_publication_count': len({e['value'] for e in ev if e['type'] == 'pubmed'}),
-            'provider_summary_publication_count': len({e['value'] for e in ev if 'pubmed' in e['type'] and e['type'] != 'pubmed'})})
+            'provider_summary_publication_count': len({e['value'] for e in ev if 'pubmed' in e['type'] and e['type'] != 'pubmed'}),
+            **source_annotation_summary(iid, annotations_by_interaction[iid])})
     eligible = {(r['species'], r['ligand_entity_id'], r['receptor_entity_id']): r['interaction_id'] for r in tables['interactions']}
     for a in tables['assertions']:
         if not a['interaction_id']:
             a['related_interaction_id'] = eligible.get((a['species_group'], a['ligand_entity_id'], a['receptor_entity_id']))
+    related = {a['record_key']: a['related_interaction_id'] for a in tables['assertions']}
+    for annotation in tables['source_annotations']:
+        annotation['related_interaction_id'] = related[annotation['record_key']]
     tables['entities'] = list(ids.entities.values())
     tables['definitions'] = list(ids.definitions.values())
     tables['memberships'] = list(ids.memberships.values())
@@ -287,6 +442,7 @@ def make_tables(annotation_root=None):
             definition = ids.definitions.get(did)
             tables['source_members'].append({**member, 'source': s, 'definition_id': did if definition else None,
                                              'entity_id': definition['entity_id'] if definition else None})
+    assign_readable_ids(tables)
     for name, rows in tables.items():
         if name != 'interactions':
             rows.sort(key=js)
@@ -315,9 +471,14 @@ def validate_tables(tables, manifest):
     assert {r['source']:r['citation'] for r in tables['sources']} == {s:manifest['sources'][s]['source_citation'] for s in SOURCE_IDS}
     assert len(assertions) == len(tables['assertions']) == expected, 'Assertion reconciliation'
     assert len(interactions) == len(tables['interactions']), 'Duplicate interactions'
+    assert len({r['annotation_id'] for r in tables['source_annotations']}) == len(tables['source_annotations']), 'Duplicate source annotations'
     for source in SOURCE_IDS:
         assert sum(a['source'] == source for a in assertions.values()) == manifest['sources'][source]['summary']['normalized_records']
     support = defaultdict(list)
+    annotation_support = defaultdict(list)
+    for annotation in tables['source_annotations']:
+        if annotation['interaction_id']:
+            annotation_support[annotation['interaction_id']].append(annotation)
     for a in assertions.values():
         assert a['disposition'] in ('primary', 'companion', 'review', 'excluded', 'provenance_only')
         if a['disposition'] in ('primary', 'companion'):
@@ -350,10 +511,16 @@ def validate_tables(tables, manifest):
                 assert all(m['relationship'].startswith('required_subunit') for m in required[e['entity_id']])
         if i['tier'] == 'primary':
             assert i['ligand_type'] in ('gene_product', 'complex', 'encoded_peptide')
-    for table in ('evidence', 'regulators'):
+        expected_annotations = source_annotation_summary(i['interaction_id'], annotation_support[i['interaction_id']])
+        assert all(i[name] == values for name, values in expected_annotations.items())
+        assert i['sign_summary'] == summarize_sign(support[i['interaction_id']], annotation_support[i['interaction_id']])
+    for table in ('evidence', 'regulators', 'source_annotations'):
         for e in tables[table]:
             a = assertions[e['record_key']]
             assert e['interaction_id'] == a['interaction_id'] and e['disposition'] == a['disposition']
+            if table == 'source_annotations':
+                assert e['source'] == a['source'] and e['species_group'] == a['species_group']
+                assert not e['summary_eligible'] or a['disposition'] in ('primary', 'companion')
     assert len(tables['evidence']) == sum(x['summary']['evidence_rows'] for x in manifest['sources'].values())
     assert len(tables['regulators']) == sum(x['summary']['regulator_rows'] for x in manifest['sources'].values())
     assert len(tables['source_members']) == sum(x['summary']['membership_rows'] for x in manifest['sources'].values())

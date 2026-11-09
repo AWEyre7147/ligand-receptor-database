@@ -57,7 +57,7 @@ def check_links() -> int:
     count=0; failures=[]
     paths=list(ROOT.glob('*.md'))+list((ROOT/'docs').rglob('*.md'))+list((ROOT/'handoffs').glob('*.md'))
     for path in paths:
-        if '.obsidian' in path.parts: continue
+        if '.obsidian' in path.parts or 'archived' in path.parts: continue
         text=path.read_text(encoding='utf-8')
         text=re.sub(r'```.*?```','',text,flags=re.S)
         for target in re.findall(r'\]\(([^)]+)\)',text):
@@ -71,7 +71,7 @@ def check_links() -> int:
             count+=1
         for target in re.findall(r'\[\[([^\]]+)\]\]',text):
             target=target.split('|')[0].split('#')[0]
-            if not any(p.stem==target or p.relative_to(ROOT/'docs').as_posix()==target+'.md' for p in (ROOT/'docs').rglob('*.md')):
+            if not any(p.stem==target or p.relative_to(ROOT/'docs').as_posix()==target+'.md' for p in (ROOT/'docs').rglob('*.md') if 'archived' not in p.parts):
                 failures.append(path.relative_to(ROOT).as_posix()+': '+target)
             count+=1
     assert not failures, 'Broken local links: '+json.dumps(failures)

@@ -1,0 +1,130 @@
+{
+  "manifest_schema_version": "1.0.0",
+  "template_revision": "2026-11-09",
+  "purpose": "Approved Excel presentation templates for species-specific database exports.",
+  "source": {
+    "filename": "Ligand-Receptor-Human-Template (1).xlsx",
+    "sha256": "3bc6705c5924c6c7a07ca488de9dba455031456c40a59cc7e84549f193a3b498",
+    "role": "User-edited human template; authoritative layout for both species."
+  },
+  "species_convention": "Species is identified by the workbook filename and this manifest; the templates contain no species columns or species-specific values.",
+  "copy_method": "Human template derived from the user-edited source with row-2 example values removed; mouse is a byte-for-byte copy of the resulting human template.",
+  "example_convention": "Headers only; no example rows or biological records.",
+  "pipeline_status": "Used by the Excel projection; product_accession removed.",
+  "sheet_count": 5,
+  "sheets": [
+    {
+      "name": "Ligand-Receptor",
+      "headers": [
+        "interaction_id",
+        "ligand_entity_id",
+        "receptor_entity_id",
+        "ligand",
+        "ligand_type",
+        "receptor",
+        "receptor_type",
+        "sign_summary",
+        "omnipath_reported_stimulation",
+        "omnipath_reported_inhibition",
+        "omnipath_reported_direction",
+        "cellchat_interaction_annotation",
+        "cellchat_pathway",
+        "cellchat_ligand_location",
+        "cellchat_ligand_family",
+        "cellchat_receptor_location",
+        "cellchat_receptor_family",
+        "connectomedb_ligand_location",
+        "connectomedb_receptor_location",
+        "italk_classification",
+        "gtopdb_ligand_type",
+        "gtopdb_interaction_type",
+        "gtopdb_action",
+        "gtopdb_action_comment",
+        "gtopdb_selectivity",
+        "gtopdb_endogenous",
+        "sources"
+      ],
+      "example_cells": {}
+    },
+    {
+      "name": "Nonprotein-Proxy",
+      "headers": [
+        "interaction_id",
+        "ligand_entity_id",
+        "receptor_entity_id",
+        "ligand",
+        "ligand_type",
+        "receptor",
+        "receptor_type",
+        "sign_summary",
+        "omnipath_reported_stimulation",
+        "omnipath_reported_inhibition",
+        "omnipath_reported_direction",
+        "cellchat_interaction_annotation",
+        "cellchat_pathway",
+        "cellchat_ligand_location",
+        "cellchat_ligand_family",
+        "cellchat_receptor_location",
+        "cellchat_receptor_family",
+        "connectomedb_ligand_location",
+        "connectomedb_receptor_location",
+        "italk_classification",
+        "gtopdb_ligand_type",
+        "gtopdb_interaction_type",
+        "gtopdb_action",
+        "gtopdb_action_comment",
+        "gtopdb_selectivity",
+        "gtopdb_endogenous",
+        "sources"
+      ],
+      "example_cells": {}
+    },
+    {
+      "name": "Entities",
+      "headers": [
+        "entity_id",
+        "gene_accession",
+        "display_label",
+        "entity_type"
+      ],
+      "example_cells": {}
+    },
+    {
+      "name": "Complex-Members",
+      "headers": [
+        "membership_id",
+        "entity_id",
+        "member_entity_id",
+        "relationship",
+        "stoichiometry"
+      ],
+      "example_cells": {}
+    },
+    {
+      "name": "Regulators",
+      "headers": [
+        "regulator_id",
+        "interaction_id",
+        "member_entity_id",
+        "role",
+        "group_label",
+        "member_label"
+      ],
+      "example_cells": {}
+    }
+  ],
+  "files": [
+    {
+      "path": "Ligand-Receptor-Human-Template.xlsx",
+      "species": "human",
+      "sha256": "d016644f72bc4a3c20327b365cb67c4a98879cb4df5c1f641f566a806c4a3142",
+      "size_bytes": 6758
+    },
+    {
+      "path": "Ligand-Receptor-Mouse-Template.xlsx",
+      "species": "mouse",
+      "sha256": "d016644f72bc4a3c20327b365cb67c4a98879cb4df5c1f641f566a806c4a3142",
+      "size_bytes": 6758
+    }
+  ]
+}

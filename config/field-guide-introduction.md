@@ -9,25 +9,27 @@ Start with `Ligand-Receptor` in the [human workbook](../data/processed/Ligand-Re
 - **Ligand-Receptor / Nonprotein-Proxy:** one ordered, species-local pair of canonical entities. An entity can be an intact complex or a mature peptide; a row is not necessarily a pair of single genes.
 - **Assertions / Review:** one original source interaction record and its final disposition. Pathway repetitions remain separate assertions. Review is a filtered copy of Assertions, so never concatenate them to count evidence.
 - **Evidence:** one typed source evidence claim attached to one assertion. Database membership, pathway and free text are not direct publication proof. No citations were fetched or independently verified during assembly.
+- **Source-Annotations:** one original provider field/value attached to its supplying source record. `summary_eligible=false` values remain traceable but do not populate interaction summaries. Use this table to recover which GtoPdb action, comment, selectivity and endogenous values actually co-occurred on a measurement record.
 - **Entities:** one species-local canonical identity. A proxy is not its product; an encoded peptide retains its molecular ID and an `encoded_by` link to its precursor gene.
 - **Complex-Members:** one canonical dependency edge. `required_subunit` members act together; `encoded_by` and biosynthetic/transport dependencies have different meanings. Unknown stoichiometry is not one.
 - **Complex-Definitions:** one resolved source definition; several definitions can map to one canonical entity. Incompatible complete member sets, stoichiometry or assembly context keep separate identities.
 - **Source-Members:** one unchanged normalized source membership claim plus final definition/entity links where resolved. Original GtoPdb subunit lists can describe alternative families: preservation here does not endorse an obligate complex.
 - **Regulators:** one CellChat optional regulator member per original interaction/group. Agonists, antagonists and coreceptors are not silently appended to required subunits.
-- **Sources:** one provider's acquisition selection, citation and normalized record count. Both workbooks contain all 16 providers for transparency, even when a provider contributes no eligible interaction of that species.
+- **Sources (Parquet):** one provider's acquisition selection, citation and normalized record count. Each species' Sources Parquet contains all 16 providers; this technical table is omitted from Excel.
 - **Readme:** one interpretation topic, not biological data.
 
 The accepted [policies](Accepted%20database%20policies.md) control inclusion. Provider-derived mouse orthology evidence is labeled inferred, and unknown provenance remains unknown. No species conversion, case-based gene conversion or new orthology mapping is performed. Source counts and publication counts are overlap-aware summaries, **not independent-replication scores**. A source's `native_reported` label is not independent verification of a native experiment.
 
 ## Keys and joins
 
-Keys are deterministic text, with 32 hexadecimal characters from SHA-256 of compact ordered JSON; interaction/entity/definition/regulator keys add I:/E:/D:/R: prefixes; membership, record and evidence keys remain unprefixed. They are stable only while identity inputs, source row locations/order, schema and policy remain stable. Source version changes can change record keys without changing biology. Do not use display labels or row numbers as cross-source keys.
+Final navigation IDs use readable prefixes and at least six digits: LRI, ENT, MEM, REG, CDF, ANN, AST, EVD and SCX. They are numbered across all species before partitioning and are local to a release. Use the ID together with its build manifest; a later release may renumber it. Normalized record/evidence keys and source-complex keys remain unchanged in Parquet for provenance. Provider accessions are separate from these internal IDs. Do not use display labels or row numbers as cross-source keys.
 
 | From | To | Cardinality and interpretation |
 |---|---|---|
 | interaction `interaction_id` | Assertions `interaction_id` | 1:many eligible assertions; only primary/companion rows support it |
 | assertion `record_key` | normalized records `record_key` | 1:1 across all sources; exposes complete original `raw_json` |
-| assertion `record_key` | Evidence / Regulators `record_key` | 1:zero-or-many; absent evidence is not fabricated |
+| assertion `record_key` | Evidence / Regulators / Source-Annotations `record_key` | 1:zero-or-many; absent evidence or annotation is not fabricated |
+| interaction `interaction_id` | Source-Annotations `interaction_id` | 1:zero-or-many eligible supplying records; source-prefixed interaction columns are independent sorted-distinct summaries of these rows |
 | interaction/assertion endpoint entity IDs | Entities `entity_id` | many:1; unresolved assertion endpoints can be null |
 | Complex-Members `entity_id`, `member_entity_id` | Entities `entity_id` | many:1 at each end; parent:member is many:many overall |
 | Complex-Definitions `entity_id` | Entities `entity_id` | many:1 |
@@ -36,7 +38,7 @@ Keys are deterministic text, with 32 hexadecimal characters from SHA-256 of comp
 | any `source` | Sources `source` | many:1 within one workbook; do not concatenate duplicated Sources sheets |
 | review assertion `related_interaction_id` | interaction `interaction_id` | optional many:1 navigation only, never support |
 
-Evidence values can repeat across assertions and sources. Join Assertions to interaction views before Evidence when counting source support; joining both one-to-many tables first can multiply rows. Neither Review nor companion views should be concatenated into primary counts without preserving their meaning.
+Evidence and annotation values can repeat across assertions and sources. Join Assertions to interaction views before Evidence when counting source support; joining one-to-many tables first can multiply rows. Summary fields are aggregated independently and do not imply that values in different columns came from the same provider record; use Source-Annotations and `record_key` for that question. Neither Review nor companion views should be concatenated into primary counts without preserving their meaning.
 
 ## Safe loading example
 
@@ -57,4 +59,4 @@ claims = evidence.merge(primary_support[['record_key']], on='record_key', valida
 direct_pmids = claims.loc[claims['type'].eq('pubmed'), 'value'].drop_duplicates()
 ```
 
-For Excel, use a cell-aware reader such as openpyxl with `data_only=False`; decode list columns with `json.loads`. For scalar text beginning `~json:`, apply `json.loads(value[6:])`. Do not strip the envelope without JSON decoding or coerce identifier strings to numbers. Blank scalar cells represent null. The `~json:` envelope also preserves an original empty string or literal prefix. The exporter refuses cells exceeding Excel's 32,767-character limit rather than truncating them.
+Excel follows the approved five-sheet templates. Lists display as semicolon-separated text and empty lists are blank. This display is not a reversible list encoding: original values can themselves contain semicolons, so use Parquet when exact value boundaries matter. Literal text, including formula-leading characters, stays text. Do not coerce identifiers to numbers. Missing sign summaries are blank, while an eligible provider's explicit unknown can remain `unknown`. The exporter refuses cells exceeding Excel's 32,767-character limit rather than truncating them. Evidence, assertions, review, source annotations and technical metadata remain complete in Parquet.

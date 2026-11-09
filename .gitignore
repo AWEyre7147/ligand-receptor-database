@@ -23,6 +23,9 @@ node_modules/
 Thumbs.db
 # Personal vault state is retained locally
 docs/.obsidian/
+/docs/archived/
+# Excel's open-workbook locks are transient, not datasets.
+~$*.xlsx
 # Credentials must never enter version control
 .env
 .env.*
@@ -31,4 +34,4 @@ docs/.obsidian/
 *.key
 credentials*.json
 # Other scientific data and manifests are not blanket-ignored.
-# Public eligibility is controlled by docs/Repository readiness.md, not ignores.
+# Provider/source permissions are independent of ignore rules.

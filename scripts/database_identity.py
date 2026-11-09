@@ -112,7 +112,7 @@ class Identities:
         value = clean(value) or ''
         return value.removeprefix(ns + ':') if ns in ('HGNC', 'MGI', 'NCBIGene') else value
 
-    def store(self, sp, kind, identity, label, basis, gene_id=None, product_id=None, notes=()):
+    def store(self, sp, kind, identity, label, basis, gene_id=None, notes=()):
         """Register a species-local entity with deterministic identity and explicit limitations.
         
         Parameters
@@ -129,8 +129,6 @@ class Identities:
             First successful deterministic resolution basis.
         gene_id : str, optional
             Resolved NCBI Gene identifier; not a mature peptide identifier.
-        product_id : str, optional
-            Source molecular product identifier; absent remains unresolved.
         notes : str or sequence[str]
             Explicit scope or unresolved identity limitations.
         
@@ -141,7 +139,7 @@ class Identities:
         """
         eid = 'E:' + key(sp, kind, identity)
         row = {'entity_id': eid, 'species': sp, 'entity_type': kind, 'display_label': label,
-               'identity': identity, 'mapping_basis': basis, 'gene_id': gene_id, 'product_id': product_id,
+               'identity': identity, 'mapping_basis': basis, 'gene_id': gene_id,
                'limitations': sorted(set(notes))}
         if eid not in self.entities:
             self.entities[eid] = row
@@ -400,7 +398,7 @@ class Identities:
         if kind == 'nonprotein_molecule':
             if ns != 'GtoPdb_ligand':
                 raise IdentityError('unresolved_molecule_namespace')
-            return self.store(sp, kind, ns + ':' + ident, label, 'source_molecule_id', product_id=ns + ':' + ident)
+            return self.store(sp, kind, ns + ':' + ident, label, 'source_molecule_id')
         if ns.startswith('GtoPdb'):
             raw = json.loads(r['raw_json'])
             if side == 'receptor':
